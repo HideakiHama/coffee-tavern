@@ -153,3 +153,44 @@
       }
     }
     ```
+### Delete Job Posting
+
+* Endpoint path: /jobdescription/{id}
+* Endpoint method: DELETE
+
+* Headers:
+  * Authorization: Bearer token
+
+    (Specific Employer who made the job post)
+
+* Response: Delete specific job post
+* Response shape (JSON):
+    ```json
+    true
+    ```
+  (Return True if delete was successful)
+
+
+ ### Update/Edit Job Posting
+
+* Endpoint path: /jobdescription/{id}
+* Endpoint method: PUT
+
+* Headers:
+  * Authorization: Bearer token
+
+    (Specific Employer who made the job post)
+
+* Response: Update or Edit Job Description
+* Response shape (JSON):
+    ```json
+    {
+      "Jobs": {
+        id: "id",
+        job_name: "job_name",
+        employer: "employer",
+        location: "location",
+        tags: "tags",
+        description: "description"
+      }
+    }
