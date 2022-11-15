@@ -1,0 +1,26 @@
+volumes:
+  fastapi-example-data:
+    external: true
+services:
+  api:
+    build:
+      context: ./api
+      dockerfile: Dockerfile.dev
+    environment:
+      DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
+      WAIT_HOSTS: db:5432
+      PORT: 8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./api:/app
+  db:
+    image: postgres:14.5-bullseye
+    environment:
+      POSTGRES_PASSWORD: tavern
+      POSTGRES_USER: coffee
+      POSTGRES_DB: coffee_tavern
+    ports:
+      - "15432:5432"
+    volumes:
+      - coffee_tavern-data:/var/lib/postgresql/data
