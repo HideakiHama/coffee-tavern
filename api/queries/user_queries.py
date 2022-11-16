@@ -4,7 +4,7 @@ from queries.pool import pool
 
 class Error(BaseModel):
     message: str
-    
+
 class User(BaseModel):
     id : int
     username : str
@@ -21,7 +21,7 @@ class UserIn(BaseModel):
 
 class UserOut(BaseModel):
     user: list[User]
-    
+
 class UserQueries:
     def get_one(self, user_id: int) -> Optional[UserOut]:
         try:
@@ -33,10 +33,10 @@ class UserQueries:
                     result = db.execute(
                         """
                         SELECT id
-                             , name
-                             , from_date
-                             , to_date
-                             , thoughts
+                            , name
+                            , from_date
+                            , to_date
+                            , thoughts
                         FROM vacations
                         WHERE id = %s
                         """,

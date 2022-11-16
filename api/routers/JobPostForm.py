@@ -1,17 +1,19 @@
 from fastapi import APIRouter, Depends, Response
 from typing import List, Optional, Union
 from queries.JobForm_queries import (
-    JobPostForm,
     JobPostFormIn,
+    JobPostFormOut,
+    JobFormRepository,
     Tags
 )
+
 
 router = APIRouter()
 
 # creating new job form
-@router.post('/create_form', response_model=JobPostForm)
+@router.post('/create_form', response_model=JobPostFormIn)
 def create_job_form(
     new_form: JobPostFormIn,
-    queries: UserQueries = Depends()
+    repo: JobFormRepository = Depends()
 ):
-    return queries.create(new_form)
+    return repo.create(new_form)
