@@ -1,5 +1,3 @@
-Andrews Code from FastAPI Lecture
-
 /api/main.py
 from fastapi import FastAPI
 from routers import users

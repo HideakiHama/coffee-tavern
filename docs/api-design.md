@@ -158,7 +158,7 @@
 ### Delete Job Posting
 
 * Endpoint path: /jobdescription/{id}
-* Endpoint method: DELETE
+* Endpoint method:  
 
 * Headers:
   * Authorization: Bearer token
