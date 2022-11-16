@@ -99,11 +99,13 @@
 ### Create Job Posting
 
 * Endpoint path: /jobpost
-* Endpoint method: GET
+* Endpoint method: POST
 
 * Request shape (form):
-  * name: string
+  * position: string
   * location: string
+  * from_date: date
+  * to_date: date
   * tags: string
   * description: string
 

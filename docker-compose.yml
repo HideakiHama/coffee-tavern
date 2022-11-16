@@ -1,5 +1,5 @@
 volumes:
-  fastapi-example-data:
+  coffee_tavern-data:
     external: true
 services:
   api:
