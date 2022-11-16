@@ -3,7 +3,7 @@ from fastapi import FastAPI, Form, APIRouter
 router = APIRouter()
 
 
-@router.post("/login/")
+@router.post("/login")
 async def login(username: str = Form(), password: str = Form()):
     return {"username": username}
 
