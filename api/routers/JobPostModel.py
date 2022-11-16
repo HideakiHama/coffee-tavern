@@ -1,16 +1,17 @@
-from pydantic import BaseModel
+from fastapi import APIRouter, Depends, Response
 from typing import List, Optional, Union
-from datetime import date
-from queries.pool import pool
+from queries.JobForm_queries import (
+    JobPostForm,
+    JobPostFormIn,
+    Tags
+)
 
+router = APIRouter()
 
-class JobPostForm(BaseModel):
-    position: str
-    location: str
-    from_date: date
-    to_date: date
-    tag: str
-    description: Optional[str]
-
-class Tags(BaseModel):
-    tag: str
+# creating new job form
+@router.post('/create_form', response_model=JobPostForm)
+def create_job_form(
+    new_form: JobPostFormIn,
+    queries: UserQueries = Depends()
+):
+    return queries.create(new_form)
