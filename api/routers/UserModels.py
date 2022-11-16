@@ -1,24 +1,16 @@
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends
-from queries.user_queries import UserQueries
+from queries.user_queries import (
+    Error, 
+    User,
+    UserIn,
+    UserOut,
+    UserQueries,
+)
+
+
+# from queries.user_queries import UserQueries
 # from typing import Optional
-
-class User(BaseModel):
-    id : int
-    username : str
-    password : str
-    email : str
-
-
-class UserIn(BaseModel):
-    id : int
-    username : str
-    password : str
-    email : str
-
-
-class UserOut(BaseModel):
-    user: list[User]
 
 router = APIRouter()
 
