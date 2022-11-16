@@ -99,7 +99,7 @@
 ### Create Job Posting
 
 * Endpoint path: /jobpost
-* Endpoint method: GET
+* Endpoint method: POST
 
 * Request shape (form):
   * name: string
@@ -156,7 +156,7 @@
 ### Delete Job Posting
 
 * Endpoint path: /jobdescription/{id}
-* Endpoint method: DELETE
+* Endpoint method:  
 
 * Headers:
   * Authorization: Bearer token
