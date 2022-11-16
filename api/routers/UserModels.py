@@ -35,7 +35,9 @@ router = APIRouter()
 def get_user_by_id(id: int = 0):
     return User #idk if this should be user or User
 
-@router.post('/users', response_model=User)
+
+# creating new user
+@router.post('/users', response_model=User) 
 def create_user(
     new_user: UserIn,
     queries: UserQueries = Depends()
