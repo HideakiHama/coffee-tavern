@@ -23,7 +23,7 @@ router = APIRouter()
 
 @router.get('/users',response_model=UserOut)
 
-@router.get('/users{id}', response_model=User)
+@router.get('/users/{id}', response_model=User)
 def get_user_by_id(id: int = 0):
     return User #idk if this should be user or User
 
