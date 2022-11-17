@@ -98,7 +98,7 @@ class JobFormRepository:
         return JobPostFormOut(id=id, **old_data)
 
     def record_JobForm_out(self, record):
-        return VacationOut(
+        return JobPostFormOut(
             id=record[0],
             employer=record[1],
             position=record[2],
