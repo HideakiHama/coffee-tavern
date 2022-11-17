@@ -10,11 +10,6 @@ async def login(username: str = Form(), password: str = Form()):
 # @router.post('/createUser')
 # def create_user():
 
-@router.post('/jobPost')
-def create_job_post():
-    pass
-
-
 user_db = {
     'curtis': {'username': 'curtis', 'location': ' Alameda', 'age': '28' }
 }
