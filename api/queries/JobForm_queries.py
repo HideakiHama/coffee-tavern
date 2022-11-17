@@ -13,7 +13,7 @@ class JobPostFormIn(BaseModel):
     from_date: date
     to_date: date
     tag: str
-    description: str
+    description: Optional[str]
 
 #response shape
 class JobPostFormOut(BaseModel):
@@ -24,7 +24,7 @@ class JobPostFormOut(BaseModel):
     from_date: date
     to_date: date
     tag: str
-    description: str
+    description: Optional[str]
 
 class Tags(BaseModel):
     tag: str
@@ -69,12 +69,13 @@ class JobFormRepository:
                     # Run our INSERT statement
                     result = db.execute(
                         """
-                        INSERT INTO vacations
+                        INSERT INTO jobs
                             (employer, position, location, from_date, to_date, tags, description)
                         VALUES
                             (%s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
                         """,
+                        print("POST INSERT")
                         [
                             JobForm.employer,
                             JobForm.position,
@@ -85,10 +86,9 @@ class JobFormRepository:
                             JobForm.description
                         ]
                     )
+                    print("RESULT", result)
                     id = result.fetchone()[0]
-                    # Return new data
-                    # old_data = vacation.dict()
-                    # return VacationOut(id=id, **old_data)
+                    print("ID", id)
                     return self.Job_Post_in_to_out(id, JobForm)
         except Exception:
             return {"message": "Create did not work"}
@@ -98,7 +98,7 @@ class JobFormRepository:
         return JobPostFormOut(id=id, **old_data)
 
     def record_JobForm_out(self, record):
-        return VacationOut(
+        return JobPostFormOut(
             id=record[0],
             employer=record[1],
             position=record[2],
