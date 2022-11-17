@@ -1,7 +1,7 @@
 from pydantic import BaseModel
 from fastapi import APIRouter, Depends
 from queries.user_queries import (
-    Error, 
+    Error,
     User,
     UserIn,
     UserOut,
@@ -29,7 +29,7 @@ def get_user_by_id(id: int = 0):
 
 
 # creating new user
-@router.post('/users', response_model=User) 
+@router.post('/users', response_model=User)
 def create_user(
     new_user: UserIn,
     queries: UserQueries = Depends()
