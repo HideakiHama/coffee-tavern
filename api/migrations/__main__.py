@@ -36,3 +36,8 @@ if __name__ == "__main__":
     from asyncio import run
 
     run(migrate())
+
+_services.create_database()
+
+@app.post("/users/",response_models=_schemas.User)
+def create_user(user:_schemas.UserCreate, db: _orm.Session=_fastapi.Depends(_services.get_db)):
