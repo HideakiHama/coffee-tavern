@@ -60,7 +60,7 @@ class JobFormRepository:
             return {"message": "Could not get that JobForm"}
 
 
-    def create(self, JobForm: JobPostFormIn) -> Union[JobPostFormOut, Error]:
+    def create(self, JobForm: JobPostFormIn) -> Union[List[JobPostFormOut], Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -70,19 +70,18 @@ class JobFormRepository:
                     result = db.execute(
                         """
                         INSERT INTO jobs
-                            (employer, position, location, from_date, to_date, tags, description)
+                            (employer, position, location, from_date, to_date, tag, description)
                         VALUES
                             (%s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
                         """,
-                        print("POST INSERT")
                         [
                             JobForm.employer,
                             JobForm.position,
                             JobForm.location,
                             JobForm.from_date,
                             JobForm.to_date,
-                            JobForm.tags,
+                            JobForm.tag,
                             JobForm.description
                         ]
                     )

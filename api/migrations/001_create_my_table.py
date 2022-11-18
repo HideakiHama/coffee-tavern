@@ -9,7 +9,7 @@ steps = [
             location varchar(1000) NOT NULL,
             from_date DATE NOT NULL,
             to_date DATE NOT NULL,
-            tags varchar(1000) NOT NULL
+            tag varchar(1000) NOT NULL,
             description TEXT
         );
         """,
