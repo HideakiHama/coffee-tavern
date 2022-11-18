@@ -4,3 +4,5 @@ We worked together on JobForm queries and router. They were able to get the endp
 Our understanding of SQL and FastApi have gotten better. Things started to click in our brains. 
 We also Watched God Reload. --> See slack for image of god reloading.
  You may watch![Alt text](WatchGodReload.png)
+
+Thursday Nov - 17 2022
