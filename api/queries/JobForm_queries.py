@@ -6,6 +6,13 @@ from queries.pool import pool
 
 class Error(BaseModel):
     message: str
+
+class JobPostForm(BaseModel):
+    id: int
+    employer: str
+    position: str
+    location: str
+    tag: str
 class JobPostFormIn(BaseModel):
     employer: str
     position: str
@@ -42,16 +49,18 @@ class JobFormRepository:
                         SELECT id,
                             employer,
                             position,
+                            location,
                             from_date,
                             to_date,
                             tag,
                             description
-                        FROM JobPostModel
+                        FROM jobs
                         WHERE id = %s
                         """,
                         [JobForm_id]
                     )
                     record = result.fetchone()
+                    print(record)
                     if record is None:
                         return None
                     return self.record_JobForm_out(record)
@@ -59,6 +68,26 @@ class JobFormRepository:
             print(e)
             return {"message": "Could not get that JobForm"}
 
+    def get_all(self) -> Union[List[JobPostForm], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.excute(
+                        """
+                        SELECT id, employer, position, location, tag
+                        FROM jobs
+                        ORDER BY id
+                        """
+                    )
+                    print("YES")
+                    resultList = list(result)
+                    print("RESULTLIST", resultList)
+                    return [
+                        self.record_JobForm_out(record)
+                        for record in resultList
+                    ]
+        except Exception as e:
+            return {"message": "Could not get job form"}
 
     def create(self, JobForm: JobPostFormIn) -> Union[List[JobPostFormOut], Error]:
         try:
