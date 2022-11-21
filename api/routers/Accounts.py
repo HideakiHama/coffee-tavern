@@ -12,7 +12,7 @@ from authenticator import authenticator
 
 from pydantic import BaseModel
 
-from queries.accounts import (
+from queries.Accounts import (
     AccountIn,
     AccountOut,
     AccountRepo,

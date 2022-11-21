@@ -14,7 +14,11 @@ router = APIRouter()
 
 ## POST ##
 # creating new employer feedback form #
-@router.post("/employer-feedback-form/", response_model=EmployerFeedbackFormOut)
+@router.post(
+    "/employer-feedback-form/",
+    tags=["Feedback"],
+    response_model=EmployerFeedbackFormOut,
+)
 def create_employer_feedback_form(
     new_form: EmployerFeedbackFormIn,
     repo: EmployerFeedbackRepository = Depends(),
@@ -26,6 +30,7 @@ def create_employer_feedback_form(
 # getting detail feedback from employer
 @router.get(
     "/employer-feedback-form/{EmployerFeedback_id}",
+    tags=["Feedback"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
 def get_one_employer_feedback_form(
@@ -42,7 +47,9 @@ def get_one_employer_feedback_form(
 ## GET ##
 # getting list of feedback from employers
 @router.get(
-    "/employer-feedbacks/", response_model=Union[List[EmployerFeedbackFormOut], Error]
+    "/employer-feedbacks/",
+    tags=["Feedback"],
+    response_model=Union[List[EmployerFeedbackFormOut], Error],
 )
 def get_all(
     repo: EmployerFeedbackRepository = Depends(),
@@ -54,6 +61,7 @@ def get_all(
 # Edit feedback #
 @router.put(
     "/employer-feedback-form/{EmployerFeedback_id}",
+    tags=["Feedback"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
 def Edit_Employer_Feedback(
