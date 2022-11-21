@@ -6,6 +6,8 @@ from queries.pool import pool
 
 class Error(BaseModel):
     message: str
+
+
 class JobPostFormIn(BaseModel):
     employer: str
     position: str
@@ -15,7 +17,8 @@ class JobPostFormIn(BaseModel):
     tag: str
     description: Optional[str]
 
-#response shape
+
+# response shape
 class JobPostFormOut(BaseModel):
     id: int
     employer: str
@@ -26,8 +29,10 @@ class JobPostFormOut(BaseModel):
     tag: str
     description: Optional[str]
 
+
 class Tags(BaseModel):
     tag: str
+
 
 class JobFormRepository:
     def get_one(self, JobForm_id: int) -> Optional[JobPostFormOut]:
@@ -49,7 +54,7 @@ class JobFormRepository:
                         FROM JobPostModel
                         WHERE id = %s
                         """,
-                        [JobForm_id]
+                        [JobForm_id],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -58,7 +63,6 @@ class JobFormRepository:
         except Exception as e:
             print(e)
             return {"message": "Could not get that JobForm"}
-
 
     def create(self, JobForm: JobPostFormIn) -> Union[List[JobPostFormOut], Error]:
         try:
@@ -82,12 +86,10 @@ class JobFormRepository:
                             JobForm.from_date,
                             JobForm.to_date,
                             JobForm.tag,
-                            JobForm.description
-                        ]
+                            JobForm.description,
+                        ],
                     )
-                    print("RESULT", result)
                     id = result.fetchone()[0]
-                    print("ID", id)
                     return self.Job_Post_in_to_out(id, JobForm)
         except Exception:
             return {"message": "Create did not work"}
@@ -104,5 +106,5 @@ class JobFormRepository:
             from_date=record[3],
             to_date=record[4],
             tag=record[5],
-            description=record[6]
+            description=record[6],
         )

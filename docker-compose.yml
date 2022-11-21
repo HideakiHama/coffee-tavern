@@ -10,6 +10,7 @@ services:
       DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
       WAIT_HOSTS: db:5432
       PORT: 8000
+      SIGNING_KEY: aki
     ports:
       - "8000:8000"
     volumes:
