@@ -32,17 +32,18 @@ class AccountRepo:
                   FROM accounts
                   WHERE email = %s
                   """,
-                    [email],  # email variable get replace with %s
+                    [email],
                 )
-        record = result.fetchone()
-        if record is None:
-            return None
-        return Account(
-            id=record[0],
-            email=record[1],
-            hashed_password=record[2],
-            user_name=record[3],
-        )
+
+                record = result.fetchone()
+                if record is None:
+                    return None
+                return Account(
+                    id=record[0],
+                    email=record[1],
+                    hashed_password=record[2],
+                    user_name=record[3],
+                )
 
     def create(self, account: AccountIn, hashed_password: str) -> Account:
         with pool.connection() as conn:
@@ -65,6 +66,6 @@ class AccountRepo:
                 return Account(
                     id=id,
                     email=account.email,
-                    user_name=account.user_name,
                     hashed_password=hashed_password,
+                    user_name=account.user_name,
                 )

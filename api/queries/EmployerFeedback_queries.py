@@ -79,9 +79,7 @@ class EmployerFeedbackRepository:
                         """,
                         [FeedbackForm.employee_name, FeedbackForm.description],
                     )
-                    print("RESULT", result)
                     id = result.fetchone()[0]
-                    print("ID", id)
                     return self.feedback_post_in_to_out(id, FeedbackForm)
         except Exception:
             return {"message": "Couldn't create feedback"}
