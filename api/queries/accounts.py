@@ -35,9 +35,7 @@ class AccountRepo:
                     """,
                     [email]  # email variable get replace with %s
                 )
-                # print("RESULT", result)
                 record = result.fetchone()
-                # print("RECORD", record)
                 if record is None:
                     return None
                 return Account(

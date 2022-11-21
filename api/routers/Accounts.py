@@ -21,6 +21,7 @@ from queries.accounts import (
 
 class AccountForm(BaseModel):
     username: str
+    username: str
     password: str
 
 
@@ -45,11 +46,7 @@ async def create_account(
     hashed_password = authenticator.hash_password(info.password)
 
     account = repo.create(info, hashed_password)
-    # print("ACCOUNT", account)
-    form = AccountForm(
-        username=info.email, password=info.password
-    )
-    # print("FORM", form)
+    form = AccountForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     print("TOKEN", 1)
     return AccountToken(account=account, **token.dict())
