@@ -63,7 +63,6 @@ class JobFormRepository:
                         [JobForm_id],
                     )
                     record = result.fetchone()
-                    print(record)
                     if record is None:
                         return None
                     return self.record_JobForm_out(record)
@@ -71,6 +70,25 @@ class JobFormRepository:
             print(e)
             return {"message": "Could not get that JobForm"}
 
+    def get_all(self) -> Union[List[JobPostForm], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id, employer, position, location, tag
+                        FROM jobs
+                        ORDER BY id
+                        """
+                    )
+                    resultList = list(result)
+                return [
+                    self.record_JobForm_all(record)
+                    for record in resultList
+                ]
+
+        except Exception as e:
+            return {"message": "Could not get any job form today"}
 
     def create(self, JobForm: JobPostFormIn) -> Union[List[JobPostFormOut], Error]:
         try:
@@ -102,6 +120,54 @@ class JobFormRepository:
         except Exception:
             return {"message": "Create did not work"}
 
+    def update(self, Form_id: int, UpdatedJobForm: JobPostFormIn) -> Union[JobPostFormOut, Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        UPDATE jobs
+                        SET employer = %s,
+                        position = %s,
+                        location = %s,
+                        from_date = %s,
+                        to_date = %s,
+                        tag = %s,
+                        description = %s
+                        WHERE id = %s
+                        """,
+                        [
+                            UpdatedJobForm.employer,
+                            UpdatedJobForm.position,
+                            UpdatedJobForm.location,
+                            UpdatedJobForm.from_date,
+                            UpdatedJobForm.to_date,
+                            UpdatedJobForm.tag,
+                            UpdatedJobForm.description,
+                            Form_id
+                        ]
+                    )
+                    print("POOF")
+                    return self.Job_Post_in_to_out(Form_id, UpdatedJobForm)
+        except Exception:
+            return {"message": "Could not update the Job Form"}
+
+    def delete(self, Form_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM jobs
+                        WHERE id = %s
+                        """,
+                        [Form_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
     def Job_Post_in_to_out(self, id: int, JobForm: JobPostFormIn):
         old_data = JobForm.dict()
         return JobPostFormOut(id=id, **old_data)
@@ -111,8 +177,18 @@ class JobFormRepository:
             id=record[0],
             employer=record[1],
             position=record[2],
-            from_date=record[3],
-            to_date=record[4],
-            tag=record[5],
-            description=record[6],
+            location=record[3],
+            from_date=record[4],
+            to_date=record[5],
+            tag=record[6],
+            description=record[7],
+        )
+
+    def record_JobForm_all(self, record):
+        return JobPostForm(
+            id=record[0],
+            employer=record[1],
+            position=record[2],
+            location=record[3],
+            tag=record[4]
         )

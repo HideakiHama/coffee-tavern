@@ -89,7 +89,6 @@ class EmployerFeedbackRepository:
         self, EmployerFeedback_id: int, FeedbackForm: EmployerFeedbackFormIn
     ) -> Union[EmployerFeedbackFormOut, Error]:
         try:
-
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
