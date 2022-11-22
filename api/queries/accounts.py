@@ -62,9 +62,7 @@ class AccountRepo:
                         account.user_name,
                     ],
                 )
-                print("RESULT", result)
                 id = result.fetchone()[0]
-                # print("ID", id)
                 return Account(
                     id=id,
                     email=account.email,

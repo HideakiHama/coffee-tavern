@@ -147,7 +147,6 @@ class JobFormRepository:
                             Form_id
                         ]
                     )
-                    print("POOF")
                     return self.Job_Post_in_to_out(Form_id, UpdatedJobForm)
         except Exception:
             return {"message": "Could not update the Job Form"}
