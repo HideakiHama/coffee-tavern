@@ -1,6 +1,7 @@
 from pydantic import BaseModel
 from typing import Optional, List, Union
 from queries.pool import pool
+from datetime import date
 
 
 class Error(BaseModel):
@@ -9,14 +10,22 @@ class Error(BaseModel):
 
 class EmployeeFeedbackFormIn(BaseModel):
     employer_name: str
+    date: date
     description: str
 
 
 class EmployeeFeedbackFormOut(BaseModel):
     id: int
     employer_name: str
+    date: date
     description: str
 
+
+# SELECT id
+# , employer_name
+# , description
+# FROM employee_form
+# WHERE id = %s
 
 # Employer Feedback of Employee
 class EmployeeFeedbackRepository:
@@ -27,11 +36,12 @@ class EmployeeFeedbackRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id
-                        , employer_name
-                        , description
-                        FROM employee_form
-                        WHERE id = %s
+                            SELECT id
+                            , employer_name
+                            , date
+                            , description
+                            FROM employee_form
+                            WHERE id = %s
                         """,
                         [
                             EmployeeFeedback_id,
@@ -51,7 +61,7 @@ class EmployeeFeedbackRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, employer_name, description
+                        SELECT id, employer_name, date, description
                         FROM employee_form
                         ORDER BY id
                         """
@@ -72,12 +82,16 @@ class EmployeeFeedbackRepository:
                     result = db.execute(
                         """
                         INSERT INTO employee_form
-                            (employer_name, description)
+                            (employer_name, date, description)
                         VALUES
-                            (%s, %s)
+                            (%s, %s, %s)
                         RETURNING id;
                         """,
-                        [FeedbackForm.employer_name, FeedbackForm.description],
+                        [
+                            FeedbackForm.employer_name,
+                            FeedbackForm.date,
+                            FeedbackForm.description,
+                        ],
                     )
                     id = result.fetchone()[0]
                     return self.feedback_post_in_to_out(id, FeedbackForm)
@@ -89,26 +103,44 @@ class EmployeeFeedbackRepository:
         self, EmployeeFeedback_id: int, FeedbackForm: EmployeeFeedbackFormIn
     ) -> Union[EmployeeFeedbackFormOut, Error]:
         try:
-
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
                         UPDATE employee_form
                         SET employer_name = %s
+                            , date = %s
                             , description = %s
-                        WHEN id = %s
+                        WHERE id = %s
                         """,
                         [
                             FeedbackForm.employer_name,
+                            FeedbackForm.date,
                             FeedbackForm.description,
-                            FeedbackForm.id,
+                            EmployeeFeedback_id,
                         ],
                     )
-                    old_data = FeedbackForm.dict()
-                    return EmployeeFeedbackFormOut(EmployeeFeedback_id, **old_data)
+                    return self.feedback_post_in_to_out(
+                        EmployeeFeedback_id, FeedbackForm
+                    )
         except Exception:
             return {"message": "Could not update the Feedback"}
+
+    ## DELETE ##
+    def delete(self, EmployeeFeedback_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM employee_form
+                        WHERE id = %s
+                        """,
+                        [EmployeeFeedback_id],
+                    )
+                    return True
+        except Exception:
+            return False
 
     def feedback_post_in_to_out(self, id: int, FeedbackForm: EmployeeFeedbackFormIn):
         old_data = FeedbackForm.dict()
@@ -117,5 +149,5 @@ class EmployeeFeedbackRepository:
     # refactored function for GET#
     def record_to_employee_feedback_out(self, record):
         return EmployeeFeedbackFormOut(
-            id=record[0], employer_name=record[1], description=record[2]
+            id=record[0], employer_name=record[1], date=record[2], description=record[3]
         )

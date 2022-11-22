@@ -16,7 +16,7 @@ router = APIRouter()
 # creating new employee feedback form #
 @router.post(
     "/employee-feedback-form/",
-    tags=["Feedback"],
+    tags=["Employee Feedback"],
     response_model=EmployeeFeedbackFormOut,
 )
 def create_employee_feedback_form(
@@ -30,7 +30,7 @@ def create_employee_feedback_form(
 # getting detail feedback from employee
 @router.get(
     "/employee-feedback-form/{EmployeeFeedback_id}",
-    tags=["Feedback"],
+    tags=["Employee Feedback"],
     response_model=Union[EmployeeFeedbackFormOut, Error],
 )
 def get_one_employee_feedback_form(
@@ -48,7 +48,7 @@ def get_one_employee_feedback_form(
 # getting list of feedback from employees
 @router.get(
     "/employee-feedbacks/",
-    tags=["Feedback"],
+    tags=["Employee Feedback"],
     response_model=Union[List[EmployeeFeedbackFormOut], Error],
 )
 def get_all(
@@ -57,11 +57,11 @@ def get_all(
     return repo.get_all()
 
 
-## POST ##
+## PUT ##
 # Edit feedback #
 @router.put(
     "/employee-feedback-form/{EmployeeFeedback_id}",
-    tags=["Feedback"],
+    tags=["Employee Feedback"],
     response_model=Union[EmployeeFeedbackFormOut, Error],
 )
 def Edit_Employee_Feedback(
@@ -70,3 +70,17 @@ def Edit_Employee_Feedback(
     repo: EmployeeFeedbackRepository = Depends(),
 ) -> Union[Error, EmployeeFeedbackFormOut]:
     return repo.update(EmployeeFeedback_id, FeedbackForm)
+
+
+## DELETE ##
+# Delete feedback #
+@router.delete(
+    "/employee-feedback-form/{EmployeeFeedback_id}",
+    tags=["Employee Feedback"],
+    response_model=bool,
+)
+def Delete_Employee_Feedback(
+    EmployeeFeedback_id: int,
+    repo: EmployeeFeedbackRepository = Depends(),
+) -> bool:
+    return repo.delete(EmployeeFeedback_id)
