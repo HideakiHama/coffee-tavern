@@ -1,4 +1,4 @@
-Coffee Tavern 
+Coffee Tavern
 
 Team:
 Person 1 - Hideaki Hama
@@ -13,7 +13,7 @@ Stack:
     - Python
     - Docker
     - React
-    
+
 
 Run these commands in terminal to set up the application
  docker volume create coffee_tavern-data
