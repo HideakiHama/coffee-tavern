@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List, Union, Literal
+from typing import Optional, List, Union
 from queries.pool import pool
 
 class Error(BaseModel):
@@ -49,7 +49,7 @@ class AccountRepo:
             with conn.cursor() as db:
                 result = db.execute(
                     """
-                    SELECT id, email, hashed_password, user_name, role
+                    SELECT id, email, hashed_password, user_name
                     FROM accounts
                     WHERE email = %s
                     """,
@@ -63,7 +63,6 @@ class AccountRepo:
                     email=record[1],
                     hashed_password=record[2],
                     user_name=record[3],
-                    role=record[4]
                 )
 
     def create(self, account: AccountIn, hashed_password: str) -> Account:
@@ -72,25 +71,24 @@ class AccountRepo:
                 result = db.execute(
                     """
                     INSERT INTO accounts
-                        (email, hashed_password, user_name, role)
+                        (email, hashed_password, user_name)
                     VALUES
-                        (%s, %s, %s, %s)
+                        (%s, %s, %s)
                     RETURNING id;
                     """,
                     [
                         account.email,
                         hashed_password,
                         account.user_name,
-                        account.role
                     ],
                 )
+
                 id = result.fetchone()[0]
                 return Account(
                     id=id,
                     email=account.email,
                     hashed_password=hashed_password,
-                    user_name=account.user_name,
-                    role=account.role
+                    user_name=account.user_name
                 )
 
     def delete(self, account_id: int) -> bool:
