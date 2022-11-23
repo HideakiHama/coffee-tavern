@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List, Union
+from typing import Optional, List, Union, Literal
 from queries.pool import pool
 
 class Error(BaseModel):
