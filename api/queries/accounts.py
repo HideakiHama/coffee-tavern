@@ -1,8 +1,9 @@
 from pydantic import BaseModel
-from typing import Optional, List, Union, Literal
+from typing import Optional, List, Union
 from queries.pool import pool
 
-
+class Error(BaseModel):
+    message: str
 class Account(BaseModel):
     id: int
     email: str
@@ -10,12 +11,11 @@ class Account(BaseModel):
     user_name: str
     role: str
 
-
 class AccountIn(BaseModel):
     email: str
     password: str
     user_name: str
-    role: Literal["Employer", "Employee"]
+    role: Literal["Employee", "Employer"]
 
 
 class AccountOut(BaseModel):
@@ -24,18 +24,36 @@ class AccountOut(BaseModel):
     user_name: str
     role: str
 
-
 class AccountRepo:
+    def get_all(self) -> Union[List[AccountOut], Error]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id, email, user_name, role
+                        FROM accounts
+                        ORDER BY id
+                        """
+                    )
+                    resultList = list(result)
+                return [
+                    self.account_all(record)
+                    for record in resultList
+                ]
+        except Exception as e:
+            return {"message": "Could not get account"}
+
     def get(self, email: str) -> Optional[Account]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
-                  SELECT id, email, hashed_password, user_name, role
-                  FROM accounts
-                  WHERE email = %s
-                  """,
-                    [email],
+                    SELECT id, email, hashed_password, user_name
+                    FROM accounts
+                    WHERE email = %s
+                    """,
+                    [email]  # email variable get replace with %s
                 )
                 record = result.fetchone()
                 if record is None:
@@ -45,7 +63,6 @@ class AccountRepo:
                     email=record[1],
                     hashed_password=record[2],
                     user_name=record[3],
-                    role=record[4],
                 )
 
     def create(self, account: AccountIn, hashed_password: str) -> Account:
@@ -54,16 +71,15 @@ class AccountRepo:
                 result = db.execute(
                     """
                     INSERT INTO accounts
-                        (email, hashed_password, user_name, role)
+                        (email, hashed_password, user_name)
                     VALUES
-                        (%s, %s, %s, %s)
+                        (%s, %s, %s)
                     RETURNING id;
                     """,
                     [
                         account.email,
                         hashed_password,
                         account.user_name,
-                        account.role,
                     ],
                 )
 
@@ -72,5 +88,29 @@ class AccountRepo:
                     id=id,
                     email=account.email,
                     hashed_password=hashed_password,
-                    role=account.role,
+                    user_name=account.user_name
                 )
+
+    def delete(self, account_id: int) -> bool:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    db.execute(
+                        """
+                        DELETE FROM accounts
+                        WHERE id = %s
+                        """,
+                        [account_id]
+                    )
+                    return True
+        except Exception as e:
+            print(e)
+            return False
+
+    def account_all(self, record):
+        return AccountOut(
+            id=record[0],
+            email=record[1],
+            user_name=record[2],
+            role=record[3]
+        )

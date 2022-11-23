@@ -11,3 +11,9 @@ We got one of the FASTAPI endpoint to work properly. Previously was running into
 
 Friday Nov - 18 2022
 Our team got login authentication to work.
+
+Monday Nov - 21 2022
+Did all the CRUD for job posting
+
+Tuesday Nov 22, 2022
+Pair prgoram with aki on status level of account
