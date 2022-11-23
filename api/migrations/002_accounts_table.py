@@ -21,7 +21,7 @@ steps = [
         ## Add profile_picture
         
         """
-        CREATE TABLE user_info (
+        CREATE TABLE employee_info (
             career_title VARCHAR(255),
             location VARCHAR(255),
             education VARCHAR(255),
@@ -31,13 +31,13 @@ steps = [
         """,
         ## Drop the table
         """
-        DROP TABLE user_info;
+        DROP TABLE employee_info;
         """,
     ],
     [
         ## Create the table
         """
-        CREATE TABLE user_work_history (
+        CREATE TABLE employee_work_history (
             company VARCHAR(255),
             from_year SMALLINT,
             to_year SMALLINT,
@@ -48,7 +48,7 @@ steps = [
         """,
         ## Drop the table
         """
-        DROP TABLE user_work_history;
+        DROP TABLE employee_work_history;
         """,
     ],
 ]
