@@ -8,12 +8,14 @@ class Account(BaseModel):
     email: str
     hashed_password: str
     user_name: str
+    # roles: str  # have to still modify
 
 
 class AccountIn(BaseModel):
     email: str
     password: str
     user_name: str
+    # roles: str  # have to still modify
 
 
 class AccountOut(BaseModel):
@@ -28,13 +30,12 @@ class AccountRepo:
             with conn.cursor() as db:
                 result = db.execute(
                     """
-                  SELECT id, email, hashed_password, user_name
-                  FROM accounts
-                  WHERE email = %s
-                  """,
-                    [email],
+                    SELECT id, email, hashed_password, user_name
+                    FROM accounts
+                    WHERE email = %s
+                    """,
+                    [email],  # email variable get replace with %s
                 )
-
                 record = result.fetchone()
                 if record is None:
                     return None

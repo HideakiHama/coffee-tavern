@@ -47,4 +47,5 @@ async def create_account(
     account = repo.create(info, hashed_password)
     form = AccountForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, repo)
+    print("TOKEN", 1)
     return AccountToken(account=account, **token.dict())

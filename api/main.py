@@ -5,6 +5,7 @@ from routers import (
     JobPostForm,
     EmployerFeedback,
     EmployeeFeedback,
+    UploadResume,
 )
 from authenticator import authenticator
 
@@ -17,3 +18,4 @@ app.include_router(JobPostForm.router),
 app.include_router(EmployerFeedback.router)
 app.include_router(EmployeeFeedback.router)
 app.include_router(authenticator.router)  # problem to check
+app.include_router(UploadResume.router)
