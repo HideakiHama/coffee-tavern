@@ -18,9 +18,20 @@ from queries.accounts import (
     AccountRepo,
 )
 
+from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
+
+# import jwt
+# import secrets
+# from decouple import config
+
+# JWT_SECRET = config("secret")
+# JWT_ALGORITHM = config("algorithm")
+
+# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
+# print("####", oauth2_scheme)
+
 
 class AccountForm(BaseModel):
-    username: str
     username: str
     password: str
 
