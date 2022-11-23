@@ -17,10 +17,11 @@ class EmployeeInfoOut(BaseModel):
     location: Optional[str]
     education: Optional[str]
     about: Optional[str]
-    # account_id: int       --> current user id
+    account_id: int
     
 class EmployeeInfoRepo:
-    def create(self, info: EmployeeInfoIn) -> Union[List[EmployeeInfoOut], Error]:
+    def create(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
+        print("::::::", info)
         try:
             # connect the database
             with pool.connection() as conn:
@@ -30,15 +31,16 @@ class EmployeeInfoRepo:
                     result = db.execute(
                         """
                         INSERT INTO employee_info
-                            (career_title, location, education, about)
+                            (career_title, location, education, about, account_id)
                         VALUES
-                            (%s, %s, %s, %s);
+                            (%s, %s, %s, %s, %s);
                         """,
                         [
                             info.career_title,
                             info.location,
                             info.education,
                             info.about,
+                            account_id
                         ],
                     )
                     # get current user id

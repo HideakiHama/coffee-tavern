@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends
-from queries.EmployeeInfo_queries import EmployeeInfoIn, EmployeeInfoRepo
+from queries.EmployeeInfo_queries import EmployeeInfoIn, EmployeeInfoRepo, EmployeeInfoOut
 # from queries.JobForm_queries import (
 #     JobPostFormIn,
 #     JobPostFormOut,
@@ -11,9 +11,10 @@ from queries.EmployeeInfo_queries import EmployeeInfoIn, EmployeeInfoRepo
 
 router = APIRouter()
 
-@router.post("/users/{id}/employee_info")
+@router.post("/users/{account_id}/employee_info")
 def create_employee_info(
     employee_info: EmployeeInfoIn,
-    repo: EmployeeInfoRepo = Depends()
-):
-    return repo.create(employee_info)
+    account_id: int,
+    repo: EmployeeInfoRepo = Depends(),
+) -> EmployeeInfoOut:
+    return repo.create(employee_info, account_id)
