@@ -4,15 +4,13 @@ import shutil
 router = APIRouter()
 
 @router.post("/resume/")
-async def create_upload_resume(file: UploadFile | None = None):
+async def create_upload_resume(file: UploadFile = File(...)):
     if not file:
         return {"message": "No upload file sent"}
     else:
         return {"filename": file.filename}
 
-# @router.post("/resume/")
-# async def upload_resume(files: UploadFile = File(...)):
-#     with open(f'{file.filename}')
+
 
 ## This is for adding multiple files -- maybe use for profile picture
 @router.post("/img/")
