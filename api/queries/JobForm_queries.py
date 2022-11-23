@@ -7,12 +7,16 @@ from queries.pool import pool
 class Error(BaseModel):
     message: str
 
+<<<<<<< api/queries/JobForm_queries.py
+
+=======
 class JobPostForm(BaseModel):
     id: int
     employer: str
     position: str
     location: str
     tag: str
+>>>>>>> api/queries/JobForm_queries.py
 class JobPostFormIn(BaseModel):
     employer: str
     position: str
@@ -67,9 +71,10 @@ class JobFormRepository:
                         return None
                     return self.record_JobForm_out(record)
         except Exception as e:
-            print(e)
             return {"message": "Could not get that JobForm"}
 
+<<<<<<< api/queries/JobForm_queries.py
+=======
     def get_all(self) -> Union[List[JobPostForm], Error]:
         try:
             with pool.connection() as conn:
@@ -90,6 +95,7 @@ class JobFormRepository:
         except Exception as e:
             return {"message": "Could not get any job form today"}
 
+>>>>>>> api/queries/JobForm_queries.py
     def create(self, JobForm: JobPostFormIn) -> Union[List[JobPostFormOut], Error]:
         try:
             # connect the database
@@ -176,6 +182,12 @@ class JobFormRepository:
             id=record[0],
             employer=record[1],
             position=record[2],
+<<<<<<< api/queries/JobForm_queries.py
+            from_date=record[3],
+            to_date=record[4],
+            tag=record[5],
+            description=record[6],
+=======
             location=record[3],
             from_date=record[4],
             to_date=record[5],
@@ -190,4 +202,5 @@ class JobFormRepository:
             position=record[2],
             location=record[3],
             tag=record[4]
+>>>>>>> api/queries/JobForm_queries.py
         )
