@@ -11,6 +11,7 @@ class EmployeeInfoIn(BaseModel):
     location: Optional[str]
     education: Optional[str]
     about: Optional[str]
+    account_id: int
 
 class EmployeeInfoOut(BaseModel):
     career_title: Optional[str]
@@ -18,7 +19,7 @@ class EmployeeInfoOut(BaseModel):
     education: Optional[str]
     about: Optional[str]
     account_id: int
-    
+
 class EmployeeInfoRepo:
     
     def create(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
@@ -34,6 +35,7 @@ class EmployeeInfoRepo:
                             (career_title, location, education, about, account_id)
                         VALUES
                             (%s, %s, %s, %s, %s);
+                        RETURNING id;
                         """,
                         [
                             info.career_title,
