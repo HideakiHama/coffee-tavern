@@ -3,7 +3,7 @@ from queries.EmployeeInfo_queries import EmployeeInfoIn, EmployeeInfoRepo, Emplo
 
 router = APIRouter()
 
-@router.post("/users/{account_id}")
+@router.post("/users/{account_id}", tags=["User Info"])
 def create_employee_info(
     employee_info: EmployeeInfoIn,
     account_id: int,
@@ -11,7 +11,7 @@ def create_employee_info(
 ) -> EmployeeInfoOut:
     return repo.create(employee_info, account_id)
 
-@router.put("/users/{account_id}")
+@router.put("/users/{account_id}", tags=["User Info"])
 def update_employee_info(
     employee_info: EmployeeInfoIn,
     account_id: int,
