@@ -12,12 +12,7 @@ from authenticator import authenticator
 
 from pydantic import BaseModel
 
-from queries.accounts import (
-    AccountIn,
-    AccountOut,
-    AccountRepo,
-    Error
-)
+from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
@@ -48,7 +43,9 @@ class HttpError(BaseModel):
 router = APIRouter()
 
 
-@router.post("/api/accounts", tags=["Accounts"], response_model=AccountToken | HttpError)
+@router.post(
+    "/api/accounts", tags=["Accounts"], response_model=AccountToken | HttpError
+)
 async def create_account(
     info: AccountIn,
     request: Request,
@@ -60,25 +57,24 @@ async def create_account(
     account = repo.create(info, hashed_password)
     form = AccountForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, repo)
-    print("TOKEN", 1)
-    # if account.role == "Employee":
-    #     print("Employeeee")
-    # elif account.role == "Employer":
-    #     print("Employerrrr")
     return AccountToken(account=account, **token.dict())
 
 
-@router.get('/api/get_account/{account_email}', tags=["Accounts"])
-async def get_one_account(account_email:str, response:Response, repo:AccountRepo = Depends()) -> AccountOut:
+@router.get("/api/get_account/{account_email}", tags=["Accounts"])
+async def get_one_account(
+    account_email: str, response: Response, repo: AccountRepo = Depends()
+) -> AccountOut:
     AccountDetail = repo.get(account_email)
     if AccountDetail is None:
         response.status_code = 404
     return AccountDetail
 
-@router.get('/api/get_all_account', tags=["Accounts"])
-async def get_all_account(repo:AccountRepo = Depends()):
+
+@router.get("/api/get_all_account", tags=["Accounts"])
+async def get_all_account(repo: AccountRepo = Depends()):
     return repo.get_all()
 
-@router.delete('/api/delete_account', tags=["Accounts"])
+
+@router.delete("/api/delete_account", tags=["Accounts"])
 async def delete_account(account_id: int, repo: AccountRepo = Depends()) -> bool:
     return repo.delete(account_id)

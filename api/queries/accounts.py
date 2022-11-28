@@ -24,8 +24,9 @@ class AccountOut(BaseModel):
     user_name: str
     role: str
 
+
 class AccountRepo:
-    def get_all(self) -> Union[List[AccountOut], Error]:
+    def get_all(self) -> List[AccountOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -37,10 +38,7 @@ class AccountRepo:
                         """
                     )
                     resultList = list(result)
-                return [
-                    self.account_all(record)
-                    for record in resultList
-                ]
+                return [self.account_all(record) for record in resultList]
         except Exception as e:
             return {"message": "Could not get account"}
 
@@ -53,7 +51,7 @@ class AccountRepo:
                     FROM accounts
                     WHERE email = %s
                     """,
-                    [email]  # email variable get replace with %s
+                    [email],  # email variable get replace with %s
                 )
                 record = result.fetchone()
                 if record is None:
@@ -63,7 +61,7 @@ class AccountRepo:
                     email=record[1],
                     hashed_password=record[2],
                     user_name=record[3],
-                    role=record[4]
+                    role=record[4],
                 )
 
     def create(self, account: AccountIn, hashed_password: str) -> Account:
@@ -77,12 +75,7 @@ class AccountRepo:
                         (%s, %s, %s, %s)
                     RETURNING id;
                     """,
-                    [
-                        account.email,
-                        hashed_password,
-                        account.user_name,
-                        account.role
-                    ],
+                    [account.email, hashed_password, account.user_name, account.role],
                 )
 
                 id = result.fetchone()[0]
@@ -91,7 +84,7 @@ class AccountRepo:
                     email=account.email,
                     hashed_password=hashed_password,
                     user_name=account.user_name,
-                    role=account.role
+                    role=account.role,
                 )
 
     def delete(self, account_id: int) -> bool:
@@ -103,7 +96,7 @@ class AccountRepo:
                         DELETE FROM accounts
                         WHERE id = %s
                         """,
-                        [account_id]
+                        [account_id],
                     )
                     return True
         except Exception as e:
@@ -112,8 +105,5 @@ class AccountRepo:
 
     def account_all(self, record):
         return AccountOut(
-            id=record[0],
-            email=record[1],
-            user_name=record[2],
-            role=record[3]
+            id=record[0], email=record[1], user_name=record[2], role=record[3]
         )

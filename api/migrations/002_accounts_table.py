@@ -8,7 +8,6 @@ steps = [
             hashed_password VARCHAR (255) NOT NULL,
             user_name VARCHAR(255) NOT NULL,
             role VARCHAR(10) NOT NULL
-
         );
         """,
         ## Drop the table
@@ -18,9 +17,7 @@ steps = [
     ],
     [
         ## Create the table
-        
         ## Add profile_picture
-        
         """
         CREATE TABLE employee_info (
             career_title VARCHAR(255),

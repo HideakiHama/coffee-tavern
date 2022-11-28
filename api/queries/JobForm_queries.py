@@ -7,12 +7,15 @@ from queries.pool import pool
 class Error(BaseModel):
     message: str
 
+
 class JobPostForm(BaseModel):
     id: int
     employer: str
     position: str
     location: str
     tag: str
+
+
 class JobPostFormIn(BaseModel):
     employer: str
     position: str
@@ -81,10 +84,7 @@ class JobFormRepository:
                         """
                     )
                     resultList = list(result)
-                return [
-                    self.record_JobForm_all(record)
-                    for record in resultList
-                ]
+                return [self.record_JobForm_all(record) for record in resultList]
 
         except Exception as e:
             return {"message": "Could not get any job form today"}
@@ -119,7 +119,9 @@ class JobFormRepository:
         except Exception:
             return {"message": "Create did not work"}
 
-    def update(self, Form_id: int, UpdatedJobForm: JobPostFormIn) -> Union[JobPostFormOut, Error]:
+    def update(
+        self, Form_id: int, UpdatedJobForm: JobPostFormIn
+    ) -> Union[JobPostFormOut, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -143,8 +145,8 @@ class JobFormRepository:
                             UpdatedJobForm.to_date,
                             UpdatedJobForm.tag,
                             UpdatedJobForm.description,
-                            Form_id
-                        ]
+                            Form_id,
+                        ],
                     )
                     return self.Job_Post_in_to_out(Form_id, UpdatedJobForm)
         except Exception:
@@ -159,7 +161,7 @@ class JobFormRepository:
                         DELETE FROM jobs
                         WHERE id = %s
                         """,
-                        [Form_id]
+                        [Form_id],
                     )
                     return True
         except Exception as e:
@@ -188,5 +190,5 @@ class JobFormRepository:
             employer=record[1],
             position=record[2],
             location=record[3],
-            tag=record[4]
+            tag=record[4],
         )
