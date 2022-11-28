@@ -11,7 +11,6 @@ class EmployeeInfoIn(BaseModel):
     location: Optional[str]
     education: Optional[str]
     about: Optional[str]
-    account_id: int
 
 class EmployeeInfoOut(BaseModel):
     career_title: Optional[str]
