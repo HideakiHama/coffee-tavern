@@ -27,7 +27,7 @@ steps = [
             location VARCHAR(255),
             education VARCHAR(255),
             about TEXT,
-            account_id INTEGER REFERENCES accounts (id)
+            account_id INTEGER
         );
         """,
         ## Drop the table
