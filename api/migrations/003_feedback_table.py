@@ -27,18 +27,4 @@ steps = [
         DROP TABLE employee_form;
         """,
     ],
-    [
-        ## Junction table
-        """
-        CREATE TABLE employer_employee(
-            employer_id INT REFERENCES employer_form(id),
-            employee_id INT REFERENCES employee_form(id),
-            PRIMARY KEY (employer_id, employee_id)
-        );
-        """,
-        ## Drop the table
-        """
-        DROP TABLE employer_employee;
-        """,
-    ],
 ]

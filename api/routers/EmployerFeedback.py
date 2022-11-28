@@ -18,7 +18,7 @@ checker = RoleChecker("Employer")
 # creating new employer feedback form #
 @router.post(
     "/employer-feedback-form/",
-    tags=["Employer Feedback"],
+    tags=["Employer Feedback Form"],
     response_model=EmployerFeedbackFormOut,
 )
 async def create_employer_feedback_form(
@@ -39,7 +39,7 @@ async def create_employer_feedback_form(
 # getting detail feedback from employer
 @router.get(
     "/employer-feedback-form/{EmployerFeedback_id}",
-    tags=["Employer Feedback"],
+    tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
 def get_one_employer_feedback_form(
@@ -60,7 +60,7 @@ def get_one_employer_feedback_form(
 # getting list of feedback from employers
 @router.get(
     "/employer-feedbacks/",
-    tags=["Employer Feedback"],
+    tags=["Employer Feedback Form"],
     response_model=Union[List[EmployerFeedbackFormOut], Error],
 )
 def get_all(
@@ -73,7 +73,7 @@ def get_all(
 # Edit feedback #
 @router.put(
     "/employer-feedback-form/{EmployerFeedback_id}",
-    tags=["Employer Feedback"],
+    tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
 def Edit_Employer_Feedback(
@@ -88,7 +88,7 @@ def Edit_Employer_Feedback(
 # Delete feedback #
 @router.delete(
     "/employer-feedback-form/{EmployerFeedback_id}",
-    tags=["Employer Feedback"],
+    tags=["Employer Feedback Form"],
     response_model=bool,
 )
 def Delete_Employer_Feedback(

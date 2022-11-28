@@ -16,7 +16,7 @@ checker = RoleChecker("Employee")
 # creating new employee feedback form #
 @router.post(
     "/employee-feedback-form/",
-    tags=["Employee Feedback"],
+    tags=["Employee Feedback Form"],
     response_model=EmployeeFeedbackFormOut,
 )
 def create_employee_feedback_form(
@@ -37,7 +37,7 @@ def create_employee_feedback_form(
 # getting detail feedback from employee
 @router.get(
     "/employee-feedback-form/{EmployeeFeedback_id}",
-    tags=["Employee Feedback"],
+    tags=["Employee Feedback Form"],
     response_model=Union[EmployeeFeedbackFormOut, Error],
 )
 def get_one_employee_feedback_form(
@@ -59,7 +59,7 @@ def get_one_employee_feedback_form(
 # getting list of feedback from employees
 @router.get(
     "/employee-feedbacks/",
-    tags=["Employee Feedback"],
+    tags=["Employee Feedback Form"],
     response_model=Union[List[EmployeeFeedbackFormOut], Error],
 )
 def get_all(
@@ -72,7 +72,7 @@ def get_all(
 # Edit feedback #
 @router.put(
     "/employee-feedback-form/{EmployeeFeedback_id}",
-    tags=["Employee Feedback"],
+    tags=["Employee Feedback Form"],
     response_model=Union[EmployeeFeedbackFormOut, Error],
 )
 def Edit_Employee_Feedback(
@@ -87,7 +87,7 @@ def Edit_Employee_Feedback(
 # Delete feedback #
 @router.delete(
     "/employee-feedback-form/{EmployeeFeedback_id}",
-    tags=["Employee Feedback"],
+    tags=["Employee Feedback Form"],
     response_model=bool,
 )
 def Delete_Employee_Feedback(
