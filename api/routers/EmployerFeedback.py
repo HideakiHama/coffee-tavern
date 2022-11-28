@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, HTTPException, status
 from typing import Union, List
 from queries.EmployerFeedback_queries import (
     EmployerFeedbackFormIn,
@@ -6,11 +6,13 @@ from queries.EmployerFeedback_queries import (
     EmployerFeedbackRepository,
     Error,
 )
-
-from fastapi.encoders import jsonable_encoder
+from RoleChecker import RoleChecker
 
 
 router = APIRouter()
+
+
+checker = RoleChecker("Employer")
 
 ## POST ##
 # creating new employer feedback form #
@@ -19,11 +21,18 @@ router = APIRouter()
     tags=["Employer Feedback"],
     response_model=EmployerFeedbackFormOut,
 )
-def create_employer_feedback_form(
+async def create_employer_feedback_form(
     new_form: EmployerFeedbackFormIn,
     repo: EmployerFeedbackRepository = Depends(),
+    checked_role: bool = Depends(checker),
 ):
-    return repo.create(new_form)
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You are employee. Please use employee feedback form",
+    )
+    if checked_role:
+        return repo.create(new_form)
+    raise credentials_exception
 
 
 ## GET ##
@@ -35,13 +44,16 @@ def create_employer_feedback_form(
 )
 def get_one_employer_feedback_form(
     EmployerFeedback_id: int,
-    response: Response,
     repo: EmployerFeedbackRepository = Depends(),
 ) -> EmployerFeedbackFormOut:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="employee feedback not found",
+    )
     EmployerFeedback = repo.get_one(EmployerFeedback_id)
-    if EmployerFeedback is None:
-        response.status_code = 404
-    return EmployerFeedback
+    if EmployerFeedback:
+        return EmployerFeedback
+    raise credentials_exception
 
 
 ## GET ##

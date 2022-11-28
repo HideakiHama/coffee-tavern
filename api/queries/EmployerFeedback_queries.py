@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
 from queries.pool import pool
 from datetime import date
@@ -9,14 +9,14 @@ class Error(BaseModel):
 
 
 class EmployerFeedbackFormIn(BaseModel):
-    employee_name: str
+    employee_name: int
     date: date
     description: str
 
 
 class EmployerFeedbackFormOut(BaseModel):
     id: int
-    employee_name: str
+    employee_name: int
     date: date
     description: str
 
@@ -80,6 +80,7 @@ class EmployerFeedbackRepository:
                         VALUES
                             (%s, %s, %s)
                         RETURNING id;
+
                         """,
                         [
                             FeedbackForm.employee_name,
@@ -88,8 +89,8 @@ class EmployerFeedbackRepository:
                         ],
                     )
                     id = result.fetchone()[0]
-                    return self.feedback_post_in_to_out(id, FeedbackForm)
-        except Exception:
+                return self.feedback_post_in_to_out(id, FeedbackForm)
+        except ValidationError:
             return {"message": "Couldn't create feedback"}
 
     ## PUT ##
@@ -138,6 +139,7 @@ class EmployerFeedbackRepository:
 
     def feedback_post_in_to_out(self, id: int, FeedbackForm: EmployerFeedbackFormIn):
         old_data = FeedbackForm.dict()
+        print("##old_data##", old_data)
         return EmployerFeedbackFormOut(id=id, **old_data)
 
     # refactored function for # GET #

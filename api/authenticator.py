@@ -2,7 +2,7 @@
 import os
 from fastapi import Depends
 from jwtdown_fastapi.authentication import Authenticator
-from queries.Accounts import AccountRepo, AccountOut, Account
+from queries.accounts import AccountRepo, AccountOut, Account
 
 
 # Authenticating the log in
@@ -35,3 +35,4 @@ class MyAuthenticator(Authenticator):
 
 
 authenticator = MyAuthenticator(os.environ["SIGNING_KEY"])
+secret_key = os.environ["SIGNING_KEY"]
