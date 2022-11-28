@@ -1,4 +1,4 @@
-from fastapi import APIRouter, File, UploadFile
+from fastapi import APIRouter, File, UploadFile, Request
 from typing import List
 import shutil
 # from fastapi.responses import HTMLResponse
@@ -15,6 +15,12 @@ async def resume_upload(file: UploadFile = File(...)):
     with open(f'{file.filename}', "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
     return {"file_name": file.filename}
+
+
+# @router.get("/upload_resume/{file.filename}")
+# def read_root(item_id: str, request: Request):
+#     client_host = request.client.host
+#     return{"client_host": client_host, "item_id":item_id}
 
 
 # @router.post("/upload_resume/")
