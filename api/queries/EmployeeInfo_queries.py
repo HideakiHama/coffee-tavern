@@ -21,7 +21,7 @@ class EmployeeInfoOut(BaseModel):
     account_id: int
 
 class EmployeeInfoRepo:
-    
+
     def create(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
@@ -34,8 +34,8 @@ class EmployeeInfoRepo:
                         INSERT INTO employee_info
                             (career_title, location, education, about, account_id)
                         VALUES
-                            (%s, %s, %s, %s, %s);
-                        RETURNING id;
+                            (%s, %s, %s, %s, %s)
+                        RETURN account_id;
                         """,
                         [
                             info.career_title,
@@ -45,11 +45,12 @@ class EmployeeInfoRepo:
                             account_id
                         ],
                     )
+                    # get current user id
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
-        
-    
+
+
     def update(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
         try:
             with pool.connection() as conn:
@@ -57,10 +58,10 @@ class EmployeeInfoRepo:
                     result = db.execute(
                         """
                         UPDATE employee_info
-                        SET 
-                            career_title = %s, 
-                            location = %s, 
-                            education = %s, 
+                        SET
+                            career_title = %s,
+                            location = %s,
+                            education = %s,
                             about = %s
                         WHERE account_id = (%s);
                         """,
