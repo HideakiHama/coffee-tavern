@@ -10,7 +10,7 @@ services:
       DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
       WAIT_HOSTS: db:5432
       PORT: 8000
-      SIGNING_KEY: aki
+      SIGNING_KEY: coffee-tavern
     ports:
       - "8000:8000"
     volumes:
@@ -20,7 +20,7 @@ services:
     command: /bin/bash run.sh
     working_dir: /app
     volumes:
-      - ./ghi:/app
+      - ./ghi/coffee-tavern:/app
     ports:
       - "3000:3000"
     environment:
