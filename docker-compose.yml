@@ -16,14 +16,17 @@ services:
     volumes:
       - ./api:/app
   react:
-    build: ./coffee-tavern
-    container_name: react1
-    ports:
-      - '3000:3000'
+    image: node:lts-bullseye
+    command: /bin/bash run.sh
+    working_dir: /app
     volumes:
-      - ./coffee-tavern:/app
-    stdin_open: true
-    tty: true
+      - ./ghi/coffee-tavern:/app
+    ports:
+      - "3000:3000"
+    environment:
+      HOST_OS: ${OS}
+      NODE_ENV: development
+      HOST: "0.0.0.0"
   db:
     image: postgres:14.5-bullseye
     environment:
