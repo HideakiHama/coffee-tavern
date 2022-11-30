@@ -1,31 +1,49 @@
 import logo from './logo.svg';
 import './App.css';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import FeedbackTest from "./feedbackTest";
+import EmployeeFeedbackForm from './EmployeeFeedbackForm';
+import EmployerFeedbackForm from './EmployerFeedbackForm';
+import EmployerFeedbackList from './EmployerFeedbackList';
+import EmployeeFeedbackList from './EmployeeFeedbackList';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code>
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      <FeedbackTest />
+
+      <div className="App">
+        {/* <header className="App-header">
+          <img src={logo} className="App-logo" alt="logo" />
+          <p>
+            Edit <code>src/App.js</code>
+          </p>
+          <a
+            className="App-link"
+            href="https://reactjs.org"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            Learn React
+          </a>
+
+
+        </header> */}
+        <Routes>
+          <Route path = "/employee-feedbacks/" element={<EmployeeFeedbackForm />} />
+          <Route path = "/employer-feedbacks/" element={<EmployerFeedbackForm />} />
+          <Route path = "/employee-feedback-list/" element={<EmployeeFeedbackList />} />
+          <Route path = "/employer-feedbacks-list/" element={<EmployerFeedbackList/>} />
+        </Routes>
+      </div>
+    </BrowserRouter>
   );
 }
 
 export default App;
 
 // import './App.css';
-// import { 
+// import {
 //   BrowserRouter as Router,
 //   Routes,
 //   Route
