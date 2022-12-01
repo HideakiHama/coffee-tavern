@@ -21,7 +21,8 @@ class EmployeeInfoOut(BaseModel):
 
 class EmployeeInfoRepo:
 
-    def create(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
+    def create(self, info: EmployeeInfoIn, account_id: object) -> Union[List[EmployeeInfoOut], Error]:
+        print("TESTING", account_id.role)
         try:
             # connect the database
             with pool.connection() as conn:
@@ -41,9 +42,10 @@ class EmployeeInfoRepo:
                             info.location,
                             info.education,
                             info.about,
-                            account_id
+                            account_id.role
                         ],
                     )
+                    print("RESULT", result)
                     # get current user id
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:

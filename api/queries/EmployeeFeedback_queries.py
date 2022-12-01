@@ -32,30 +32,24 @@ class EmployeeFeedbackFormOut2(BaseModel):
 # Employer Feedback of Employee
 class EmployeeFeedbackRepository:
     ## GET ##
-    def get_one(self, EmployeeFeedback_id: int) -> Optional[EmployeeFeedbackFormOut]:
+    def get_one(self, EmployeeFeedback_id: int) -> Optional[EmployeeFeedbackFormOut2]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
                             SELECT
-                            emp_f.id,
-                            emp_f.account_id,
-                            emp_f.employer_name,
-                            emp_f.date
-                            emp_f.description
-                            FROM
-                            employee_form emp_f
-                            INNER JOIN
-                            (SELECT id, email, hashed_password, user_name, role FROM accounts) a ON a.id = emp_f.account_id
-                            GROUP BY
-                            a.id,
-                            a.email
-
+                            id,
+                            employer_name,
+                            date,
+                            description,
+                            account_id
+                            FROM employee_form
+                            WHERE id = %s
                         """,
-                        # [
-                        #     EmployeeFeedback_id,
-                        # ],
+                        [
+                            EmployeeFeedback_id,
+                        ],
                     )
                     record = result.fetchone()
                     if record is None:

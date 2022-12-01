@@ -9,7 +9,7 @@ from queries.EmployeeFeedback_queries import (
 )
 from RoleChecker import RoleChecker
 
-from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
+from queries.accounts import AccountRepo
 
 router = APIRouter()
 
@@ -50,12 +50,14 @@ def get_one_employee_feedback_form(
     EmployeeFeedback_id: int,
     response: Response,
     repo: EmployeeFeedbackRepository = Depends(),
+    repo1: AccountRepo = Depends()
 ) -> EmployeeFeedbackFormOut:
     credentials_exception = HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="employee feedback not found",
     )
-    EmployeeFeedback = repo.get_one(EmployeeFeedback_id)
+    EmployeeFeedback = repo.get_one(EmployeeFeedback_id).dict()
+    EmployeeFeedback["account_id"] = repo1.get(EmployeeFeedback["account_id"]).dict()
     if EmployeeFeedback:
         return EmployeeFeedback
     raise credentials_exception

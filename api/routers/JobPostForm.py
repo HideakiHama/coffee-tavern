@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response
+from fastapi import APIRouter, Depends, Response, HTTPException, status
 from typing import List, Optional, Union
 from queries.JobForm_queries import (
     JobPostFormIn,
@@ -6,19 +6,34 @@ from queries.JobForm_queries import (
     JobFormRepository,
     Tags,
     Error,
-    JobPostForm
+    JobPostForm,
+    JobPostFormOut2
 )
-
+from queries.accounts import AccountRepo
+from RoleChecker import RoleChecker
 
 router = APIRouter()
 
+checker = RoleChecker("Employer")
+
 # creating new job form
-@router.post('/create_form', tags=["JobForm"], response_model=JobPostFormOut)
+@router.post('/create_form/{account_id}', tags=["JobForm"], response_model=JobPostFormOut2)
 def create_job_form(
     new_form: JobPostFormIn,
+    account_id: int,
     repo: JobFormRepository = Depends(),
+    repo1: AccountRepo = Depends(),
+    checked_role: bool = Depends(checker),
 ):
-    return repo.create(new_form)
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You do not have access to this as employee. TURN BACK NOW!",
+    )
+    if checked_role:
+        not_final = repo.create(new_form, account_id).dict()
+        not_final["account_id"] = repo1.get(account_id).dict()
+        return not_final
+    raise credentials_exception
 
 @router.get('/get_all_form', tags=["JobForm"], response_model=Union[List[JobPostForm], Error])
 def get_all_job_form(repo: JobFormRepository = Depends()):
