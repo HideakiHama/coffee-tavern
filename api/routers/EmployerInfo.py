@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from typing import List, Optional, Union
+from typing import Union
 from queries.EmployerInfo_queries import EmployerInfoRepo, EmployerInfoIn, EmployerInfoOut, Error
 
 router = APIRouter()
@@ -12,7 +12,7 @@ def create_employer_info(
 ) -> EmployerInfoOut:
     return repo.create(employer_info, account_id)
 
-@router.get('/users/{account_id}/get_employer_info', tags=["User Info"], response_model=Union[EmployerInfoOut, Error])
+@router.get("/users/{account_id}/get_employer_info", tags=["User Info"], response_model=Union[EmployerInfoOut, Error])
 def get_employer_info_by_id(
     account_id: int, 
     response: Response, 
