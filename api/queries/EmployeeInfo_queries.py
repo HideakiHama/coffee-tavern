@@ -22,32 +22,31 @@ class EmployeeInfoOut(BaseModel):
 class EmployeeInfoRepo:
 
     def create(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
-        try:
-            # connect the database
-            with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
-                with conn.cursor() as db:
-                    # Run our INSERT statement
-                    result = db.execute(
-                        """
-                        INSERT INTO employee_info
-                            (career_title, location, education, about, account_id)
-                        VALUES
-                            (%s, %s, %s, %s, %s)
-                        RETURN account_id;
-                        """,
-                        [
-                            info.career_title,
-                            info.location,
-                            info.education,
-                            info.about,
-                            account_id
-                        ],
-                    )
-                    # get current user id
-                    return EmployeeInfoOut(account_id=account_id, **info.dict())
-        except Exception:
-            return {"message": "Create did not work"}
+        # try:
+        # connect the database
+        with pool.connection() as conn:
+            # get a cursor (something to run SQL with)
+            with conn.cursor() as db:
+                # Run our INSERT statement
+                result = db.execute(
+                    """
+                    INSERT INTO employee_info
+                        (career_title, location, education, about, account_id)
+                    VALUES
+                        (%s, %s, %s, %s, %s)
+                    """,
+                    [
+                        info.career_title,
+                        info.location,
+                        info.education,
+                        info.about,
+                        account_id
+                    ],
+                )
+                # get current user id
+                return EmployeeInfoOut(account_id=account_id, **info.dict())
+        # except Exception:
+        #     return {"message": "Create did not work"}
 
 
     def update(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
