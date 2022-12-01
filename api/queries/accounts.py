@@ -2,16 +2,9 @@ from pydantic import BaseModel
 from typing import Optional, List, Union, Literal
 from queries.pool import pool
 
-<<<<<<< HEAD
-class Error(BaseModel):
-    message: str
-=======
-
 class Error(BaseModel):
     message: str
 
-
->>>>>>> feedbacks
 class Account(BaseModel):
     id: int
     email: str
