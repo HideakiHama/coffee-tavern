@@ -17,12 +17,13 @@ checker = RoleChecker("Employer")
 ## POST ##
 # creating new employer feedback form #
 @router.post(
-    "/employer-feedback-form/",
+    "/employer-feedback-form/{account_id}",
     tags=["Employer Feedback Form"],
     response_model=EmployerFeedbackFormOut,
 )
 async def create_employer_feedback_form(
     new_form: EmployerFeedbackFormIn,
+    account_id: int,
     repo: EmployerFeedbackRepository = Depends(),
     checked_role: bool = Depends(checker),
 ):
@@ -31,7 +32,7 @@ async def create_employer_feedback_form(
         detail="You are employee. Please use employee feedback form",
     )
     if checked_role:
-        return repo.create(new_form)
+        return repo.create(new_form, account_id)
     raise credentials_exception
 
 
