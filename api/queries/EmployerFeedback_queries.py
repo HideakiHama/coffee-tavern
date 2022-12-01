@@ -2,7 +2,6 @@ from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
 from queries.pool import pool
 from datetime import date
-from queries.accounts import Account
 
 
 class Error(BaseModel):
@@ -10,31 +9,22 @@ class Error(BaseModel):
 
 
 class EmployerFeedbackFormIn(BaseModel):
-    employee_name: str
+    employee_name: int
     date: date
     description: str
 
 
 class EmployerFeedbackFormOut(BaseModel):
     id: int
-    employee_name: str
+    employee_name: int
     date: date
     description: str
-    account_id: Account | None = None
-
-
-class EmployerFeedbackFormOut2(BaseModel):
-    id: int
-    employee_name: str
-    date: date
-    description: str
-    account_id: int
 
 
 # Employer Feedback of Employee
 class EmployerFeedbackRepository:
     ## GET ##
-    def get_one(self, EmployerFeedback_id: int) -> Optional[EmployerFeedbackFormOut2]:
+    def get_one(self, EmployerFeedback_id: int) -> Optional[EmployerFeedbackFormOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -44,7 +34,6 @@ class EmployerFeedbackRepository:
                         , employee_name
                         , date
                         , description
-                        , account_id
                         FROM employer_form
                         WHERE id = %s
                         """,
@@ -60,53 +49,43 @@ class EmployerFeedbackRepository:
             return {"message": "Could not get employer feedback form"}
 
     ## GET ##
-    def get_all(self, account_id: int) -> Union[List[EmployerFeedbackFormOut2], Error]:
+    def get_all(self) -> Union[List[EmployerFeedbackFormOut], Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, employee_name, date, description, account_id
+                        SELECT id, employee_name, date, description
                         FROM employer_form
                         ORDER BY id
                         """
                     )
                     resultList = list(result)
-
-                y = [
-                    self.record_to_employer_feedback_out(record).dict()
+                return [
+                    self.record_to_employer_feedback_out(record)
                     for record in resultList
-                ]
-
-                list1 = []
-                for i in y:
-                    if i["account_id"] == account_id:
-                        list1.append(i)
-
-                return list1
+                ]  # refactored
         except Exception as e:
             return {"message": "Could not get employer feedback form"}
 
     ## POST ##
-    def create(
-        self, FeedbackForm: EmployerFeedbackFormIn, account_id: int
-    ) -> EmployerFeedbackFormOut:
+    def create(self, FeedbackForm: EmployerFeedbackFormIn) -> EmployerFeedbackFormOut:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
                         INSERT INTO employer_form
-                            (employee_name, date, description, account_id)
+                            (employee_name, date, description)
                         VALUES
-                            (%s, %s, %s, %s)
+                            (%s, %s, %s)
                         RETURNING id;
+
                         """,
                         [
                             FeedbackForm.employee_name,
                             FeedbackForm.date,
                             FeedbackForm.description,
-                            account_id,
                         ],
                     )
                     id = result.fetchone()[0]
@@ -160,15 +139,11 @@ class EmployerFeedbackRepository:
 
     def feedback_post_in_to_out(self, id: int, FeedbackForm: EmployerFeedbackFormIn):
         old_data = FeedbackForm.dict()
+        print("##old_data##", old_data)
         return EmployerFeedbackFormOut(id=id, **old_data)
 
     # refactored function for # GET #
     def record_to_employer_feedback_out(self, record):
-
-        return EmployerFeedbackFormOut2(
-            id=record[0],
-            employee_name=record[1],
-            date=record[2],
-            description=record[3],
-            account_id=record[4],
+        return EmployerFeedbackFormOut(
+            id=record[0], employee_name=record[1], date=record[2], description=record[3]
         )
