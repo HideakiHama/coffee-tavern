@@ -3,6 +3,10 @@ from typing import Optional, List, Union, Literal
 from queries.pool import pool
 
 
+class Error(BaseModel):
+    message: str
+
+
 class Account(BaseModel):
     id: int
     email: str
@@ -42,16 +46,16 @@ class AccountRepo:
         except Exception as e:
             return {"message": "Could not get account"}
 
-    def get(self, email: str) -> Optional[Account]:
+    def get(self, account_id: int) -> Optional[Account]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
                     SELECT id, email, hashed_password, user_name, role
                     FROM accounts
-                    WHERE email = %s
+                    WHERE id = %s
                     """,
-                    [email],  # email variable get replace with %s
+                    [account_id],  # email variable get replace with %s
                 )
                 record = result.fetchone()
                 if record is None:

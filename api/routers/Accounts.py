@@ -50,11 +50,11 @@ async def create_account(
     return AccountToken(account=account, **token.dict())
 
 
-@router.get("/api/get_account/{account_email}", tags=["Accounts"])
+@router.get("/api/get_account/{account_id}", tags=["Accounts"])
 async def get_one_account(
-    account_email: str, response: Response, repo: AccountRepo = Depends()
+    account_id: int, response: Response, repo: AccountRepo = Depends()
 ) -> AccountOut:
-    AccountDetail = repo.get(account_email)
+    AccountDetail = repo.get(account_id)
     if AccountDetail is None:
         response.status_code = 404
     return AccountDetail

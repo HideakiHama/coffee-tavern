@@ -2,6 +2,7 @@ from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
 from queries.pool import pool
 from datetime import date
+from queries.accounts import AccountOut
 
 
 class Error(BaseModel):
@@ -19,6 +20,7 @@ class EmployeeFeedbackFormOut(BaseModel):
     employer_name: int
     date: date
     description: str
+    account_id: AccountOut | None = None
 
 
 # Employer Feedback of Employee
