@@ -1,3 +1,13 @@
+#### Dec 01 2022
+
+
+#### Nov 30 2022
+Today I pair programmed with Chris on Employee Feedback to retrieve account id for who ever employee are giving feedback to.
+
+#### Nov 29 2022
+Today I worked on creating a functionality side of feedbacks.
+The blocker for today was remembering React from scratch.  I also had issue with installing axios.   Turns out there was some issue with registry.  After couple hour axios stuff was resolved.
+
 #### Nov 28 2022
 
 Today we tried running the React, but couldn't go too far because we all had react issue.   For me the problem was improper installation of create-react-app.
@@ -9,7 +19,7 @@ Today we tried running the React, but couldn't go too far because we all had rea
 
 #### Nov 27 2022
 
-After endless spiral into different rabbit holes I was finally able to set permission to API endpoints!! I use OAuth2passwordBearer to lock the endpoint.  Created a Asyn function to decode the jwt token (It also check for 'secret key' before decoding).  Then check if the user role (status) matches with the permission (status). If the user role matches then they are authorized to use the API endpoint.  Ah-ha moment:  FastApi documentation are our friend.
+After endless spiral into different rabbit holes I was finally able to set permission to API endpoints!! I use OAuth2passwordBearer to lock the endpoint.  Created a Async function to decode the jwt token (It also check for 'secret key' before decoding).  Then check if the user role (status) matches with the permission (status). If the user role matches then they are authorized to use the API endpoint.  Ah-ha moment:  FastApi documentation are our friend.
 
 #### Nov 26 2022
 

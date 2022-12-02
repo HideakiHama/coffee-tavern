@@ -14,8 +14,9 @@ Today, I worked on:
 
 * Employer info
 
-I created create, update, and get by id endpoints for user info. The get 
-request for user info is giving an error. Trying to fix that.
+I created create, update, and get by id endpoints for user info. Going to 
+refactor with chris tomorrow to grab the data better, so it'll be easier 
+to grab on the front end.
 
 
 
