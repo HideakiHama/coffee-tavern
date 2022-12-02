@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
-// import axios from "axios";
+import axios from "axios";
 
-const EmployeeFeedbacksUrl = "localhost:8000/employee-feedbacks/"
+const account_id = 5
+const EmployerFeedbacksUrl = `http://localhost:8000/employer-feedbacks/${account_id}/`
 
 function EmployeeFeedbackList() {
       const [feedbackData, setFeedbackData] = useState([]);
@@ -10,16 +11,16 @@ function EmployeeFeedbackList() {
         getEmployeeFeedbacksUrl();
       }, []);
 
-      const getEmployeeFeedbacksUrl = async () => {
-        // const response = await axios.get(EmployeeFeedbacksUrl);
-        // setFeedbackData(response.data);
-        const response = await fetch(EmployeeFeedbacksUrl);
-        const jsonData = await response.json();
-        setFeedbackData(jsonData);
+      const getEmployeeFeedbacksUrl = async (account_id) => {
+        const response = await axios.get(EmployerFeedbacksUrl);
+        setFeedbackData(response.data);
+        // const response = await fetch(EmployeeFeedbacksUrl);
+        // const jsonData = await response.json();
+        // setFeedbackData(jsonData);
 
       };
 
-      console.log("#####", feedbackData)
+
       return (
       <div>
         <h1>Employee List</h1>
@@ -28,4 +29,5 @@ function EmployeeFeedbackList() {
 
     )
 }
+
 export default EmployeeFeedbackList
