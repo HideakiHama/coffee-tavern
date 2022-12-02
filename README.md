@@ -1,6 +1,6 @@
-## Coffee Tavern
+### Coffee Tavern
 
-This application is a linkedin but for the people in the service industry.
+> This application is a linkedin but for the people in the service industry.
 
 ## Team:
 >Person 1 - Hideaki Hama
@@ -11,7 +11,7 @@ This application is a linkedin but for the people in the service industry.
 
 >Person 4 - Christopher Shih
 
-Stack:
+### Stack:
 
 # Front-End
     - React
