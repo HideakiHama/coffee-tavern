@@ -59,6 +59,7 @@ export default class JobPostForm extends Component {
                                     <input onChange={this.handleNameChange} placeholder="Name" required type="text" name="name" id="name" className="form-control" />
                                     <label htmlFor="name">Employer</label>
                                 </div>
+                                {/* <button onClick={handleSubmit}>Upload</button> */}
                                 <button className="btn btn-outline-success">Create</button>
                             </form>
                         </div>
