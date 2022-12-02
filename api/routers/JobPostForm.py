@@ -36,31 +36,18 @@ def create_job_form(
     raise credentials_exception
 
 
-@router.get(
-    "/get_all_form", tags=["JobForm"], response_model=Union[List[JobPostForm], Error]
-)
+@router.get("/get_all_form", tags=["JobForm"], response_model=Union[List[JobPostForm], Error])
 def get_all_job_form(repo: JobFormRepository = Depends()):
-
     return repo.get_all()
 
-
-@router.get(
-    "/get_form/{form_id}", tags=["JobForm"], response_model=Union[JobPostFormOut, Error]
-)
-def get_one_job_form(
-    form_id: int, response: Response, repo: JobFormRepository = Depends()
-) -> JobPostFormOut:
+@router.get("/get_form/{form_id}", tags=["JobForm"], response_model=Union[JobPostFormOut, Error])
+def get_one_job_form(form_id: int, response: Response, repo: JobFormRepository = Depends()) -> JobPostFormOut:
     FormDetail = repo.get_one(form_id)
     if FormDetail is None:
         response.status_code = 404
     return FormDetail
 
-
-@router.post(
-    "/update_job_form/{id}",
-    tags=["JobForm"],
-    response_model=Union[JobPostFormOut, Error],
-)
+@router.post("/update_job_form/{id}", tags=["JobForm"], response_model=Union[JobPostFormOut, Error],)
 def Update_Job_Form(
     form_id: int,
     UpdatedJobForm: JobPostFormIn,
