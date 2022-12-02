@@ -1,41 +1,57 @@
-import React, { Component } from 'react'
-import aios from 'axios'
+import React, { useState } from "react"
+// import axios from 'axios'
 
-export default function UploadResume(){ 
+export default function UploadResume() { 
 
-const [file, uploadFile] = useState(null)
+    const [selectedFile, setSelectedFile] = useState(null);
+    const [input, setInput] = useState('')
 
-const fileChangeHandler = (e) => {
-    setSelected(e.target.files[0]);
-    console.log(e.target.files[0])
-}
-
-const handleSubmit = (e) => {
-    const formData = new FormData();
-    formData.append(
-        "files",
-        selectedFile,
-        selecedFile.name
-    );
-    const requestOptions = {
-        method: "POST"
+    const fileChangeHandler = (e) => {
+        setSelectedFile(e.target.files[0]);
+        console.log(e.target.files[0])
     }
-}
 
-return (
-    <div className="App">
-        <header className="App-header">
-            <h1>
-                Upload Resume
-            </h1>
-        </header>
-        <form>
-            <fieldset>
-                <input onChange={fileChangeHandler} name="resume" type="files" accept='jpeg, .png, .jpg, .pdf'></input>
-            </fieldset>
-        </form>
-    </div>
-)
+    const handleSubmit = (e) => {
+        const formData = new FormData();
+        formData.append(
+            "files",
+            selectedFile,
+            selectedFile.name
+        );
+        formData.append(
+            "username",
+            input
+        )
+
+        const requestOptions = {
+            method: "POST",
+            body: formData
+        };
+
+        fetch("http://localhost:8000/upload_resume/", requestOptions)
+        .then(response => response.json())
+        .then(function(response) {
+            console.log(response)
+        })
+    }
+
+    return (
+        <div className="App">
+            <header className="App-header">
+                <h1>
+                    Upload Resume
+                </h1>
+            </header>
+            <form>
+                <fieldset>
+                    <input onChange={fileChangeHandler} name="resume" type="files" accept='jpeg, .png, .jpg, .pdf'></input>
+                </fieldset>
+                <button onClick={handleSubmit}>Upload</button>
+            </form>
+            <input onChange={(e) => setInput(e.target.value)}></input>
+        </div>
+    )
+
 
 // function handleSubmit(){
 //     console.log(file[0].name)
