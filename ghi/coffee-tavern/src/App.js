@@ -39,6 +39,14 @@ render() {
         </Route>
         <Route path="/upload_resume/" element={<UploadResume />}>
         </Route>
+        <Route path = "/employee-feedbacks/" element={<EmployeeFeedbackForm />} >
+        </Route>
+        <Route path = "/employer-feedbacks/" element={<EmployerFeedbackForm />} >
+        </Route>
+        <Route path = "/employee-feedback-list/" element={<EmployeeFeedbackList />} >
+        </Route>
+        <Route path = "/employer-feedbacks-list/" element={<EmployerFeedbackList/>} >
+        </Route>
       </Routes>
     </div> 
     </BrowserRouter>
