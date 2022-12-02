@@ -18,6 +18,7 @@ Stack:
 
 
 Run these commands in terminal to set up the application
- docker volume create coffee_tavern-data    ## This will create the database in your docker
- docker compose up --build                  ## This will build and compose up the images and containers for your docker at the same time
- bash nuke.sh ---> Will do everything Thanos the project
+ docker volume create coffee_tavern-data    ## This will create the database in your docker 
+ docker compose up --build                  ## This will build and compose up the images and containers for your docker at the same time 
+ ***(Mac User Only)*** bash thanos.sh ---> Will do everything Thanos the project***(Mac User Only)***
+
