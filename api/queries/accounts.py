@@ -4,6 +4,7 @@ from queries.pool import pool
 
 class Error(BaseModel):
     message: str
+
 class Account(BaseModel):
     id: int
     email: str

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from typing import List, Optional, Union
+from typing import Union
 from queries.EmployerInfo_queries import EmployerInfoRepo, EmployerInfoIn, EmployerInfoOut, Error
 from queries.accounts import AccountRepo
 

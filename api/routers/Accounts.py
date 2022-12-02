@@ -55,9 +55,12 @@ async def create_account(
     hashed_password = authenticator.hash_password(info.password)
 
     account = repo.create(info, hashed_password)
+    print(account)
     form = AccountForm(username=info.email, password=info.password)
     token = await authenticator.login(response, request, form, repo)
-    return AccountToken(account=account, **token.dict())
+    x = AccountToken(account=account, **token.dict())
+    print("XXXXX", x)
+    return x
 
 
 @router.get("/api/get_account/{account_id}", tags=["Accounts"])

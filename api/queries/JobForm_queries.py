@@ -2,6 +2,7 @@ from pydantic import BaseModel
 from typing import List, Optional, Union
 from datetime import date
 from queries.pool import pool
+from queries.accounts import Account
 
 
 class Error(BaseModel):
@@ -23,7 +24,7 @@ class JobPostFormIn(BaseModel):
     from_date: date
     to_date: date
     tag: str
-    description: Optional[str]
+    description: str
 
 
 # response shape
@@ -35,7 +36,19 @@ class JobPostFormOut(BaseModel):
     from_date: date
     to_date: date
     tag: str
-    description: Optional[str]
+    description: str
+
+
+class JobPostFormOut2(BaseModel):
+    id: int
+    employer: str
+    position: str
+    location: str
+    from_date: date
+    to_date: date
+    tag: str
+    description: str
+    account_id: Account | None = None
 
 
 class Tags(BaseModel):
@@ -89,7 +102,7 @@ class JobFormRepository:
         except Exception as e:
             return {"message": "Could not get any job form today"}
 
-    def create(self, JobForm: JobPostFormIn) -> Union[List[JobPostFormOut], Error]:
+    def create(self, JobForm: JobPostFormIn, account_id: int) -> Union[List[JobPostFormOut2], Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -99,9 +112,9 @@ class JobFormRepository:
                     result = db.execute(
                         """
                         INSERT INTO jobs
-                            (employer, position, location, from_date, to_date, tag, description)
+                            (employer, position, location, from_date, to_date, tag, description, account_id)
                         VALUES
-                            (%s, %s, %s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s, %s, %s)
                         RETURNING id;
                         """,
                         [
@@ -112,9 +125,11 @@ class JobFormRepository:
                             JobForm.to_date,
                             JobForm.tag,
                             JobForm.description,
+                            account_id
                         ],
                     )
                     id = result.fetchone()[0]
+                    print("ID", id)
                     return self.Job_Post_in_to_out(id, JobForm)
         except Exception:
             return {"message": "Create did not work"}
@@ -122,6 +137,7 @@ class JobFormRepository:
     def update(
         self, Form_id: int, UpdatedJobForm: JobPostFormIn
     ) -> Union[JobPostFormOut, Error]:
+        print("UpdatedJobForm", UpdatedJobForm)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -170,6 +186,7 @@ class JobFormRepository:
 
     def Job_Post_in_to_out(self, id: int, JobForm: JobPostFormIn):
         old_data = JobForm.dict()
+        print(old_data)
         return JobPostFormOut(id=id, **old_data)
 
     def record_JobForm_out(self, record):

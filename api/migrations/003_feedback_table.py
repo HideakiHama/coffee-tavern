@@ -4,7 +4,8 @@ steps = [
         """
         CREATE TABLE employer_form(
             id SERIAL PRIMARY KEY NOT NULL,
-            employee_name INT REFERENCES accounts(id),
+            account_id INT REFERENCES accounts(id),
+            employee_name VARCHAR(255),
             date DATE NOT NULL,
             description TEXT
         );
@@ -18,7 +19,8 @@ steps = [
         """
         CREATE TABLE employee_form(
             id SERIAL PRIMARY KEY NOT NULL,
-            employer_name INT REFERENCES accounts(id),
+            account_id INT REFERENCES accounts(id),
+            employer_name VARCHAR(255),
             date DATE NOT NULL,
             description TEXT
         );
