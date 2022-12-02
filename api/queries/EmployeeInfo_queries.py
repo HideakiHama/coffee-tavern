@@ -22,7 +22,6 @@ class EmployeeInfoOut(BaseModel):
 class EmployeeInfoRepo:
 
     def create(self, info: EmployeeInfoIn, account_id: object) -> Union[List[EmployeeInfoOut], Error]:
-        print("TESTING", account_id.role)
         try:
             # connect the database
             with pool.connection() as conn:

@@ -12,7 +12,6 @@ def create_employee_info(
     repo1: AccountRepo = Depends(),
 ) -> EmployeeInfoOut:
     not_final = repo1.get(account_id)
-    # print("NOTFINAL", not_final)
     # print(type(not_final))
     return repo.create(employee_info, not_final)
 
