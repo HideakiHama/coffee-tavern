@@ -6,11 +6,13 @@ from queries.pool import pool
 class Error(BaseModel):
     message: str
 
+
 class EmployeeInfoIn(BaseModel):
     career_title: Optional[str]
     location: Optional[str]
     education: Optional[str]
     about: Optional[str]
+
 
 class EmployeeInfoOut(BaseModel):
     career_title: Optional[str]
@@ -20,8 +22,9 @@ class EmployeeInfoOut(BaseModel):
     account_id: int
 
 class EmployeeInfoRepo:
-
-    def create(self, info: EmployeeInfoIn, account_id: object) -> Union[List[EmployeeInfoOut], Error]:
+    def create(
+        self, info: EmployeeInfoIn, account_id: int
+    ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -41,7 +44,7 @@ class EmployeeInfoRepo:
                             info.location,
                             info.education,
                             info.about,
-                            account_id.role
+                            account_id,
                         ],
                     )
                     print("RESULT", result)
@@ -50,8 +53,9 @@ class EmployeeInfoRepo:
         except Exception:
             return {"message": "Create did not work"}
 
-
-    def update(self, info: EmployeeInfoIn, account_id: int) -> Union[List[EmployeeInfoOut], Error]:
+    def update(
+        self, info: EmployeeInfoIn, account_id: int
+    ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -70,8 +74,8 @@ class EmployeeInfoRepo:
                             info.location,
                             info.education,
                             info.about,
-                            account_id
-                        ]
+                            account_id,
+                        ],
                     )
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:

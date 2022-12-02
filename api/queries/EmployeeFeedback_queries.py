@@ -2,8 +2,7 @@ from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
 from queries.pool import pool
 from datetime import date
-from queries.accounts import Account
-
+from queries.accounts import Account, AccountOut
 
 class Error(BaseModel):
     message: str

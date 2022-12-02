@@ -137,6 +137,7 @@ class JobFormRepository:
     def update(
         self, Form_id: int, UpdatedJobForm: JobPostFormIn
     ) -> Union[JobPostFormOut, Error]:
+        print("UpdatedJobForm", UpdatedJobForm)
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:

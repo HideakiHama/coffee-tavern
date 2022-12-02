@@ -4,10 +4,13 @@ from queries.EmployerFeedback_queries import (
     EmployerFeedbackFormIn,
     EmployerFeedbackFormOut,
     EmployerFeedbackRepository,
+    EmployerFeedbackFormOut2,
     Error,
 )
+from queries.accounts import AccountRepo
 from RoleChecker import RoleChecker
 
+from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
 
 router = APIRouter()
 
@@ -17,7 +20,7 @@ checker = RoleChecker("Employer")
 ## POST ##
 # creating new employer feedback form #
 @router.post(
-    "/employer-feedback-form/{account_id}",
+    "/employer-feedback-form/{account_id}/",
     tags=["Employer Feedback Form"],
     response_model=EmployerFeedbackFormOut,
 )
@@ -25,6 +28,7 @@ async def create_employer_feedback_form(
     new_form: EmployerFeedbackFormIn,
     account_id: int,
     repo: EmployerFeedbackRepository = Depends(),
+    repo1: AccountRepo = Depends(),
     checked_role: bool = Depends(checker),
 ):
     credentials_exception = HTTPException(
@@ -32,26 +36,31 @@ async def create_employer_feedback_form(
         detail="You are employee. Please use employee feedback form",
     )
     if checked_role:
-        return repo.create(new_form, account_id)
+        not_final = repo.create(new_form, account_id).dict()  ####
+        not_final["account_id"] = repo1.get(account_id).dict()
+        return not_final
     raise credentials_exception
 
 
 ## GET ##
 # getting detail feedback from employer
 @router.get(
-    "/employer-feedback-form/{EmployerFeedback_id}",
+    "/employer-feedback-form/{EmployerFeedback_id}/",
     tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
 def get_one_employer_feedback_form(
     EmployerFeedback_id: int,
     repo: EmployerFeedbackRepository = Depends(),
+    repo1: AccountRepo = Depends(),
 ) -> EmployerFeedbackFormOut:
     credentials_exception = HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="employee feedback not found",
     )
-    EmployerFeedback = repo.get_one(EmployerFeedback_id)
+    EmployerFeedback = repo.get_one(EmployerFeedback_id).dict()
+    EmployerFeedback["account_id"] = repo1.get(EmployerFeedback["account_id"]).dict()
+
     if EmployerFeedback:
         return EmployerFeedback
     raise credentials_exception
@@ -60,20 +69,21 @@ def get_one_employer_feedback_form(
 ## GET ##
 # getting list of feedback from employers
 @router.get(
-    "/employer-feedbacks/",
+    "/employer-feedbacks/{account_id}/",
     tags=["Employer Feedback Form"],
-    response_model=Union[List[EmployerFeedbackFormOut], Error],
+    response_model=Union[List[EmployerFeedbackFormOut2], Error],
 )
 def get_all(
+    account_id: int,
     repo: EmployerFeedbackRepository = Depends(),
 ):
-    return repo.get_all()
+    return repo.get_all(account_id)
 
 
 ## PUT ##
 # Edit feedback #
 @router.put(
-    "/employer-feedback-form/{EmployerFeedback_id}",
+    "/employer-feedback-form/{EmployerFeedback_id}/",
     tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
@@ -88,7 +98,7 @@ def Edit_Employer_Feedback(
 ## DELETE ##
 # Delete feedback #
 @router.delete(
-    "/employer-feedback-form/{EmployerFeedback_id}",
+    "/employer-feedback-form/{EmployerFeedback_id}/",
     tags=["Employer Feedback Form"],
     response_model=bool,
 )
