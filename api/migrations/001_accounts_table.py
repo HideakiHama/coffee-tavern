@@ -41,12 +41,28 @@ steps = [
             to_year SMALLINT,
             position VARCHAR(255),
             position_description TEXT,
-            account_id INTEGER REFERENCES accounts(id)
+            account_id INTEGER REFERENCES accounts (id)
         );
         """,
         ## Drop the table
         """
         DROP TABLE employee_work_history;
+        """,
+    ],
+    [
+        ## Create the table
+        ## Add profile_picture
+        """
+        CREATE TABLE employer_info (
+            job_type VARCHAR(255),
+            location VARCHAR(255),
+            about TEXT,
+            account_id INTEGER
+        );
+        """,
+        ## Drop the table
+        """
+        DROP TABLE employer_info;
         """,
     ],
 ]

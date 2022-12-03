@@ -6,6 +6,7 @@ from routers import (
     EmployeeFeedback,
     UploadResume,
     EmployeeInfo,
+    EmployerInfo
 )
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
@@ -32,3 +33,4 @@ app.include_router(EmployeeFeedback.router)
 app.include_router(authenticator.router)  # problem to check
 app.include_router(UploadResume.router)
 app.include_router(EmployeeInfo.router)
+app.include_router(EmployerInfo.router)
