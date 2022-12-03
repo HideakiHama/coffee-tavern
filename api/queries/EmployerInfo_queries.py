@@ -2,29 +2,26 @@ from pydantic import BaseModel
 from typing import List, Optional, Union
 from queries.pool import pool
 
-
 class Error(BaseModel):
     message: str
-
-
-class EmployeeInfoIn(BaseModel):
-    career_title: Optional[str]
+    
+class EmployerInfo(BaseModel):
+    pass
+    
+class EmployerInfoIn(BaseModel):
+    job_type: Optional[str]
     location: Optional[str]
-    education: Optional[str]
     about: Optional[str]
 
-
-class EmployeeInfoOut(BaseModel):
-    career_title: Optional[str]
+class EmployerInfoOut(BaseModel):
+    job_type: Optional[str]
     location: Optional[str]
-    education: Optional[str]
     about: Optional[str]
     account_id: int
-
-class EmployeeInfoRepo:
-    def create(
-        self, info: EmployeeInfoIn, account_id: int
-    ) -> Union[List[EmployeeInfoOut], Error]:
+    
+class EmployerInfoRepo:
+    
+    def create(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -33,26 +30,24 @@ class EmployeeInfoRepo:
                     # Run our INSERT statement
                     result = db.execute(
                         """
-                        INSERT INTO employee_info
-                            (career_title, location, education, about, account_id)
+                        INSERT INTO employer_info
+                            (job_type, location, about, account_id)
                         VALUES
-                            (%s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s)
                         """,
                         [
-                            info.career_title,
+                            info.job_type,
                             info.location,
-                            info.education,
                             info.about,
-                            account_id,
+                            account_id
                         ],
                     )
-                    print("RESULT", result)
                     # get current user id
-                    return EmployeeInfoOut(account_id=account_id, **info.dict())
+                    return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
         
-    def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
+    def get_one(self, account_id: int) -> Optional[EmployerInfoOut]:
         try:
             # connect the database
             with pool.connection() as conn:
@@ -62,12 +57,11 @@ class EmployeeInfoRepo:
                     result = db.execute(
                         """
                         SELECT
-                            career_title,
+                            job_type,
                             location,
-                            education,
                             about,
                             account_id
-                        FROM employee_info
+                        FROM employer_info
                         WHERE account_id = %s
                         """,
                         [account_id],
@@ -75,43 +69,38 @@ class EmployeeInfoRepo:
                     record = result.fetchone()
                     if record is None:
                         return None
-                    return self.record_employee_form_out(record)
+                    return self.record_employer_form_out(record)
         except Exception as e:
             return {"message": "Could not get employer info"}
-
-    def update(
-        self, info: EmployeeInfoIn, account_id: int
-    ) -> Union[List[EmployeeInfoOut], Error]:
+        
+    def update(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        UPDATE employee_info
+                        UPDATE employer_info
                         SET
-                            career_title = %s,
+                            job_type = %s,
                             location = %s,
-                            education = %s,
                             about = %s
-                        WHERE account_id = (%s);
+                        WHERE account_id = %s
                         """,
                         [
-                            info.career_title,
+                            info.job_type,
                             info.location,
-                            info.education,
                             info.about,
-                            account_id,
-                        ],
+                            account_id
+                        ]
                     )
-                    return EmployeeInfoOut(account_id=account_id, **info.dict())
+                    return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
         
-    def record_employee_form_out(self, record):
-        return EmployeeInfoOut(
-            career_title=record[0],
+    def record_employer_form_out(self, record):
+        return EmployerInfoOut(
+            job_type=record[0],
             location=record[1],
-            education=record[2],
-            about=record[3],
-            account_id=record[4]
+            about=record[2],
+            account_id=record[3]
         )

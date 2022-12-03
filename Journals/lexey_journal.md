@@ -1,3 +1,52 @@
+## December 2, 2022
+
+Today, I worked on:
+
+* 
+
+I did
+
+
+
+## December 1, 2022
+
+Today, I worked on:
+
+* Employer info
+
+I created create, update, and get by id endpoints for user info. Going to 
+refactor with chris tomorrow to grab the data better, so it'll be easier 
+to grab on the front end.
+
+
+
+## November 30, 2022
+
+Today, I worked on:
+
+* Employee info, React
+
+Added get by id endpoint and query for employee info. Aki was able to 
+help me solve why my react wasn't working on my computer. Mostly had to 
+do with file structure and where things where downloaded.
+
+
+
+## November 29, 2022
+
+Today, I worked on:
+
+* React
+
+Watched react videos to refreash on front end. react is having issues 
+with auto reload on my computer. While trying to fix it, files were 
+mixed up and everyones project was working differently. Trying to 
+solve why it's not working on my computer even though I cloned the 
+most up to date repo to try and see if react works. That same repo 
+works on other team members computers who have windows.
+
+
+
 ## November 28, 2022
 
 Today, I worked on:
@@ -5,7 +54,7 @@ Today, I worked on:
 * Figured out employee info queries and started setting up front-end
 
 Finally figure out how to connect the employee information to the id 
-of the logged in account.Now working with Chris, Aki, and Curtis to set 
+of the logged in account. Now working with Chris, Aki, and Curtis to set 
 up the react app so we can get started on the front-end.
 
 

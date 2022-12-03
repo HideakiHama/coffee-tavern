@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from 'react';
 // import axios from "axios"
+// import M from 'materialize-css';
+import 'materialize-css/dist/css/materialize.min.css'
 
 function EmployerFeedbackForm() {
     const useFeedbackForm = (initState) => {
@@ -35,29 +37,42 @@ function EmployerFeedbackForm() {
 
     const {inputs, handleInputChange, handleSubmit} = useFeedbackForm(initState);
 
-    return (
-      <div>
-        <h1>Employer Feedback Form</h1>
-        <form onSubmit={handleSubmit}>
-          <div>
-            <label>Employee Name</label>
-            <input type="text" name="EmployeeName" onChange={handleInputChange}
-            value ={inputs['EmployeeName']} required />
-          </div>
-          <div>
-            <label>Date</label>
-            <input type="date" name="Date" onChange={handleInputChange}
-            value ={inputs["Date"]} required />
-          </div>
-          <div>
-            <label>Description</label>
-            <input type="text" name="Description" onChange={handleInputChange}
-            value ={inputs["Description"]} required />
-          </div>
-          <button type="submit">Submit</button>
-        </form>
+      return (
+        <div className="row">
+          <form className="col s12" onSubmit={handleSubmit}>
+            <div className="row">
+              <div className="input-field col s6">
+                <label>Employee Name</label>
+                <input type="text" onChange={handleInputChange} required></input>
+              </div>
+              <div className="input-field col s6">
+                <input id="last_name" type="text" ></input>
+                <label >Date</label>
+              </div>
+            </div>
+            <div className="row">
+            </div>
+            <div className="row">
+              <div className="input-field col s12">
+                <input id="email" type="email" ></input>
+                <label>Feedback Description</label>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col s12">             
+                <div className="input-field inline">
+              
+                    <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+                              <i className="material-icons right">Feedback</i>
+                    </button>
+                </div>
+              </div>
+            </div>
+          </form>
       </div>
+      );
+    }
+    
 
-    )
-}
-export default EmployerFeedbackForm
+    
+ export default EmployerFeedbackForm
