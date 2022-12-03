@@ -1,4 +1,12 @@
+#### Dec 02 2022
+In the morning all of us took our turn shared screen to merge our branches to the remote main at the Gitlab.  After experiencing what happened yesterday it was really traumatizing for me.  Again only ah-ha moment was always use git status to make sure I'm not sending node-modules.
+In the afternoon I pair programmed with Curtis to add more style to the employer-feedback on the frontend.
+
 #### Dec 01 2022
+I pair programmed with chris in the morning to finish the backend for Employee Feedback, then I worked on the authorization of Job-form PUT method.  I was going to start the frontend functionality side of Feedback Form and Feedback List but I couldn't start it until the evening that day.  I accidentally pushed node-modules into the gitlab and took us all the afternoon to fix it.  Turns out my node-module was not properly 'gitignored' when I committed.   I had several ah-ha moment today:
+ - if the node-modules doesn't ignore I need to both delete the node-modules folder and ".gitignore" file. remake the ".gitignore" file with all the files/directories that I want to be ignored.  Then I need to reinstall the node-module by npm install (in the correct directory!)
+ - git status is my friend.  let me know what file it will be commit or pushed
+ - When I run React I have to change "Select End of Line Sequence" from CRLF to LF (https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/)
 
 
 #### Nov 30 2022
