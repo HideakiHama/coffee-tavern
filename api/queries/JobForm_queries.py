@@ -15,6 +15,7 @@ class JobPostForm(BaseModel):
     position: str
     location: str
     tag: str
+    description: str
 
 
 class JobPostFormIn(BaseModel):
@@ -91,7 +92,7 @@ class JobFormRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, employer, position, location, tag
+                        SELECT id, employer, position, location, tag, description
                         FROM jobs
                         ORDER BY id
                         """
@@ -208,4 +209,5 @@ class JobFormRepository:
             position=record[2],
             location=record[3],
             tag=record[4],
+            description=record[5]
         )
