@@ -35,3 +35,7 @@
 
 ## Dec 1 - Thursday
 > Git ignore was not working properly and was copying the node modules onto our gitLab which is not a great thing. Added some Material UI pages to start off with. I was able to finish routing JobPostForm, JobPostList, Login, and Signup as well as UploadResumeForm onto the App.js. Everything on my end is working on react. localhost:3000. Material Ui is amazing looks great now I will need to connect our backend to the front end. Things to do tmr, are probably get started on the nav bar.
+
+## Dec 2 - Friday
+> Finished the Nav.js and put it into our app.js. We now have a working nav bar. We also scrapped one of the materialui pages and instead went for a more simple page made with css components from the Material.css.  We just have to change the class to className. We also finished merging all of our repos together and now moved onto bigger and better things.
+> We also dabbled a little into CI/CD.
