@@ -13,11 +13,15 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState, useEffect} from "react"
+import { useNavigate } from 'react-router';
+import Popup from 'reactjs-popup';
+import 'reactjs-popup/dist/index.css';
 
 const theme = createTheme();
 
 export default function JobPostList() {
   const [jobForm, setJobForm] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getJobForm = async () => {
@@ -28,6 +32,23 @@ export default function JobPostList() {
     }
     getJobForm()
   }, []);
+
+  function handleClick() {
+    navigate("/create_form")
+  }
+
+  // function PopupGfg(){
+  //   return(
+  //   <div>
+  //     <h4>Popup - GeeksforGeeks</h4>
+  //     <Popup trigger={<button> Click to open popup </button>}
+  //      position="right center">
+  //       <div>GeeksforGeeks</div>
+  //       <button>Click here</button>
+  //     </Popup>
+  //   </div>
+  //   )
+  // };
 
   return (
     <ThemeProvider theme={theme}>
@@ -41,10 +62,9 @@ export default function JobPostList() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {jobForm.map((jobForms) => (
-              <Grid item  xs={12} sm={6} md={4}>
+              <Grid item  xs={12} sm={6} md={4}  key={jobForms.id}>
                   <Card
-                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-                  key={jobForms.id}>
+                  sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
                       {jobForms.employer}
