@@ -85,6 +85,8 @@ async def delete_account(account_id: int, repo: AccountRepo = Depends()) -> bool
 @router.get("/get_token", response_model=AccountToken | None)
 async def get_token(request: Request, account: dict = Depends(authenticator.get_current_account_data)) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
+        print("R", request)
+        print("A", authenticator)
         return {
             "access_token": request.cookies[authenticator.cookie_name],
             "type": "Bearer",

@@ -8,25 +8,29 @@ import Checkbox from '@mui/material/Checkbox';
 import Link from '@mui/material/Link';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
-// import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useToken } from './useToken';
-
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
-export default function Login() {
-  const [token, login] = useToken();
+export default function SignIn() {
+  const [token, login, logout] = useToken();
+  const navigate = useNavigate();
+
+  if (token){
+    logout()
+    return;
+  }
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    login(data.get("email"), data.get("password"));
+    navigate("/")
   };
 
   return (
@@ -42,7 +46,7 @@ export default function Login() {
           }}
         >
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
-            {/* <LockOutlinedIcon /> */}
+            <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5">
             Sign in
@@ -82,9 +86,9 @@ export default function Login() {
             </Button>
             <Grid container>
               <Grid item xs>
-                {/* <Link href="#" variant="body2">
+                <Link href="#" variant="body2">
                   Forgot password?
-                </Link> */}
+                </Link>
               </Grid>
               <Grid item>
                 <Link href="#" variant="body2">
@@ -94,7 +98,6 @@ export default function Login() {
             </Grid>
           </Box>
         </Box>
-        {/* <Copyright sx={{ mt: 8, mb: 4 }} /> */}
       </Container>
     </ThemeProvider>
   );

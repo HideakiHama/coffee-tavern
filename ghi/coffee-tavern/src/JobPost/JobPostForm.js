@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useAuthContext } from '../useToken';
 
 const JobPostForm = () => {
     const [employer, setEmployer] = useState("");
@@ -8,6 +9,7 @@ const JobPostForm = () => {
     const [to_date, setToDate] = useState("");
     const [tag, setTag] = useState("");
     const [description, setDescription] = useState("");
+    const { token } = useAuthContext();
 
     const clearJobForm = () => {
         setEmployer("");
@@ -18,10 +20,10 @@ const JobPostForm = () => {
         setTag("");
         setDescription("");
     }
-    let account_id = 1
+
     const handleSubmit = async(submit) => {
         submit.preventDefault()
-        const JobFormURL = `http://localhost:8000/create_form/${account_id}`;
+        const JobFormURL = `http://localhost:8000/create_form/${token}`;
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify({

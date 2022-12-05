@@ -13,29 +13,35 @@ import Container from '@mui/material/Container';
 import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState, useEffect} from "react"
-import { useNavigate } from 'react-router';
+// import { useNavigate } from 'react-router';
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
+import { useAuthContext } from '../useToken';
 
 const theme = createTheme();
 
 export default function JobPostList() {
   const [jobForm, setJobForm] = useState([]);
-  const navigate = useNavigate();
+  const { token } = useAuthContext();
+  // const navigate = useNavigate();
 
   useEffect(() => {
     const getJobForm = async () => {
-      const response = await fetch("http://localhost:8000/get_all_form");
+      const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/get_all_form`,  {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}`,
+      },
+    });
       const data = await response.json();
-      console.log("DATA", data)
       setJobForm(data)
     }
     getJobForm()
   }, []);
+  // #add [token] maybe
 
-  function handleClick() {
-    navigate("/create_form")
-  }
+  // function handleClick() {
+  //   navigate("/create_form")
+  // }
 
   // function PopupGfg(){
   //   return(
@@ -62,7 +68,7 @@ export default function JobPostList() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {jobForm.map((jobForms) => (
-              <Grid item  xs={12} sm={6} md={4}  key={jobForms.id}>
+              <Grid item  xs={12} sm={6} md={4} key={jobForms.id}>
                   <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flexGrow: 1 }}>

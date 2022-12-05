@@ -27,8 +27,8 @@ export default class App extends Component {
 render() {
   return (
     <AuthProvider>
-      <GetToken />
-        <BrowserRouter>
+      <BrowserRouter>
+        <GetToken />
           <Nav />
             <div className="container">
               <Routes>
