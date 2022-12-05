@@ -20,7 +20,7 @@ checker = RoleChecker("Employer")
 ## POST ##
 # creating new employer feedback form #
 @router.post(
-    "/employer-feedback-form/{account_id}/",
+    "/employer-feedback-form/{account_id}",
     tags=["Employer Feedback Form"],
     response_model=EmployerFeedbackFormOut,
 )
@@ -29,23 +29,23 @@ async def create_employer_feedback_form(
     account_id: int,
     repo: EmployerFeedbackRepository = Depends(),
     repo1: AccountRepo = Depends(),
-    checked_role: bool = Depends(checker),
+    # checked_role: bool = Depends(checker),
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are employee. Please use employee feedback form",
     )
-    if checked_role:
-        not_final = repo.create(new_form, account_id).dict()  ####
-        not_final["account_id"] = repo1.get(account_id).dict()
-        return not_final
-    raise credentials_exception
+    # if checked_role:
+    not_final = repo.create(new_form, account_id).dict()  ####
+    not_final["account_id"] = repo1.get(account_id).dict()
+    return not_final
+    # raise credentials_exception
 
 
 ## GET ##
 # getting detail feedback from employer
 @router.get(
-    "/employer-feedback-form/{EmployerFeedback_id}/",
+    "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
@@ -69,7 +69,7 @@ def get_one_employer_feedback_form(
 ## GET ##
 # getting list of feedback from employers
 @router.get(
-    "/employer-feedbacks/{account_id}/",
+    "/employer-feedbacks/{account_id}",
     tags=["Employer Feedback Form"],
     response_model=Union[List[EmployerFeedbackFormOut2], Error],
 )
@@ -83,7 +83,7 @@ def get_all(
 ## PUT ##
 # Edit feedback #
 @router.put(
-    "/employer-feedback-form/{EmployerFeedback_id}/",
+    "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
@@ -98,7 +98,7 @@ def Edit_Employer_Feedback(
 ## DELETE ##
 # Delete feedback #
 @router.delete(
-    "/employer-feedback-form/{EmployerFeedback_id}/",
+    "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],
     response_model=bool,
 )

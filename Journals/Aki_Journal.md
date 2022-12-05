@@ -1,3 +1,10 @@
+#### Dec 04 2022
+I Worked on finishing the PUT and Delete request of both feedbacks.  I deleted "required" attribute inside the input tag of feedback-edit component. When user didn't want to update certain field then the original input data will sent to the backend. I added if statement inside the handle-edit to handle empty field.   Blocker: If the user wanted to edit, for example description field, the user have to type everything again even if its for editing one miss spell words.
+
+#### Dec 03 2022
+Worked on finishing POST, GET, and started PUT request of both feedbacks.   For tbe PUT I wanted to have user see and edit what they wrote inside the inputs fields.  To do this I had two option use "defaultValue" or "placeholder" attribute. I couldn't use "defaultValues" because I already had "value" inside the input tag. Also, if I deleted 'value' inside the input tag it will cause "A component is changing a controlled input to be uncontrolled" Side note: Controlled component is data that is handled by a React Component.  Uncontrolled component is data handled by the DOM itself.
+I decided to use the "placeholder" attribute to allow user to see what they wrote previously.
+
 #### Dec 02 2022
 In the morning all of us took our turn shared screen to merge our branches to the remote main at the Gitlab.  After experiencing what happened yesterday it was really traumatizing for me.  Again only ah-ha moment was always use git status to make sure I'm not sending node-modules.
 In the afternoon I pair programmed with Curtis to add more style to the employer-feedback on the frontend.

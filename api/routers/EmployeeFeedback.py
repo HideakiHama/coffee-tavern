@@ -27,17 +27,18 @@ def create_employee_feedback_form(
     account_id: int,
     repo: EmployeeFeedbackRepository = Depends(),
     repo1: AccountRepo = Depends(),
-    checked_role: bool = Depends(checker),
+    # checked_role: bool = Depends(checker),
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are employer. Please use employer feedback form",
     )
-    if checked_role:
-        not_final = repo.create(new_form, account_id).dict()
-        not_final["account_id"] = repo1.get(account_id).dict()
-        return not_final
-    raise credentials_exception
+    # if checked_role:
+    not_final = repo.create(new_form, account_id).dict()
+    not_final["account_id"] = repo1.get(account_id).dict()
+    return not_final
+    # raise credentials_exception
+
 
 ## GET ##
 # getting detail feedback from employee
@@ -50,7 +51,7 @@ def get_one_employee_feedback_form(
     EmployeeFeedback_id: int,
     response: Response,
     repo: EmployeeFeedbackRepository = Depends(),
-    repo1: AccountRepo = Depends()
+    repo1: AccountRepo = Depends(),
 ) -> EmployeeFeedbackFormOut:
     credentials_exception = HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
@@ -79,7 +80,7 @@ def get_all(
 
 ## PUT ##
 # Edit feedback #
-@router.patch(
+@router.put(
     "/employee-feedback-form/{EmployeeFeedback_id}",
     tags=["Employee Feedback Form"],
     response_model=Union[EmployeeFeedbackFormOut, Error],
