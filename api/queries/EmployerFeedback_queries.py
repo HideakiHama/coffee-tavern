@@ -34,7 +34,7 @@ class EmployerFeedbackFormOut2(BaseModel):
 # Employer Feedback of Employee
 class EmployerFeedbackRepository:
     ## GET ##
-    def get_one(self, EmployerFeedback_id: int) -> Optional[EmployerFeedbackFormOut2]:
+    def get_one(self, EmployerFeedback_id: int) -> Optional[EmployerFeedbackFormOut]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -117,7 +117,7 @@ class EmployerFeedbackRepository:
     ## PUT ##
     def update(
         self, EmployerFeedback_id: int, FeedbackForm: EmployerFeedbackFormIn
-    ) -> Union[EmployerFeedbackFormOut, Error]:
+    ) -> Union[EmployerFeedbackFormOut2, Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -133,7 +133,7 @@ class EmployerFeedbackRepository:
                             FeedbackForm.employee_name,
                             FeedbackForm.date,
                             FeedbackForm.description,
-                            EmployerFeedback_id,
+                            EmployerFeedback_id,                      
                         ],
                     )
                     return self.feedback_post_in_to_out(

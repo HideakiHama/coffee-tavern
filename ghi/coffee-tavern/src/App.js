@@ -1,4 +1,3 @@
-// import logo from './logo.svg';
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import EmployeeFeedbackForm from './feedbacks/EmployeeFeedbackForm';
@@ -9,16 +8,19 @@ import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
 
 import React, { Component } from 'react';
-import JobPostForm from './JobPostForm';
-import JobPostList from './JobPostList';
+import JobPostForm from './JobPost/JobPostForm';
+import JobPostList from './JobPost/JobPostList';
 import Login from './Login';
 import Signup from './Signup';
 import MainPage from './MainPage';
 import UploadResume from './UploadResumeForm';
 import Nav from './Nav';
+import { AuthProvider, useToken } from './useToken';
 
-
-
+function GetToken() {
+  useToken();
+  return null
+}
 export default class App extends Component {
   constructor(props) {
     super(props);
@@ -27,38 +29,40 @@ export default class App extends Component {
 
 render() {
   return (
-    <BrowserRouter>
-      <Nav />
-        <div className="container">
-          <Routes>
-            <Route path="/" element={<MainPage />}>
-            </Route>
-            <Route path="/create_form" element={<JobPostForm />}>
-            </Route>
-            <Route path="/get_all_form" element={<JobPostList />}>
-            </Route>
-            <Route path="/token" element={<Login />}>
-            </Route>
-            <Route path="/api/accounts" element={<Signup />}>
-            </Route>
-            <Route path="/upload_resume/" element={<UploadResume />}>
-            </Route>
-            <Route path = "/employee-feedback" element={<EmployeeFeedbackForm />} >
-            </Route>
-            <Route path = "/employer-feedback" element={<EmployerFeedbackForm />} >
-            </Route>
-            <Route path = "/employee-feedbacks-list" element={<EmployeeFeedbackList />} >
-            </Route>
-            <Route path = "/employer-feedbacks-list" element={<EmployerFeedbackList/>} >
-            </Route>
-            <Route path = "/employee-feedback-update" element={<EmployeeFeedbackEdit/>}>
-            </Route>
-            <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
-            </Route>
-
-          </Routes>
-        </div>
-    </BrowserRouter>
+    <AuthProvider>
+      <BrowserRouter>
+        <GetToken />
+          <Nav />
+            <div className="container">
+              <Routes>
+                <Route path="/" element={<MainPage />}>
+                </Route>
+                <Route path="/create_form" element={<JobPostForm />}>
+                </Route>
+                <Route path="/get_all_form" element={<JobPostList />}>
+                </Route>
+                <Route path="/token" element={<Login />}>
+                </Route>
+                <Route path="/api/accounts" element={<Signup />}>
+                </Route>
+                <Route path="/upload_resume/" element={<UploadResume />}>
+                </Route>
+                <Route path = "/employee-feedback" element={<EmployeeFeedbackForm />} >
+                </Route>
+                <Route path = "/employer-feedback" element={<EmployerFeedbackForm />} >
+                </Route>
+                <Route path = "/employee-feedbacks-list" element={<EmployeeFeedbackList />} >
+                </Route>
+                <Route path = "/employer-feedbacks-list" element={<EmployerFeedbackList/>} >
+                </Route>
+                <Route path = "/employee-feedback-update" element={<EmployeeFeedbackEdit/>}>
+                </Route>
+                <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
+                </Route>
+              </Routes>
+            </div>
+        </BrowserRouter>
+    </AuthProvider>
   )
   }
 }

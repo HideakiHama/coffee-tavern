@@ -15,6 +15,7 @@ class JobPostForm(BaseModel):
     position: str
     location: str
     tag: str
+    description: str
 
 
 class JobPostFormIn(BaseModel):
@@ -91,7 +92,7 @@ class JobFormRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, employer, position, location, tag
+                        SELECT id, employer, position, location, tag, description
                         FROM jobs
                         ORDER BY id
                         """
@@ -103,6 +104,8 @@ class JobFormRepository:
             return {"message": "Could not get any job form today"}
 
     def create(self, JobForm: JobPostFormIn, account_id: int) -> Union[List[JobPostFormOut2], Error]:
+        print("ACC", account_id)
+        print("JOB", JobForm)
         try:
             # connect the database
             with pool.connection() as conn:
@@ -186,7 +189,7 @@ class JobFormRepository:
 
     def Job_Post_in_to_out(self, id: int, JobForm: JobPostFormIn):
         old_data = JobForm.dict()
-        print(old_data)
+        print("OLD", old_data)
         return JobPostFormOut(id=id, **old_data)
 
     def record_JobForm_out(self, record):
@@ -208,4 +211,5 @@ class JobFormRepository:
             position=record[2],
             location=record[3],
             tag=record[4],
+            description=record[5]
         )
