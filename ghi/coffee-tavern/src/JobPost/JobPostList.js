@@ -33,6 +33,8 @@ export default function JobPostList() {
       },
     });
       const data = await response.json();
+      setJobForm(data)
+  }
     getJobForm()
   }, []);
   // #add [token] maybe
