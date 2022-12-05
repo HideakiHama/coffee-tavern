@@ -26,6 +26,7 @@ def create_job_form(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You do not have access to this as employee. TURN BACK NOW!",
     )
+    print("ACC", account["id"])
     if account["role"] == "Employer":
         not_final = repo.create(new_form, account["id"]).dict()
         not_final["account_id"] = account
