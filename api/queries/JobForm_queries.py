@@ -38,6 +38,17 @@ class JobPostFormOut(BaseModel):
     to_date: date
     tag: str
     description: str
+    account_id: int
+
+class JobPostFormOut1(BaseModel):
+    id: int
+    employer: str
+    position: str
+    location: str
+    from_date: date
+    to_date: date
+    tag: str
+    description: str
 
 
 class JobPostFormOut2(BaseModel):
@@ -50,11 +61,6 @@ class JobPostFormOut2(BaseModel):
     tag: str
     description: str
     account_id: Account | None = None
-
-
-class Tags(BaseModel):
-    tag: str
-
 
 class JobFormRepository:
     def get_one(self, JobForm_id: int) -> Optional[JobPostFormOut]:
@@ -73,7 +79,8 @@ class JobFormRepository:
                             from_date,
                             to_date,
                             tag,
-                            description
+                            description,
+                            account_id
                         FROM jobs
                         WHERE id = %s
                         """,
@@ -167,7 +174,9 @@ class JobFormRepository:
                             Form_id,
                         ],
                     )
-                    return self.Job_Post_in_to_out(Form_id, UpdatedJobForm)
+                    z = self.Job_Post_in_to_out(Form_id, UpdatedJobForm)
+                    print("z", z)
+                    return z
         except Exception:
             return {"message": "Could not update the Job Form"}
 
@@ -190,7 +199,7 @@ class JobFormRepository:
     def Job_Post_in_to_out(self, id: int, JobForm: JobPostFormIn):
         old_data = JobForm.dict()
         print("OLD", old_data)
-        return JobPostFormOut(id=id, **old_data)
+        return JobPostFormOut1(id=id, **old_data)
 
     def record_JobForm_out(self, record):
         return JobPostFormOut(
@@ -202,6 +211,7 @@ class JobFormRepository:
             to_date=record[5],
             tag=record[6],
             description=record[7],
+            account_id=record[8]
         )
 
     def record_JobForm_all(self, record):
