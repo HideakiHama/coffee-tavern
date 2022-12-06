@@ -159,7 +159,6 @@ class EmployeeFeedbackRepository:
             return False
 
     def feedback_post_in_to_out(self, id: int, FeedbackForm: EmployeeFeedbackFormIn):
-        print("FEEDBACKFORM", FeedbackForm)
         old_data = FeedbackForm.dict()
         return EmployeeFeedbackFormOut(id=id, **old_data)
 

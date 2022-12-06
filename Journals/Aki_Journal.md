@@ -1,4 +1,9 @@
-#### Dec 04 2022
+### Dec 05 2022
+Today I worked on having Authenticator work on the feedback form and changing the login back to login by email and not by id.
+User can only login by id because our SQL inside our account.'get' function was wrong.  WHERE clause (filter) was set to ID instead of email. It made the data expect integer. instead of string.
+Our major blocker was trying to figure out how to make our Monolithic app into Microservice.
+
+### Dec 04 2022
 I Worked on finishing the PUT and Delete request of both feedbacks.  I deleted "required" attribute inside the input tag of feedback-edit component. When user didn't want to update certain field then the original input data will sent to the backend. I added if statement inside the handle-edit to handle empty field.   Blocker: If the user wanted to edit, for example description field, the user have to type everything again even if its for editing one miss spell words.
 
 #### Dec 03 2022
