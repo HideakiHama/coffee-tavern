@@ -25,16 +25,18 @@ export default function JobPostList() {
   const { token } = useAuthContext();
   // const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const getJobForm = async () => {
-  //     const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/get_all_form`,  {
-  //       method: "GET",
-  //       headers: { Authorization: `Bearer ${token}`,
-  //     },
-  //   });
-  //     const data = await response.json();
-  //   getJobForm()
-  // }, []);
+  useEffect(() => {
+    const getJobForm = async () => {
+      const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/get_all_form`,  {
+        method: "GET",
+        headers: { Authorization: `Bearer ${token}`,
+      },
+    });
+      const data = await response.json();
+      setJobForm(data)
+  }
+    getJobForm()
+  }, []);
   // #add [token] maybe
 
   // function handleClick() {
