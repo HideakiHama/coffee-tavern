@@ -31,7 +31,8 @@ Run these commands in terminal to set up the application
 
 ```shell
 #This will create the database in your docker 
-$ docker volume create coffee_tavern-data    
+$ docker volume create coffee_tavern-data
+$ docker volume create tagsapi-data    
 ```
 ```shell
 #This will build and compose up the images and containers for your docker at the same time 

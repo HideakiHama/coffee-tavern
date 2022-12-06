@@ -4,8 +4,9 @@ function Nav() {
   return (
   <nav>
   <div className="nav-wrapper teal">
-    <a href="#" class="brand-logo right">Logo</a>
+    {/* <a className="brand-logo right">Logo</a> */}
         <ul id="nav-mobile" className="left hide-on-med-and-down">
+            <li><NavLink className="dropdown-item" aria-current="page" to="/">Home</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/api/accounts">Signup</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/token">Login</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/upload_resume/">Upload Resume</NavLink></li>
