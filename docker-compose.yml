@@ -1,8 +1,8 @@
 volumes:
   coffee_tavern-data:
     external: true
-  tagsapi-data:
-    external: true
+  # tagsapi-data:
+  #   external: true
 services:
   accountsapi:
     build:
@@ -17,6 +17,21 @@ services:
       - "8000:8000"
     volumes:
       - ./accountsapi:/app
+
+  tagsapi:
+      build:
+        context: ./tagsapi
+        dockerfile: Dockerfile.dev
+      ports:
+        - "8100:8100"
+      volumes:
+        - ./tagsapi:/app
+      environment:
+        DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
+        WAIT_HOSTS: db:5432
+        PORT: 8100
+        SIGNING_KEY: curtis
+        
   react:
     image: node:lts-bullseye
     command: /bin/bash run.sh
@@ -41,28 +56,3 @@ services:
       - "15432:5432"
     volumes:
       - coffee_tavern-data:/var/lib/postgresql/data
-
-  tagsdb:
-    image: postgres:14.5-bullseye
-    environment:
-      POSTGRES_PASSWORD: tavern
-      POSTGRES_USER: coffee
-      POSTGRES_DB: tagsapi
-    ports:
-      - "15000:5433"
-    volumes:
-      - tagsapi-data:/var/lib/postgresql/data
-
-  tagsapi:
-      build:
-        context: ./tagsapi
-        dockerfile: Dockerfile.dev
-      ports:
-        - "8100:8100"
-      volumes:
-        - ./tagsapi:/app
-      environment:
-        DATABASE_URL: postgresql://coffee:tavern@db/tagsapi
-        WAIT_HOSTS: db:5433
-        PORT: 8100
-        SIGNING_KEY: curtis
