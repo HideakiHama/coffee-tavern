@@ -45,5 +45,6 @@ $ docker compose up --build
 # Will do everything Thanos the project***(Mac User Only)***
 $ bash thanos.sh 
 ```
-
+tags api db = postgres://mjlcehbq:68CQlz4J0QGLvquHOSHqQjs97X_vpuyS@arjuna.db.elephantsql.com/mjlcehbq
+accounts api db = postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
 
