@@ -36,7 +36,8 @@ export default function JobPostList() {
       setJobForm(data)
   }
     getJobForm()
-  }, []);
+}, [])
+
   // #add [token] maybe
 
   // function handleClick() {

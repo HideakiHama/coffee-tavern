@@ -4,9 +4,9 @@ from queries.JobForm_queries import (
     JobPostFormIn,
     JobPostFormOut,
     JobFormRepository,
-    Tags,
     Error,
     JobPostForm,
+    JobPostFormOut1,
     JobPostFormOut2
 )
 from queries.accounts import AccountRepo
@@ -19,7 +19,6 @@ router = APIRouter()
 def create_job_form(
     new_form: JobPostFormIn,
     repo: JobFormRepository = Depends(),
-    repo1: AccountRepo = Depends(),
     account: dict = Depends(authenticator.get_current_account_data)
 ):
     credentials_exception = HTTPException(
@@ -45,7 +44,7 @@ def get_one_job_form(form_id: int, response: Response, repo: JobFormRepository =
         response.status_code = 404
     return FormDetail
 
-@router.post("/update_job_form/{id}", tags=["JobForm"], response_model=Union[JobPostFormOut, Error],)
+@router.put("/update_job_form/{id}", tags=["JobForm"], response_model=Union[JobPostFormOut1, Error],)
 def Update_Job_Form(
     form_id: int,
     UpdatedJobForm: JobPostFormIn,
@@ -56,12 +55,39 @@ def Update_Job_Form(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are employee. Only the employer can edit",
     )
+    credentials_exception1 = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You did not make this. Access denied",
+    )
     if account["role"] == "Employer":
-        return repo.update(form_id, UpdatedJobForm)
-    raise credentials_exception
+        x = repo.get_one(form_id)
+        print("XXXX", x)
+        if  x.account_id == account["id"]:
+        # print(x.account_id)
+            return repo.update(form_id, UpdatedJobForm).dict()
 
+        else:
+            raise credentials_exception1
+    else:
+        raise credentials_exception
 
 @router.delete("/delete_job_form/{id}", tags=["JobForm"], response_model=bool)
 def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> bool:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You are employee. Only the employer have this access",
+    )
+    credentials_exception1 = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You did not make this. Access denied",
+    )
     if account["role"] == "Employer":
-        return repo.delete(form_id)
+        x = repo.get_one(form_id)
+        print("XXXX", x)
+        if  x.account_id == account["id"]:
+        # print(x.account_id)
+            return repo.delete(form_id)
+        else:
+            raise credentials_exception1
+    else:
+        raise credentials_exception
