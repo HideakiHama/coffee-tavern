@@ -1,65 +1,61 @@
 stages:
-  - test   # Run tests first
-  - build  # Run build after tests
-  - deploy # Run deploy after build
+  - test
+  - build
+  - deploy
 
-# For each FastAPI service that you have in your application that has unit tests, 
-#add a new job section with the name and directory of the service substituted.
-# This will change the active directory to the service's directory, install its requirements,
-# then run the unit tests with pytest, just like if you were doing it by hand.
-
-service-name-unit-test-job:
-  image: python:3-bullseye
-  stage: test
-  script:
-    - cd service-directory
-    - pip install -r requirements.txt
-    - python -m pytest
-
-## Lint-test-job
+# Run flake8 to check for code quality
 lint-test-job:
   image: python:3-bullseye
   stage: test
   script:
     - pip install flake8
-    - flake8 api  # Run flake8 on Python project to check
-                  # for code quality
+    - flake8 sample_service
 
-build-back-end-job:
-  stage: build
-  image:
-  services:
-    - docker:20.10.16-dind
+Run the unit tests
+api-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
   script:
-    - cd api
-    - docker volume create coffee_tavern-data
-    - docker compose up --build 
+    - cd sample_service
+    - pip install -r requirements.txt
+    - python -m pytest
 
+# Build the React/JavaScript front-end
 build-front-end-job:
   stage: build
   image: node:lts-bullseye
+  needs:
+    - lint-test-job
   variables:
+    If either of these variables is defined in the GitLab
+    CI/CD variables, that value will override the value here.
+    You need to substitute in your real values for
+    GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://gitlab.com/caffeine-anonymous/coffee-tavern 
+    REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
   script:
-    - cd ghi  # CHANGE THIS TO THE DIRECTORY THAT HAS package.json
+    - cd ghi
+    - cd coffee-tavern
     - npm install
     - npm run build
-    - cp build/index.html build/404.html  # Make this a SPA
+    - cp build/index.html build/404.html
   artifacts:
     paths:
-      - ghi/build/  # Save all of the files in the build path
+      - ghi/build/
 
+# Deploy the React/JavaScript front-end to GitLab pages
 pages:
   stage: deploy
   rules:
-
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   dependencies:
     - build-front-end-job
   needs:
     - build-front-end-job
   script:
-    - cd api
-    - mv ghi/build/public
+    - mv ghi/build/ public
   artifacts:
     paths:
       - public

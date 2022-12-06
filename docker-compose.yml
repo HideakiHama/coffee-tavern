@@ -9,7 +9,7 @@ services:
       context: ./accountsapi
       dockerfile: Dockerfile.dev
     environment:
-      DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
+      DATABASE_URL: postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
       WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki
@@ -27,7 +27,7 @@ services:
       volumes:
         - ./tagsapi:/app
       environment:
-        DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
+        DATABASE_URL: postgres://mjlcehbq:68CQlz4J0QGLvquHOSHqQjs97X_vpuyS@arjuna.db.elephantsql.com/mjlcehbq
         WAIT_HOSTS: db:5432
         PORT: 8100
         SIGNING_KEY: curtis
@@ -46,13 +46,15 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
-  db:
-    image: postgres:14.5-bullseye
-    environment:
-      POSTGRES_PASSWORD: tavern
-      POSTGRES_USER: coffee
-      POSTGRES_DB: coffee_tavern
-    ports:
-      - "15432:5432"
-    volumes:
-      - coffee_tavern-data:/var/lib/postgresql/data
+
+## comment this before deployment
+  # db:
+  #   image: postgres:14.5-bullseye
+  #   environment:
+  #     POSTGRES_PASSWORD: tavern
+  #     POSTGRES_USER: coffee
+  #     POSTGRES_DB: coffee_tavern
+  #   ports:
+  #     - "15432:5432"
+  #   volumes:
+  #     - coffee_tavern-data:/var/lib/postgresql/data

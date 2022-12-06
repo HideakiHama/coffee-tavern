@@ -42,4 +42,8 @@ def get_all(repo: TagRepository = Depends()):
 # Delete tag #
 @router.delete("/delete_tag/{Tag_id}", tags=["TagForm"], response_model=bool)
 def delete_tag(Tag_id: int, repo: TagRepository = Depends()):
+<<<<<<< HEAD
     return repo.delete(Tag_id)
+=======
+    return repo.delete(Tag_id)
+>>>>>>> 812776103fc5131fbea437ce046eab0026790aad
