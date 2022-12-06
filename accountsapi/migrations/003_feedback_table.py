@@ -28,5 +28,5 @@ steps = [
         """
         DROP TABLE employee_form;
         """,
-    ],
+    ]
 ]

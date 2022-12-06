@@ -44,8 +44,9 @@ export default function UploadResume() {
             </header>
             <form>
                 <fieldset>
-                    <input onChange={fileChangeHandler} name="resume" type="files" accept='jpeg, .png, .jpg, .pdf'></input>
+                    <input onClick={fileChangeHandler} name="resume" type="files" accept='jpeg, .png, .jpg, .pdf'></input>
                 </fieldset>
+                {/* <button onClick={fileChangeHandler}></button> */}
                 <button onClick={handleSubmit}>Upload</button>
             </form>
             <input onChange={(e) => setInput(e.target.value)}></input>

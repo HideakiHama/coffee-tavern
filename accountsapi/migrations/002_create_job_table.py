@@ -18,5 +18,5 @@ steps = [
         """
         DROP TABLE jobs;
         """,
-    ],
+    ]
 ]
