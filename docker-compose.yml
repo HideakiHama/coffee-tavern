@@ -2,9 +2,9 @@ volumes:
   coffee_tavern-data:
     external: true
 services:
-  api:
+  api-account:
     build:
-      context: ./api
+      context: ./api-account
       dockerfile: Dockerfile.dev
     environment:
       DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
@@ -14,7 +14,7 @@ services:
     ports:
       - "8000:8000"
     volumes:
-      - ./api:/app
+      - ./api-account:/app
   react:
     image: node:lts-bullseye
     command: /bin/bash run.sh
