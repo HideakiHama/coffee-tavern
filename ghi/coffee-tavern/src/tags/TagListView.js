@@ -8,6 +8,7 @@ function TagView(props){
     //     id: 1,
     //     tag: 'barista' 
     // }]
+    console.log("this is props in TagView" , props.tagsList)
     return (
         <div>
             <ul>

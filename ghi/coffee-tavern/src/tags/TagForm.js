@@ -8,26 +8,37 @@ import TagView from './TagListView';
 function TagForm(){
 
     const [tagsList, setTagsList] = useState([])
-    const [id, setId] = useState('')
+    // const [id, setId] = useState('')
     const [tag, setTag] = useState('')
 
-    // read tags
-    useEffect(() => { get_tag_url()
-        axios.get('http://localhost8100/get-tag/${Tag_id}')
-        .then(res => {
-            setTagsList(res.data)
-        },[])
-    });
-    const get_tag_url = async(Tag_id) => {
-        Tag_id = 1
+    // read tags get_tag_url()
+    // useEffect(() => { 
+    //     axios.get('http://localhost8100/get_all_tags')
+    //     .then(res => {
+    //         console.log("this is useEffect", res)
+    //         setTagsList(res.data)
+    //     },[])
+    // });
+
+    // const getTagHandler = () => {
+    //     axios.get('http://localhost8100/get_all_tags')
+    //     .then(res => {
+    //         console.log("this is useEffect", res)
+    //         setTagsList(res.data)
+    //     },)
+    //     };
+    // const get_tag_url = async(Tag_id) => {
+    //     Tag_id = 1
     
-    const response = await axios.get('http://localhost8100/get-tag/${Tag_id}')
-        setTagsList(response.data)
-    }
+    // const response = await axios.get('http://localhost8100/get_all_tags')
+    //     setTagsList(response.data)
+    // }
+    
     // post tags
     const addTagHandler = () => {
         axios.post('http://localhost8100/create_tag_form')
         .then(res => console.log(res))
+        setTagsList([...tagsList, tag]);
     };
     //{'id': id, 'tag': tag}
 
