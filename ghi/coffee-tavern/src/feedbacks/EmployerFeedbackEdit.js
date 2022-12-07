@@ -1,9 +1,13 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
+import { useLocation } from "react-router-dom";
 
 function EmployerFeedbackEdit(){
 
+  const location = useLocation();
+  const id = location.state.id
+  console.log("##EDIT ID###", id)
   //Handles getting the data from the specific employee ID
   const [employee, setEmployee] = useState([]);
   const { token } = useAuthContext();
@@ -13,7 +17,7 @@ function EmployerFeedbackEdit(){
   }, []);
 
   const getEmployerFeedbacksUrl = async (EmployerFeedback_id) => {
-    EmployerFeedback_id = 1                               //Temporary Employer ID
+    EmployerFeedback_id = id                              //Temporary Employer ID
     const response = await axios.get(`http://localhost:8000/employer-feedback-form/${EmployerFeedback_id}`,
     {headers: { Authorization: `Bearer ${token}`}});
     setEmployee(response.data)};
@@ -30,7 +34,7 @@ function EmployerFeedbackEdit(){
     // Editing Form
     const handleEdit = async (event,EmployerFeedback_id) => {
       event.preventDefault();
-      EmployerFeedback_id = 1                            //Temporary Employer ID
+      EmployerFeedback_id = id                            //Temporary Employer ID
 
       if(!(inputs["employee_name"])){
         inputs["employee_name"] = employee.employee_name
@@ -59,7 +63,7 @@ function EmployerFeedbackEdit(){
 
     // Delete Form
     const handleDelete = async (EmployerFeedback_id) => {
-      EmployerFeedback_id = 1                            //Temporary Employer ID
+      EmployerFeedback_id = id                            //Temporary Employer ID
       await axios.delete(
         `http://localhost:8000/employer-feedback-form/${EmployerFeedback_id}`,
         {headers: { Authorization: `Bearer ${token}`}})
@@ -70,6 +74,7 @@ function EmployerFeedbackEdit(){
 
     return (
       <div className="row">
+        <h1>Edit feedback</h1>
         <form className="col s12" onSubmit={handleEdit}>
           <div className="row">
             <div className="form-floating col s6">
@@ -95,7 +100,7 @@ function EmployerFeedbackEdit(){
           <div className="row">
             <div className="col s12">
               <div className="input-field inline">
-                  <button className="btn waves-effect waves-light" type="submit" name="action">Edit
+                  <button className="btn waves-effect waves-light" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
               </div>

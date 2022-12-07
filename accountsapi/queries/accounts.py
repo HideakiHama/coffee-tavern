@@ -46,16 +46,16 @@ class AccountRepo:
         except Exception as e:
             return {"message": "Could not get account"}
 
-    def get(self, email: str) -> Optional[Account]:
+    def get(self, user_name: str) -> Optional[Account]:
         with pool.connection() as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
                     SELECT id, email, hashed_password, user_name, role
                     FROM accounts
-                    WHERE email = %s
+                    WHERE user_name = %s
                     """,
-                    [email],  # email variable get replace with %s
+                    [user_name],  # email variable get replace with %s
                 )
                 record = result.fetchone()
                 if record is None:

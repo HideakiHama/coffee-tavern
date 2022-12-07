@@ -120,7 +120,7 @@ def Delete_Employer_Feedback(
     )
 
     x = repo.get_one(EmployerFeedback_id)
-    # print(x.account_id)
+
     if x.account_id == account["id"]:
         return repo.delete(EmployerFeedback_id)
     raise credentials_exception
