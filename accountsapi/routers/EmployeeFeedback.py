@@ -7,13 +7,11 @@ from queries.EmployeeFeedback_queries import (
     EmployeeFeedbackFormOut2,
     Error,
 )
-from RoleChecker import RoleChecker
-
 from queries.accounts import AccountRepo
+from authenticator import authenticator
 
 router = APIRouter()
 
-checker = RoleChecker("Employee")
 
 ## POST ##
 # creating new employee feedback form #
@@ -24,20 +22,19 @@ checker = RoleChecker("Employee")
 )
 def create_employee_feedback_form(
     new_form: EmployeeFeedbackFormIn,
-    account_id: int,
     repo: EmployeeFeedbackRepository = Depends(),
-    repo1: AccountRepo = Depends(),
-    checked_role: bool = Depends(checker),
+    account: dict = Depends(authenticator.get_current_account_data),
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are employer. Please use employer feedback form",
     )
-    if checked_role:
-        not_final = repo.create(new_form, account_id).dict()
-        not_final["account_id"] = repo1.get(account_id).dict()
+    if account["role"] == "Employee":
+        not_final = repo.create(new_form, account["id"]).dict()  ####
+        not_final["account_id"] = account
         return not_final
     raise credentials_exception
+
 
 ## GET ##
 # getting detail feedback from employee
@@ -48,16 +45,16 @@ def create_employee_feedback_form(
 )
 def get_one_employee_feedback_form(
     EmployeeFeedback_id: int,
-    response: Response,
+    account: dict = Depends(authenticator.get_current_account_data),
     repo: EmployeeFeedbackRepository = Depends(),
-    repo1: AccountRepo = Depends()
 ) -> EmployeeFeedbackFormOut:
     credentials_exception = HTTPException(
         status_code=status.HTTP_404_NOT_FOUND,
         detail="employee feedback not found",
     )
     EmployeeFeedback = repo.get_one(EmployeeFeedback_id).dict()
-    EmployeeFeedback["account_id"] = repo1.get(EmployeeFeedback["account_id"]).dict()
+    EmployeeFeedback["account_id"] = account
+
     if EmployeeFeedback:
         return EmployeeFeedback
     raise credentials_exception
@@ -79,7 +76,7 @@ def get_all(
 
 ## PUT ##
 # Edit feedback #
-@router.patch(
+@router.put(
     "/employee-feedback-form/{EmployeeFeedback_id}",
     tags=["Employee Feedback Form"],
     response_model=Union[EmployeeFeedbackFormOut, Error],
@@ -88,8 +85,18 @@ def Edit_Employee_Feedback(
     EmployeeFeedback_id: int,
     FeedbackForm: EmployeeFeedbackFormIn,
     repo: EmployeeFeedbackRepository = Depends(),
+    account: dict = Depends(authenticator.get_current_account_data),
 ) -> Union[Error, EmployeeFeedbackFormOut]:
-    return repo.update(EmployeeFeedback_id, FeedbackForm)
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You are employee. Only the employer can edit",
+    )
+
+    x = repo.get_one(EmployeeFeedback_id)
+    # print(x.account_id)
+    if x.account_id == account["id"]:
+        return repo.update(EmployeeFeedback_id, FeedbackForm)
+    raise credentials_exception
 
 
 ## DELETE ##
@@ -102,5 +109,15 @@ def Edit_Employee_Feedback(
 def Delete_Employee_Feedback(
     EmployeeFeedback_id: int,
     repo: EmployeeFeedbackRepository = Depends(),
+    account: dict = Depends(authenticator.get_current_account_data),
 ) -> bool:
-    return repo.delete(EmployeeFeedback_id)
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You are employee. Only the employer can edit",
+    )
+
+    x = repo.get_one(EmployeeFeedback_id)
+    # print(x.account_id)
+    if x.account_id == account["id"]:
+        return repo.delete(EmployeeFeedback_id)
+    raise credentials_exception

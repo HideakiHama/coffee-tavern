@@ -15,18 +15,16 @@ from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
 router = APIRouter()
 
 
-
 ## POST ##
 # creating new employer feedback form #
 @router.post(
-    "/employer-feedback-form/{account_id}/",
+    "/employer-feedback-form/{account_id}",
     tags=["Employer Feedback Form"],
     response_model=EmployerFeedbackFormOut,
 )
 async def create_employer_feedback_form(
     new_form: EmployerFeedbackFormIn,
     repo: EmployerFeedbackRepository = Depends(),
-   
     account: dict = Depends(authenticator.get_current_account_data),
 ):
     credentials_exception = HTTPException(
@@ -43,13 +41,13 @@ async def create_employer_feedback_form(
 ## GET ##
 # getting detail feedback from employer
 @router.get(
-    "/employer-feedback-form/{EmployerFeedback_id}/",
+    "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
 def get_one_employer_feedback_form(
     EmployerFeedback_id: int,
-     account: dict = Depends(authenticator.get_current_account_data),
+    account: dict = Depends(authenticator.get_current_account_data),
     repo: EmployerFeedbackRepository = Depends(),
 ) -> EmployerFeedbackFormOut:
     credentials_exception = HTTPException(
@@ -67,14 +65,14 @@ def get_one_employer_feedback_form(
 ## GET ##
 # getting list of feedback from employers
 @router.get(
-    "/employer-feedbacks/{account_id}/",
+    "/employer-feedbacks/{account_id}",
     tags=["Employer Feedback Form"],
     response_model=Union[List[EmployerFeedbackFormOut2], Error],
 )
 def get_all(
     account_id: int,
     repo: EmployerFeedbackRepository = Depends(),
-    account: dict = Depends(authenticator.get_current_account_data)
+    account: dict = Depends(authenticator.get_current_account_data),
 ):
     return repo.get_all(account_id)
 
@@ -82,7 +80,7 @@ def get_all(
 ## PUT ##
 # Edit feedback #
 @router.put(
-    "/employer-feedback-form/{EmployerFeedback_id}/",
+    "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],
     response_model=Union[EmployerFeedbackFormOut, Error],
 )
@@ -99,14 +97,15 @@ def Edit_Employer_Feedback(
 
     x = repo.get_one(EmployerFeedback_id)
     # print(x.account_id)
-    if  x.account_id == account["id"]:
+    if x.account_id == account["id"]:
         return repo.update(EmployerFeedback_id, FeedbackForm)
     raise credentials_exception
+
 
 ## DELETE ##
 # Delete feedback #
 @router.delete(
-    "/employer-feedback-form/{EmployerFeedback_id}/",
+    "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],
     response_model=bool,
 )
@@ -122,7 +121,6 @@ def Delete_Employer_Feedback(
 
     x = repo.get_one(EmployerFeedback_id)
     # print(x.account_id)
-    if  x.account_id == account["id"]:
+    if x.account_id == account["id"]:
         return repo.delete(EmployerFeedback_id)
     raise credentials_exception
-   

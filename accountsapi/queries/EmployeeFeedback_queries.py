@@ -4,6 +4,7 @@ from queries.pool import pool
 from datetime import date
 from queries.accounts import Account, AccountOut
 
+
 class Error(BaseModel):
     message: str
 
@@ -21,12 +22,14 @@ class EmployeeFeedbackFormOut(BaseModel):
     description: str
     account_id: Account | None = None
 
+
 class EmployeeFeedbackFormOut2(BaseModel):
     id: int
     employer_name: str
     date: date
     description: str
     account_id: int
+
 
 # Employer Feedback of Employee
 class EmployeeFeedbackRepository:
@@ -79,7 +82,7 @@ class EmployeeFeedbackRepository:
                 for i in y:
                     if i["account_id"] == account_id:
                         list1.append(i)
-                print(list1)
+
                 return list1
         except Exception as e:
             return {"message": "Could not get employee feedback form"}
@@ -103,7 +106,7 @@ class EmployeeFeedbackRepository:
                             FeedbackForm.employer_name,
                             FeedbackForm.date,
                             FeedbackForm.description,
-                            account_id
+                            account_id,
                         ],
                     )
                     id = result.fetchone()[0]
@@ -156,12 +159,15 @@ class EmployeeFeedbackRepository:
             return False
 
     def feedback_post_in_to_out(self, id: int, FeedbackForm: EmployeeFeedbackFormIn):
-        print("FEEDBACKFORM", FeedbackForm)
         old_data = FeedbackForm.dict()
         return EmployeeFeedbackFormOut(id=id, **old_data)
 
     # refactored function for GET#
     def record_to_employee_feedback_out(self, record):
         return EmployeeFeedbackFormOut2(
-            id=record[0], employer_name=record[1], date=record[2], description=record[3], account_id=record[4]
+            id=record[0],
+            employer_name=record[1],
+            date=record[2],
+            description=record[3],
+            account_id=record[4],
         )

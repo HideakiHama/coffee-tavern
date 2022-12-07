@@ -1,0 +1,67 @@
+stages:
+  - test   # Run tests first
+  - build  # Run build after tests
+  - deploy # Run deploy after build
+
+# For each FastAPI service that you have in your application that has unit tests, 
+# add a new job section with the name and directory of the service substituted.
+# This will change the active directory to the service's directory, install its requirements,
+# then run the unit tests with pytest, just like if you were doing it by hand.
+
+service-name-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - cd app
+    - pip install -r requirements.txt
+    - python -m pytest
+
+## Lint-test-job
+lint-test-job:
+  image: python:3-bullseye
+  stage: test
+  script:
+    - pip install flake8
+    - flake8 api  # Run flake8 on Python project to check
+                  # for code quality
+
+build-back-end-job:
+  stage: build
+  image:
+  services:
+    - docker:20.10.16-dind
+  script:
+    - cd api
+    - docker volume create coffee_tavern-data
+    - docker compose up --build 
+
+build-front-end-job:
+  stage: build
+  image: node:lts-bullseye
+  variables:
+    PUBLIC_URL: https://gitlab.com/caffeine-anonymous/coffee-tavern 
+  script:
+    - cd ghi  # CHANGE THIS TO THE DIRECTORY THAT HAS package.json
+    - npm install
+    - npm run build
+    - cp build/index.html build/404.html  # Make this a SPA
+  artifacts:
+    paths:
+      - ghi/build/  # Save all of the files in the build path
+
+pages:
+  stage: deploy
+  rules:
+
+  dependencies:
+    - build-front-end-job
+  needs:
+    - build-front-end-job
+  script:
+    - cd api
+    - mv ghi/build/public
+  artifacts:
+    paths:
+      - public
+
+

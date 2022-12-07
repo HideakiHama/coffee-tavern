@@ -21,6 +21,7 @@ class EmployeeInfoOut(BaseModel):
     about: Optional[str]
     account_id: int
 
+
 class EmployeeInfoRepo:
     def create(
         self, info: EmployeeInfoIn, account_id: int
@@ -46,12 +47,11 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
-                    print("RESULT", result)
                     # get current user id
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
-        
+
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
         try:
             # connect the database
@@ -106,12 +106,12 @@ class EmployeeInfoRepo:
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
-        
+
     def record_employee_form_out(self, record):
         return EmployeeInfoOut(
             career_title=record[0],
             location=record[1],
             education=record[2],
             about=record[3],
-            account_id=record[4]
+            account_id=record[4],
         )
