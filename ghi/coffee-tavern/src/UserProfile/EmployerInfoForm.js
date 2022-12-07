@@ -34,7 +34,7 @@ function EmployerInfoForm({id}) {
 
         getEmployerInfo()
 
-    }, [id])
+    }, [id, token])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
