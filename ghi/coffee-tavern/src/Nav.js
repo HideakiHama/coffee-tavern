@@ -20,6 +20,9 @@ function Nav() {
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedback">Employee Feedback Form</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedbacks-list">Past Employee Feedbacks</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedback-update">Edit Employee Feedbacks</NavLink></li>
+
+            
+            <li><NavLink className="dropdown-item" aria-current="page" to="/user/employee">Employee Profile</NavLink></li>
         </ul>
     </div>
     </nav>

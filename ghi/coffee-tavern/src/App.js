@@ -6,6 +6,10 @@ import EmployerFeedbackList from './feedbacks/EmployerFeedbackList';
 import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
 import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
+import EmployeeProfile from './UserProfile/Employee';
+import EmployerProfile from './UserProfile/Employer';
+import EmployeeInfoForm from './UserProfile/EmployeeInfoForm';
+import EmployerInfoForm from './UserProfile/EmployerInfoForm';
 
 import TagForm from './tags/TagForm';
 
@@ -26,7 +30,9 @@ function GetToken() {
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = {
+      id: 2
+    };
   }
 
 render() {
@@ -63,6 +69,14 @@ render() {
                 </Route>
                 <Route path = "/create_tag_form" element={<TagForm />}>
                 </Route>
+
+                {/* Lexey */}
+
+                <Route path = "/user/employee/" element={<EmployeeProfile id={this.state.id}/>} />
+                <Route path = "/user/employee/info-form" element={<EmployeeInfoForm id={this.state.id}/>} />
+                <Route path = "/user/employer" element={<EmployerProfile id={this.state.id}/>} />
+                <Route path = "/user/employer/info-form" element={<EmployerInfoForm id={this.state.id}/>} />
+
               </Routes>
             </div>
         </BrowserRouter>
