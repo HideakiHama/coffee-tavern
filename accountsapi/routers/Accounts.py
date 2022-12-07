@@ -16,17 +16,6 @@ from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
 
 from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
-# import jwt
-# import secrets
-# from decouple import config
-
-# JWT_SECRET = config("secret")
-# JWT_ALGORITHM = config("algorithm")
-
-# oauth2_scheme = OAuth2PasswordBearer(tokenUrl="token")
-# print("####", oauth2_scheme)
-
-
 class AccountForm(BaseModel):
     username: str
     password: str
@@ -85,8 +74,6 @@ async def delete_account(account_id: int, repo: AccountRepo = Depends()) -> bool
 @router.get("/get_token", response_model=AccountToken | None)
 async def get_token(request: Request, account: dict = Depends(authenticator.get_current_account_data)) -> AccountToken | None:
     if account and authenticator.cookie_name in request.cookies:
-        print("R", request)
-        print("A", authenticator)
         return {
             "access_token": request.cookies[authenticator.cookie_name],
             "type": "Bearer",

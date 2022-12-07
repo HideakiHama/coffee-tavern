@@ -104,8 +104,4 @@ class TagRepository:
 
     # refactored function for GET#
     def record_to_tag_out(self, record):
-<<<<<<< HEAD
         return Tags(id=record[0], tag=record[1])
-=======
-        return Tags(id=record[0], tag=record[1])
->>>>>>> 812776103fc5131fbea437ce046eab0026790aad
