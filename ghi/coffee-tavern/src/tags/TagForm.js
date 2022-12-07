@@ -8,7 +8,7 @@ import TagView from './TagListView';
 function TagForm(){
 
     const [tagsList, setTagsList] = useState([])
-    // const [id, setId] = useState('')
+    const [id, setId] = useState('')
     const [tag, setTag] = useState('')
 
     // read tags
@@ -21,11 +21,10 @@ function TagForm(){
  
     // post tags
     const addTagHandler = () => {
-        axios.post('http://localhost8100/create_tag_form', {'tag': tag})
+        axios.post('http://localhost8100/create_tag_form/', {'id': id, 'tag': tag})
         .then(res => console.log(res))
     };
-   
-
+    
 
 
     return(
@@ -36,7 +35,9 @@ function TagForm(){
         <div className="card-body">
         <h5 className="card text-white bg-dark mb-3"> Add Tag </h5>
             <span className="card-text">
-            <input className="mb-w form-control desIn" onChange={event =>
+            {/* <input className="mb-w form-control idIn" onChange={event =>
+            setTag(event.target.value)} placeholder="ID"/> */}
+            <input className="mb-w form-control tagIn" onChange={event =>
             setTag(event.target.value)} placeholder="Tag Name"/>
             <button className="btn btn-outline-primary mx-2 mb-3" style={{
                 'borderRadius':'50px',
