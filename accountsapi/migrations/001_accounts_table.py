@@ -20,6 +20,7 @@ steps = [
         ## Add profile_picture
         """
         CREATE TABLE employee_info (
+            full_name VARCHAR(255),
             career_title VARCHAR(255),
             location VARCHAR(255),
             education VARCHAR(255),
@@ -54,6 +55,7 @@ steps = [
         ## Add profile_picture
         """
         CREATE TABLE employer_info (
+            company_name VARCHAR(255),
             job_type VARCHAR(255),
             location VARCHAR(255),
             about TEXT,

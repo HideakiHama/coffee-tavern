@@ -69,26 +69,22 @@ function EmployerInfoForm({id}) {
             <form className="col s12" onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="form-floating col s6">
-                        <input type="text" name="company_name" value={companyName} id="company_name" onChange={e => setCompanyName(e.target.value)}>
+                        <input placeholder="Company Name" type="text" name="company_name" value={companyName} id="company_name" onChange={e => setCompanyName(e.target.value)}>
                         </input>
-                        <label>Company Name</label>
                     </div>
                     <div className="form-floating col s6">
-                        <input type="text" name="job_type" value={jobType} id="job_type" onChange={e => setJobType(e.target.value)}>
+                        <input placeholder="Type of Company" type="text" name="job_type" value={jobType} id="job_type" onChange={e => setJobType(e.target.value)}>
                         </input>
-                        <label>Type of Company</label>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-floating col s6">
-                        <input type="text" name="location" value={location} id="location" onChange={e => setLocation(e.target.value)}>
+                        <input placeholder="Location" type="text" name="location" value={location} id="location" onChange={e => setLocation(e.target.value)}>
                         </input>
-                        <label>Location</label>
                     </div>
                     <div className="form-floating col s6">
-                        <input type="text" name="about" value={about} id="about" onChange={e => setAbout(e.target.value)}>
+                        <input placeholder="About" type="text" name="about" value={about} id="about" onChange={e => setAbout(e.target.value)}>
                         </input>
-                        <label>About</label>
                     </div>
                 </div>
                 <div className="row">

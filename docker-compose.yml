@@ -9,7 +9,7 @@ services:
       context: ./accountsapi
       dockerfile: Dockerfile.dev
     environment:
-      DATABASE_URL: postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
+      DATABASE_URL: postgres://nomzfggc:6bglQKZvY6RA8TTdlIc6Iz-D6e65l9kq@arjuna.db.elephantsql.com/nomzfggc
       # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki

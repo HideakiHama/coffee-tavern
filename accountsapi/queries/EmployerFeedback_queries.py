@@ -1,8 +1,10 @@
 from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
-from queries.pool import pool
 from datetime import date
 from queries.accounts import Account
+import os
+from psycopg import connect
+from queries.pool import keepalive_kwargs
 
 
 class Error(BaseModel):
@@ -36,7 +38,7 @@ class EmployerFeedbackRepository:
     ## GET ##
     def get_one(self, EmployerFeedback_id: int) -> Optional[EmployerFeedbackFormOut]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -60,9 +62,9 @@ class EmployerFeedbackRepository:
             return {"message": "Could not get employer feedback form"}
 
     ## GET ##
-    def get_all(self, account_id: int) -> Union[List[EmployerFeedbackFormOut2], Error]:
+    def get_all(self, account_id: str) -> Union[List[EmployerFeedbackFormOut2], Error]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -92,7 +94,7 @@ class EmployerFeedbackRepository:
         self, FeedbackForm: EmployerFeedbackFormIn, account_id: int
     ) -> EmployerFeedbackFormOut:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -119,7 +121,7 @@ class EmployerFeedbackRepository:
         self, EmployerFeedback_id: int, FeedbackForm: EmployerFeedbackFormIn
     ) -> Union[EmployerFeedbackFormOut2, Error]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -145,7 +147,7 @@ class EmployerFeedbackRepository:
     ## DELETE ##
     def delete(self, EmployerFeedback_id: int) -> bool:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
