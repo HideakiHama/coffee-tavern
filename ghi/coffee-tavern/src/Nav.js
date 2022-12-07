@@ -9,8 +9,7 @@ function Nav() {
     {/* <a className="brand-logo right">Logo</a> */}
         <ul id="nav-mobile" className="left hide-on-med-and-down">
             <li><NavLink className="dropdown-item" aria-current="page" to="/">Home</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/api/accounts">Signup</NavLink></li>
-            <li><Testing /></li>
+            <Testing />
             <li><NavLink className="dropdown-item" aria-current="page" to="/upload_resume/">Upload Resume</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/create_form">Create Job Post</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/get_all_form">Board of Jobs</NavLink></li>

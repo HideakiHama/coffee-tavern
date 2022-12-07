@@ -41,8 +41,9 @@ async def create_account(
     response: Response,
     repo: AccountRepo = Depends(),
 ):
+    print("HEHEHE")
     hashed_password = authenticator.hash_password(info.password)
-
+    print("PLZ")
     account = repo.create(info, hashed_password)
     print(account)
     form = AccountForm(username=info.email, password=info.password)

@@ -102,23 +102,21 @@ export function useToken() {
     return handleErrorMessage(error);
   }
 
-  async function signup(username, password, email, firstName, lastName) {
+  async function signup(password, email, firstName) {
     const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/api/accounts/`;
     const response = await fetch(url, {
       method: "post",
       body: JSON.stringify({
-        username,
-        password,
-        email,
+        password: password,
+        email: email,
         first_name: firstName,
-        last_name: lastName,
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     if (response.ok) {
-      await login(username, password);
+      await login(email, password);
     }
     return false;
   }

@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import List, Optional, Union
-from queries.pool import pool
+from queries.pool import keepalive_kwargs
+import os
+from psycopg import connect
 
 
 class Error(BaseModel):
@@ -28,7 +30,7 @@ class EmployeeInfoRepo:
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
@@ -55,7 +57,7 @@ class EmployeeInfoRepo:
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
         try:
             # connect the database
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our SELECT statement
@@ -83,7 +85,7 @@ class EmployeeInfoRepo:
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """

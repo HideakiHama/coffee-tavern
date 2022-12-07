@@ -1,7 +1,9 @@
 from pydantic import BaseModel
 from typing import List, Optional, Union
 from datetime import date
-from queries.pool import pool
+from queries.pool import keepalive_kwargs
+import os
+from psycopg import connect
 from queries.accounts import Account
 
 
@@ -66,7 +68,7 @@ class JobFormRepository:
     def get_one(self, JobForm_id: int) -> Optional[JobPostFormOut]:
         try:
             # connect the database
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our SELECT statement
@@ -95,7 +97,7 @@ class JobFormRepository:
 
     def get_all(self) -> Union[List[JobPostForm], Error]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -115,7 +117,7 @@ class JobFormRepository:
         print("JOB", JobForm)
         try:
             # connect the database
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
@@ -149,7 +151,7 @@ class JobFormRepository:
     ) -> Union[JobPostFormOut, Error]:
         print("UpdatedJobForm", UpdatedJobForm)
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -182,7 +184,7 @@ class JobFormRepository:
 
     def delete(self, Form_id: int) -> bool:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """

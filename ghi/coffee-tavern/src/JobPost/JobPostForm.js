@@ -11,6 +11,7 @@ const JobPostForm = () => {
     const [tag, setTag] = useState("");
     const [tags, setTags] = useState([]);
     const { token } = useAuthContext();
+
     const clearJobForm = () => {
         setEmployer("");
         setPosition("");

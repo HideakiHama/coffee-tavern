@@ -6,9 +6,22 @@ const Testing = () => {
     const { token } = useAuthContext();
 
     if (token) {
-        return (<NavLink className="dropdown-item" aria-current="page" to="/token">logout</NavLink>)
+        return (
+        <li>
+        <NavLink className="dropdown-item" aria-current="page" to="/token">logout</NavLink>
+        </li>
+        )
     }else{
-        return (<NavLink className="dropdown-item" aria-current="page" to="/token">Login</NavLink>)
+        return (
+        <>
+        <li>
+        <NavLink className="dropdown-item" aria-current="page" to="/token">Login</NavLink>
+        </li>
+        <li>
+        <NavLink className="dropdown-item" aria-current="page" to="/api/accounts">Signup</NavLink>
+        </li>
+        </>
+        )
     }
 
 }
