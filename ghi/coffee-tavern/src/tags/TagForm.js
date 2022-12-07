@@ -11,19 +11,20 @@ function TagForm(){
     // const [id, setId] = useState('')
     const [tag, setTag] = useState('')
 
-    // read tags
-    useEffect(() => { get_tag_url()
-        axios.get('http://localhost8100/get-tag/${Tag_id}')
+    // read tags get_tag_url()
+    useEffect(() => { 
+        axios.get('http://localhost8100/get_all_tags')
         .then(res => {
             setTagsList(res.data)
         },[])
     });
-    const get_tag_url = async(Tag_id) => {
-        Tag_id = 1
+    // const get_tag_url = async(Tag_id) => {
+    //     Tag_id = 1
     
-    const response = await axios.get('http://localhost8100/get-tag/${Tag_id}')
-        setTagsList(response.data)
-    }
+    // const response = await axios.get('http://localhost8100/get_all_tags')
+    //     setTagsList(response.data)
+    // }
+    
     // post tags
     const addTagHandler = () => {
         axios.post('http://localhost8100/create_tag_form',{'tag': tag})
