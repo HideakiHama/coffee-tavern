@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response
-from queries import TagOut, TagIn, TagRepository, Tags, Error
+from queries.TagQueries import TagOut, TagIn, TagRepository, Error
 from typing import List, Union
 
 router = APIRouter()
@@ -14,7 +14,8 @@ def create_tag(new_form: TagOut, repo: TagRepository = Depends()):
 ## GET ##
 # getting detail feedback from employer
 @router.get(
-    "/employer-feedback-form/{Tag_id}",
+    "/get-tag/{Tag_id}",
+    tags=["TagForm"],
     response_model=Union[TagOut, Error],
 )
 def get_one_employer_feedback_form(

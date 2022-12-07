@@ -2,7 +2,7 @@ import React, {useState } from 'react';
 import axios from "axios"
 // import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css'
-
+import { useAuthContext } from '../useToken';
 
 
 function EmployerFeedbackForm() {
@@ -11,7 +11,7 @@ function EmployerFeedbackForm() {
                                           , date: ''
                                           , description:''
                                           });
-
+    const { token } = useAuthContext();
 
     const account_id = 2
 
@@ -19,7 +19,8 @@ function EmployerFeedbackForm() {
       event.preventDefault();
       const { employee_name, date, description } = inputs;
       const submit = { employee_name, date, description } ;
-      const response = await axios.post(`http://localhost:8000/employer-feedback-form/${account_id}`, submit) //account_id 2
+      await axios.post(`http://localhost:8000/employer-feedback-form/${account_id}`, submit,
+      {headers: { Authorization: `Bearer ${token}`,}})      //checks if the user logged in
       setInputs({employee_name: '', date: '', description:''})
     }
 

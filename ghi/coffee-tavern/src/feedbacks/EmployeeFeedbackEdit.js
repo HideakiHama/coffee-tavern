@@ -1,18 +1,21 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
+import { useAuthContext } from '../useToken';
 
 function EmployeeFeedbackEdit(){
 
   //Handles getting the data from the specific employer ID
   const [employer, setEmployer] = useState([]);
+  const { token } = useAuthContext();
 
   useEffect(() =>{
     getEmployeeFeedbacksUrl();
   }, []);
 
   const getEmployeeFeedbacksUrl = async (EmployeeFeedback_id) => {
-    EmployeeFeedback_id = 1      //Temporary Employee ID
-    const response = await axios.get(`http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`);
+    EmployeeFeedback_id = 1                                   //Temporary Employee ID
+    const response = await axios.get(`http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`,
+    {headers: { Authorization: `Bearer ${token}`}});
     setEmployer(response.data)};
 
 
@@ -27,7 +30,7 @@ function EmployeeFeedbackEdit(){
     // Editing Form
     const handleEdit = async (event,EmployeeFeedback_id) => {
       event.preventDefault();
-      EmployeeFeedback_id = 1     //Temporary Employee ID
+      EmployeeFeedback_id = 1                           //Temporary Employee ID
 
       if(!(inputs["employer_name"])){
         inputs["employer_name"] = employer.employer_name
@@ -39,8 +42,8 @@ function EmployeeFeedbackEdit(){
 
       const { employer_name, date, description } = inputs;
       const submit = { employer_name, date, description } ;
-      await axios.put(`http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`, submit) //account_id 2
-      console.log("HANDLE SUBMIT")
+      await axios.put(`http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`, submit,
+      {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employer_name:'', date: '', description:''})
       setEmployer({employer_name:'', date: '', description:''})
     }
@@ -48,7 +51,6 @@ function EmployeeFeedbackEdit(){
     // Response to the input change
     const handleInputChange = (event) => {
       event.persist();
-        console.log("HANDLE INPUT CHANGE")
 
         setInputs(inputs => ({                         //setInputs
         ...inputs,
@@ -57,10 +59,10 @@ function EmployeeFeedbackEdit(){
 
     // Delete Form
     const handleDelete = async (EmployeeFeedback_id) => {
-      EmployeeFeedback_id = 1     //Temporary Employee ID
+      EmployeeFeedback_id = 1                            //Temporary Employee ID
       await axios.delete(
         `http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`
-        )
+        , {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employer_name:'', date: '', description:''})
       setEmployer({employer_name:'', date: '', description:''})
       }

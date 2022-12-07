@@ -2,7 +2,7 @@ import React, {useState } from 'react';
 import axios from "axios"
 // import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css'
-
+import { useAuthContext } from '../useToken';
 
 
 function EmployeeFeedbackForm() {
@@ -11,23 +11,21 @@ function EmployeeFeedbackForm() {
                                           , date: ''
                                           , description:''
                                           });
-
+    const { token } = useAuthContext();
 
     const account_id = 1
 
     const handleSubmit = async (event) => {
       event.preventDefault();
-
       const { employer_name, date, description } = inputs;
       const submit = { employer_name, date, description } ;
-      await axios.post(`http://localhost:8000/employee-feedback-form/${account_id}/`, submit) //account_id 1
-      console.log("HANDLE SUBMIT")
+      await axios.post(`http://localhost:8000/employee-feedback-form/${account_id}/`, submit,
+      {headers: { Authorization: `Bearer ${token}`}})    //checks if the user logged in
       setInputs({employer_name: '', date: '', description:''})
     }
 
       const handleInputChange = (event) => {
       event.persist();
-        console.log("HANDLE INPUT CHANGE")
 
         setInputs(inputs => ({                         //setInputs
         ...inputs,

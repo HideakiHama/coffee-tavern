@@ -7,9 +7,9 @@ class Error(BaseModel):
     message: str
 
 
-# class Tags(BaseModel):
-#     id: int
-#     tag: str
+class Tags(BaseModel):
+    id: int
+    tag: str
 
 
 class TagIn(BaseModel):
@@ -23,7 +23,7 @@ class TagOut(BaseModel):
 
 class TagRepository:
     ## GET ##
-    def get_one(self, Tag_id: int) -> Optional[TagOut]:
+    def get_one(self, tag: str) -> Optional[Tags]:
         try:
             with pool.connections() as conn:
                 with conn.cursor() as db:
@@ -32,11 +32,9 @@ class TagRepository:
                         SELECT id
                         , tag
                         FROM tags
-                        WHERE id = %s
+                        WHERE tag = %s
                         """,
-                        [
-                            Tag_id,
-                        ],
+                        [tag],
                     )
                     record = result.fetchone()
                     if record is None:
@@ -65,7 +63,7 @@ class TagRepository:
             return {"message": "No tags available"}
 
     ## POST ##
-    def create(self, TagForm: TagIn) -> TagOut:
+    def create(self, TagForm: TagIn) -> Tags:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -80,7 +78,7 @@ class TagRepository:
                         [TagForm.tag],
                     )
                     id = result.fetchone()[0]
-                    return self.feedback_post_in_to_out(id, TagForm)
+                    return Tags(id=id, tag=TagForm.tag)
         except Exception:
             return {"message": "Couldn't create Tag"}
 
@@ -106,4 +104,4 @@ class TagRepository:
 
     # refactored function for GET#
     def record_to_tag_out(self, record):
-        return TagOut(id=record[0], tag=record[1])
+        return Tags(id=record[0], tag=record[1])

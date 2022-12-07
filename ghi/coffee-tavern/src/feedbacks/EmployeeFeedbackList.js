@@ -1,19 +1,24 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
-
+import { useAuthContext } from '../useToken';
 
 
 
 function EmployeeFeedbackList() {
     const [employee, setEmployee] = useState([]);
 
+    const { token } = useAuthContext();
+
+
+    //NEED TO FIX THIS
     useEffect(() =>{
       getEmployerFeedbacksUrl();
     }, []);
 
     const getEmployerFeedbacksUrl = async (account_id) => {
       account_id = 1
-      const response = await axios.get(`http://localhost:8000/employee-feedbacks/${account_id}`);
+      const response = await axios.get(`http://localhost:8000/employee-feedbacks/${account_id}`,
+      {headers: { Authorization: `Bearer ${token}`}});
       setEmployee(response.data)};
 
     return (
@@ -30,7 +35,7 @@ function EmployeeFeedbackList() {
           <tbody>
             {employee && employee.map(employee =>
               <tr key={employee.id}>
-                <td>{employee.id}</td>
+                <td>{employee.employer_name}</td>
                 <td>{employee.date}</td>
                 <td>{employee.description}</td>
               </tr>
