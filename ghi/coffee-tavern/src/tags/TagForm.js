@@ -8,7 +8,7 @@ import TagView from './TagListView';
 function TagForm(){
 
     const [tagsList, setTagsList] = useState([])
-    const [id, setId] = useState('')
+    // const [id, setId] = useState('')
     const [tag, setTag] = useState('')
 
     // read tags
@@ -26,7 +26,7 @@ function TagForm(){
     }
     // post tags
     const addTagHandler = () => {
-        axios.post('http://localhost8100/create_tag_form')
+        axios.post('http://localhost8100/create_tag_form',{'tag': tag})
         .then(res => console.log(res))
     };
     //{'id': id, 'tag': tag}
