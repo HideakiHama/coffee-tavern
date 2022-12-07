@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../useToken';
 
 const JobPostForm = () => {
@@ -7,10 +7,10 @@ const JobPostForm = () => {
     const [location, setLocation] = useState("");
     const [from_date, setFromDate] = useState("");
     const [to_date, setToDate] = useState("");
-    const [tag, setTag] = useState("");
     const [description, setDescription] = useState("");
+    const [tag, setTag] = useState("");
+    const [tags, setTags] = useState([]);
     const { token } = useAuthContext();
-
     const clearJobForm = () => {
         setEmployer("");
         setPosition("");
@@ -21,9 +21,21 @@ const JobPostForm = () => {
         setDescription("");
     }
 
+    useEffect (() => {
+        const getTag = async () => {
+            const response = await fetch(`${process.env.REACT_APP_TAGS_API_HOST}/get_all_tags`, {
+            method: "GET",
+            headers: { Authorization: `Bearer ${token}`,
+            },});
+            const data = await response.json();
+            setTags(data);
+        }
+        getTag()
+    }, [])
+
     const handleSubmit = async(submit) => {
         submit.preventDefault()
-        const JobFormURL = `http://localhost:8000/create_form/${token}`;
+        const JobFormURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/create_form/`;
         const fetchConfig = {
             method: 'post',
             body: JSON.stringify({
@@ -35,11 +47,10 @@ const JobPostForm = () => {
                 tag: tag,
                 description: description
             }),
-            headers: {
-                "Content-type": "application/json",
-            },
-        }
+            headers: { Authorization: `Bearer ${token}`, "Content-type": "application/json",
+        }};
         const response = await fetch(JobFormURL, fetchConfig);
+        console.log("RESPONSE", response)
         const data = await response.json();
         console.log("DATAA", data)
         if (response.ok){
@@ -68,8 +79,17 @@ const JobPostForm = () => {
                         <div className="form-floating mb-3">
                             <input placeholder="To_date" required type="date" name="to_date" value={to_date} onChange={(event) => setToDate(event.target.value)} id="to_date" className="form-control" />
                         </div>
-                        <div className="form-floating mb-3">
+                        {/* <div className="form-floating mb-3">
                             <input placeholder="Tags" required type="text" name="tag" value={tag} onChange={(event) => setTag(event.target.value)} id="tag" className="form-control" />
+                        </div> */}
+                        <div className="mb-3">
+                            <select value={tag} onChange={(event => setTag(event.target.value))} required id="tag" name="tag" className="form-select">
+                                <option value="">Add a Tag</option>
+                                {tags.map(tag => {
+                                    console.log(tag)
+                                    return (<option key={tag.id} value={tag.id}>{tag.tag}</option>)
+                                })}
+                            </select>
                         </div>
                         <div className="form-floating mb-3">
                             <input placeholder="Description" required type="text" name="description" value={description} onChange={(event) => setDescription(event.target.value)} id="description" className="form-control" />

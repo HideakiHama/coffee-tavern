@@ -1,9 +1,12 @@
 import './App.css';
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import EmployeeFeedbackForm from './EmployeeFeedbackForm';
-import EmployerFeedbackForm from './EmployerFeedbackForm';
-import EmployerFeedbackList from './EmployerFeedbackList';
-import EmployeeFeedbackList from './EmployeeFeedbackList';
+import EmployeeFeedbackForm from './feedbacks/EmployeeFeedbackForm';
+import EmployerFeedbackForm from './feedbacks/EmployerFeedbackForm';
+import EmployerFeedbackList from './feedbacks/EmployerFeedbackList';
+import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
+import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
+import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
+
 import React, { Component } from 'react';
 import JobPostForm from './JobPost/JobPostForm';
 import JobPostList from './JobPost/JobPostList';
@@ -44,13 +47,17 @@ render() {
                 </Route>
                 <Route path="/upload_resume/" element={<UploadResume />}>
                 </Route>
-                <Route path = "/employee-feedbacks/" element={<EmployeeFeedbackForm />} >
+                <Route path = "/employee-feedback" element={<EmployeeFeedbackForm />} >
                 </Route>
-                <Route path = "/employer-feedbacks/" element={<EmployerFeedbackForm />} >
+                <Route path = "/employer-feedback" element={<EmployerFeedbackForm />} >
                 </Route>
-                <Route path = "/employee-feedback-list/" element={<EmployeeFeedbackList />} >
+                <Route path = "/employee-feedbacks-list" element={<EmployeeFeedbackList />} >
                 </Route>
-                <Route path = "/employer-feedbacks-list/" element={<EmployerFeedbackList/>} >
+                <Route path = "/employer-feedbacks-list" element={<EmployerFeedbackList/>} >
+                </Route>
+                <Route path = "/employee-feedback-update" element={<EmployeeFeedbackEdit/>}>
+                </Route>
+                <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
                 </Route>
               </Routes>
             </div>

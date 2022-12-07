@@ -1,4 +1,24 @@
+### Dec 05 2022
+Today I worked on having Authenticator work on the feedback form and changing the login back to login by email and not by id.
+User can only login by id because our SQL inside our account.'get' function was wrong.  WHERE clause (filter) was set to ID instead of email. It made the data expect integer. instead of string.
+Our major blocker was trying to figure out how to make our Monolithic app into Microservice.
+
+### Dec 04 2022
+I Worked on finishing the PUT and Delete request of both feedbacks.  I deleted "required" attribute inside the input tag of feedback-edit component. When user didn't want to update certain field then the original input data will sent to the backend. I added if statement inside the handle-edit to handle empty field.   Blocker: If the user wanted to edit, for example description field, the user have to type everything again even if its for editing one miss spell words.
+
+#### Dec 03 2022
+Worked on finishing POST, GET, and started PUT request of both feedbacks.   For tbe PUT I wanted to have user see and edit what they wrote inside the inputs fields.  To do this I had two option use "defaultValue" or "placeholder" attribute. I couldn't use "defaultValues" because I already had "value" inside the input tag. Also, if I deleted 'value' inside the input tag it will cause "A component is changing a controlled input to be uncontrolled" Side note: Controlled component is data that is handled by a React Component.  Uncontrolled component is data handled by the DOM itself.
+I decided to use the "placeholder" attribute to allow user to see what they wrote previously.
+
+#### Dec 02 2022
+In the morning all of us took our turn shared screen to merge our branches to the remote main at the Gitlab.  After experiencing what happened yesterday it was really traumatizing for me.  Again only ah-ha moment was always use git status to make sure I'm not sending node-modules.
+In the afternoon I pair programmed with Curtis to add more style to the employer-feedback on the frontend.
+
 #### Dec 01 2022
+I pair programmed with chris in the morning to finish the backend for Employee Feedback, then I worked on the authorization of Job-form PUT method.  I was going to start the frontend functionality side of Feedback Form and Feedback List but I couldn't start it until the evening that day.  I accidentally pushed node-modules into the gitlab and took us all the afternoon to fix it.  Turns out my node-module was not properly 'gitignored' when I committed.   I had several ah-ha moment today:
+ - if the node-modules doesn't ignore I need to both delete the node-modules folder and ".gitignore" file. remake the ".gitignore" file with all the files/directories that I want to be ignored.  Then I need to reinstall the node-module by npm install (in the correct directory!)
+ - git status is my friend.  let me know what file it will be commit or pushed
+ - When I run React I have to change "Select End of Line Sequence" from CRLF to LF (https://www.aleksandrhovhannisyan.com/blog/crlf-vs-lf-normalizing-line-endings-in-git/)
 
 
 #### Nov 30 2022
