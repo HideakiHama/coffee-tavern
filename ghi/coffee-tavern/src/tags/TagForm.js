@@ -12,12 +12,21 @@ function TagForm(){
     const [tag, setTag] = useState('')
 
     // read tags get_tag_url()
-    useEffect(() => { 
-        axios.get('http://localhost8100/get_all_tags')
-        .then(res => {
-            setTagsList(res.data)
-        },[])
-    });
+    // useEffect(() => { 
+    //     axios.get('http://localhost8100/get_all_tags')
+    //     .then(res => {
+    //         console.log("this is useEffect", res)
+    //         setTagsList(res.data)
+    //     },[])
+    // });
+
+    // const getTagHandler = () => {
+    //     axios.get('http://localhost8100/get_all_tags')
+    //     .then(res => {
+    //         console.log("this is useEffect", res)
+    //         setTagsList(res.data)
+    //     },)
+    //     };
     // const get_tag_url = async(Tag_id) => {
     //     Tag_id = 1
     
@@ -27,8 +36,9 @@ function TagForm(){
     
     // post tags
     const addTagHandler = () => {
-        axios.post('http://localhost8100/create_tag_form',{'tag': tag})
+        axios.post('http://localhost8100/create_tag_form')
         .then(res => console.log(res))
+        setTagsList([...tagsList, tag]);
     };
     //{'id': id, 'tag': tag}
 
