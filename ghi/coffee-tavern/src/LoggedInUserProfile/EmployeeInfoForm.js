@@ -1,20 +1,25 @@
 import 'materialize-css/dist/css/materialize.min.css'
-
+import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
 
 function EmployeeInfoForm({id}) {
-    // const [employeeInfo, setEmployeeInfo] = useState('')
+
     const [fullName, setFullName] = useState('')
     const [careerTitle, setCareerTitle] = useState('')
     const [location, setLocation] = useState('')
     const [education, setEducation] = useState('')
     const [about, setAbout] = useState('')
+    const [pic, setPic] = useState('')
 
     const { token } = useAuthContext();
 
     useEffect(() => {
         async function getEmployeeInfo () {
+
+            const decoded = jwt_decode(token)
+            const id = decoded.account["id"]
+            
             const infoURL = `http://localhost:8000/users/${id}/get_employee_info`
 
             const infoResponse = await fetch(infoURL, {
@@ -24,13 +29,14 @@ function EmployeeInfoForm({id}) {
 
             if (infoResponse.ok) {
                 const info = await infoResponse.json()
-
+                console.log(info)
                 if (info) {
                     setFullName(info.full_name)
                     setCareerTitle(info.career_title)
                     setLocation(info.location)
                     setEducation(info.education)
                     setAbout(info.about)
+                    setPic(info.pic_url)
                 }
             }
         }
@@ -46,7 +52,8 @@ function EmployeeInfoForm({id}) {
             "career_title": careerTitle,
             "location": location,
             "education": education,
-            "about": about
+            "about": about,
+            "pic_url": pic
         }
         
         const employeeInfoURL = `http://localhost:8000/users/${id}/update_employee_info`
@@ -94,6 +101,12 @@ function EmployeeInfoForm({id}) {
                 <div className="row">
                     <div className="form-floating col s6">
                         <input placeholder="About"type="text" name="about" value={about} id="about" onChange={e => setAbout(e.target.value)}>
+                        </input>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="form-floating col s6">
+                        <input placeholder="Profile Picture URL"type="text" name="pic_url" value={pic} id="pic_url" onChange={e => setPic(e.target.value)}>
                         </input>
                     </div>
                 </div>

@@ -34,7 +34,7 @@ const EmployeeProfile = () => {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`}
       });
-      console.log("hello")
+
       if (employeeResponse.ok) {
         const info = await employeeResponse.json();
         
@@ -44,8 +44,6 @@ const EmployeeProfile = () => {
         setEducation(info.education)
         setAbout(info.about)
         setPic(info.pic_url)
-
-        console.log(info.pic_url)
       }
     }
     getEmployeeInfo()
@@ -91,9 +89,10 @@ const EmployeeProfile = () => {
                 <li>{education}</li>
                 <li>{about}</li>
               </ul>
-              {/* <img src={pic} alt="Profile Pic"/> */}
             </Typography>
-            <a href="/user/employee/info-form">Edit Info</a>
+            <button className="btn waves-effect waves-light" type="submit" name="action">
+              <a href="/user/employee/info-form">Edit Info</a>
+            </button>
           </Box>
         </Grid>
       </Grid>
