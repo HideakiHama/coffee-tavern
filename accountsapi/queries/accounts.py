@@ -1,6 +1,8 @@
 from pydantic import BaseModel
 from typing import Optional, List, Union, Literal
-from queries.pool import pool
+from queries.pool import keepalive_kwargs
+import os
+from psycopg import connect
 
 
 class Error(BaseModel):
@@ -32,7 +34,7 @@ class AccountOut(BaseModel):
 class AccountRepo:
     def get_all(self) -> List[AccountOut]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -47,7 +49,7 @@ class AccountRepo:
             return {"message": "Could not get account"}
 
     def get(self, user_name: str) -> Optional[Account]:
-        with pool.connection() as conn:
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -70,7 +72,7 @@ class AccountRepo:
 
     # For Getting account by user ID (/api/get_account/{account_id})
     def getId(self, user_name: str) -> Optional[Account]:
-        with pool.connection() as conn:
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -92,7 +94,7 @@ class AccountRepo:
                 )
 
     def create(self, account: AccountIn, hashed_password: str) -> Account:
-        with pool.connection() as conn:
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -115,7 +117,7 @@ class AccountRepo:
 
     def delete(self, account_id: int) -> bool:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """

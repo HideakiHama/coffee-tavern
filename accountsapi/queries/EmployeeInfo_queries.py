@@ -1,13 +1,15 @@
 from pydantic import BaseModel
 from typing import List, Optional, Union
-from queries.pool import pool
-
+import os
+from psycopg import connect
+from queries.pool import keepalive_kwargs
 
 class Error(BaseModel):
     message: str
 
 
 class EmployeeInfoIn(BaseModel):
+    full_name: Optional[str]
     career_title: Optional[str]
     location: Optional[str]
     education: Optional[str]
@@ -15,6 +17,7 @@ class EmployeeInfoIn(BaseModel):
 
 
 class EmployeeInfoOut(BaseModel):
+    full_name: Optional[str]
     career_title: Optional[str]
     location: Optional[str]
     education: Optional[str]
@@ -28,18 +31,19 @@ class EmployeeInfoRepo:
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO employee_info
-                            (career_title, location, education, about, account_id)
+                            (full_name, career_title, location, education, about, account_id)
                         VALUES
-                            (%s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s)
                         """,
                         [
+                            info.full_name,
                             info.career_title,
                             info.location,
                             info.education,
@@ -52,43 +56,49 @@ class EmployeeInfoRepo:
         except Exception:
             return {"message": "Create did not work"}
 
-    def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
-        try:
-            # connect the database
-            with pool.connection() as conn:
-                # get a cursor (something to run SQL with)
-                with conn.cursor() as db:
-                    # Run our SELECT statement
-                    result = db.execute(
-                        """
-                        SELECT
-                            career_title,
-                            location,
-                            education,
-                            about,
-                            account_id
-                        FROM employee_info
-                        WHERE account_id = %s
-                        """,
-                        [account_id],
-                    )
-                    record = result.fetchone()
-                    if record is None:
-                        return None
-                    return self.record_employee_form_out(record)
-        except Exception as e:
-            return {"message": "Could not get employer info"}
+    def get_one(self, account_id: str) -> Optional[EmployeeInfoOut]:
+        print("account id", account_id)
+        # try:
+        # connect the database
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            # get a cursor (something to run SQL with)
+            with conn.cursor() as db:
+                # Run our SELECT statement
+                result = db.execute(
+                    """
+                    SELECT
+                        full_name,
+                        career_title,
+                        location,
+                        education,
+                        about,
+                        account_id
+                    FROM employee_info
+                    WHERE account_id = %s
+                    """,
+                    [account_id],
+                )
+                record = result.fetchone()
+                print("record", record)
+                if record is None:
+                    return None
+                y = self.record_employee_form_out(record)
+                print("Y", y)
+                return y
+        # except Exception as e:
+        #     return {"message": "Could not get employee info"}
 
     def update(
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
                         UPDATE employee_info
                         SET
+                            full_name = %s,
                             career_title = %s,
                             location = %s,
                             education = %s,
@@ -96,6 +106,7 @@ class EmployeeInfoRepo:
                         WHERE account_id = (%s);
                         """,
                         [
+                            info.full_name,
                             info.career_title,
                             info.location,
                             info.education,
@@ -108,10 +119,13 @@ class EmployeeInfoRepo:
             return {"message": "Update did not work"}
 
     def record_employee_form_out(self, record):
-        return EmployeeInfoOut(
-            career_title=record[0],
-            location=record[1],
-            education=record[2],
-            about=record[3],
-            account_id=record[4],
+        x = EmployeeInfoOut(
+            full_name=record[0],
+            career_title=record[1],
+            location=record[2],
+            education=record[3],
+            about=record[4],
+            account_id=record[5]
         )
+        print("X", x)
+        return x
