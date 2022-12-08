@@ -56,8 +56,7 @@ class EmployeeInfoRepo:
         except Exception:
             return {"message": "Create did not work"}
 
-    def get_one(self, account_id: str) -> Optional[EmployeeInfoOut]:
-        print("account id", account_id)
+    def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
         # try:
         # connect the database
         with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
