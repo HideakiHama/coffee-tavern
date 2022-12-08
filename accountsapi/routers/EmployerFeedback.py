@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Union, List
 from queries.EmployerFeedback_queries import (
     EmployerFeedbackFormIn,
@@ -7,15 +7,12 @@ from queries.EmployerFeedback_queries import (
     EmployerFeedbackFormOut2,
     Error,
 )
-from queries.accounts import AccountRepo
 from authenticator import authenticator
-
-from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
 
 router = APIRouter()
 
 
-## POST ##
+# POST #
 # creating new employer feedback form #
 @router.post(
     "/employer-feedback-form/{account_id}",
@@ -32,13 +29,13 @@ async def create_employer_feedback_form(
         detail="You are employee. Please use employee feedback form",
     )
     if account["role"] == "Employer":
-        not_final = repo.create(new_form, account["id"]).dict()  ####
+        not_final = repo.create(new_form, account["id"]).dict()  #
         not_final["account_id"] = account
         return not_final
     raise credentials_exception
 
 
-## GET ##
+# GET #
 # getting detail feedback from employer
 @router.get(
     "/employer-feedback-form/{EmployerFeedback_id}",
@@ -62,7 +59,7 @@ def get_one_employer_feedback_form(
     raise credentials_exception
 
 
-## GET ##
+# GET #
 # getting list of feedback from specific employers
 @router.get(
     "/employer-feedbacks/{account_id}",
@@ -77,14 +74,14 @@ def get_all_with_id(
     return repo.get_all_with_id(account_id)
 
 
-## GET ##
+# GET #
 # Get all the EmployerFeedbacks Regardless of who wrote it
 @router.get("/get_all_employerFeedbacks", tags=["Employer Feedback Form"])
 def get_all_employer_feedbacks(repo: EmployerFeedbackRepository = Depends()):
     return repo.get_all_feedbacks()
 
 
-## PUT ##
+# PUT #
 # Edit feedback #
 @router.put(
     "/employer-feedback-form/{EmployerFeedback_id}",
@@ -101,15 +98,13 @@ def Edit_Employer_Feedback(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are employee. Only the employer can edit",
     )
-
     x = repo.get_one(EmployerFeedback_id)
-    # print(x.account_id)
     if x.account_id == account["id"]:
         return repo.update(EmployerFeedback_id, FeedbackForm)
     raise credentials_exception
 
 
-## DELETE ##
+# DELETE #
 # Delete feedback #
 @router.delete(
     "/employer-feedback-form/{EmployerFeedback_id}",

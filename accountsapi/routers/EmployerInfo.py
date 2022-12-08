@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, Response
-from typing import Union
-from queries.EmployerInfo_queries import EmployerInfoRepo, EmployerInfoIn, EmployerInfoOut, Error
+from fastapi import APIRouter, Depends
+from queries.EmployerInfo_queries import EmployerInfoRepo, EmployerInfoIn, EmployerInfoOut
 from queries.accounts import AccountRepo
 from authenticator import authenticator
 
 router = APIRouter()
+
 
 @router.post("/users/{account_id}/create_employer_info", tags=["User Info"])
 def create_employer_info(
@@ -16,15 +16,13 @@ def create_employer_info(
     info["account_id"] = account
     return info
 
+
 @router.get('/users/{account_id}/get_employer_info', tags=["User Info"])
-def get_employer_info_by_id(
-    account_id: str,
-    repo: EmployerInfoRepo = Depends(),
-    repo1: AccountRepo = Depends()
-    ) -> EmployerInfoOut:
+def get_employer_info_by_id(account_id: str, repo: EmployerInfoRepo = Depends(), repo1: AccountRepo = Depends()) -> EmployerInfoOut:
     EmployerInfo = repo.get_one(account_id).dict()
     EmployerInfo["account_id"] = repo1.get(account_id).dict()
     return EmployerInfo
+
 
 @router.put("/users/{account_id}/update_employer_info", tags=["User Info"])
 def update_employer_info(

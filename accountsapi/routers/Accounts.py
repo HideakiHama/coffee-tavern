@@ -1,8 +1,6 @@
 # accounts.py  in the router folder
 from fastapi import (
     Depends,
-    HTTPException,
-    status,
     Response,
     APIRouter,
     Request,
@@ -14,7 +12,6 @@ from pydantic import BaseModel
 
 from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
 
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 class AccountForm(BaseModel):
     username: str

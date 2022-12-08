@@ -1,6 +1,6 @@
 steps = [
     [
-        ## Create the table
+        # Create the table
         """
         CREATE TABLE jobs (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -15,13 +15,13 @@ steps = [
             account_id INT REFERENCES accounts(id)
         );
         """,
-        ## Drop the table
+        # Drop the table
         """
         DROP TABLE jobs;
         """,
     ],
     [
-        ## Create the table
+        # Create the table
         """
         CREATE TABLE applied (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -31,7 +31,7 @@ steps = [
             education VARCHAR(255)
         );
         """,
-        ## Drop the table
+        # Drop the table
         """
         DROP TABLE applied;
         """,

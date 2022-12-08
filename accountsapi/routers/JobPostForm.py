@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response, HTTPException, status
-from typing import List, Optional, Union
+from typing import List, Union
 from queries.JobForm_queries import (
     JobPostFormIn,
     JobPostFormOut,
@@ -11,11 +11,11 @@ from queries.JobForm_queries import (
     Applicants,
     ApplicantsOut
 )
-from queries.accounts import AccountRepo
 from authenticator import authenticator
 from queries.EmployeeInfo_queries import EmployeeInfoRepo
 
 router = APIRouter()
+
 
 # creating new job form
 @router.post('/create_form/', tags=["JobForm"], response_model=JobPostFormOut2)
@@ -39,12 +39,14 @@ def create_job_form(
 def get_all_job_form(repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)):
     return repo.get_all()
 
+
 @router.get("/get_form/{form_id}", tags=["JobForm"], response_model=Union[JobPostFormOut, Error])
 def get_one_job_form(form_id: int, response: Response, repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> JobPostFormOut:
     FormDetail = repo.get_one(form_id)
     if FormDetail is None:
         response.status_code = 404
     return FormDetail
+
 
 @router.put("/update_job_form/{id}", tags=["JobForm"], response_model=Union[JobPostFormOut1, Error],)
 def Update_Job_Form(
@@ -64,14 +66,13 @@ def Update_Job_Form(
     if account["role"] == "Employer":
         x = repo.get_one(form_id)
         print("XXXX", x)
-        if  x.account_id == account["id"]:
-        # print(x.account_id)
+        if x.account_id == account["id"]:
             return repo.update(form_id, UpdatedJobForm).dict()
-
         else:
             raise credentials_exception1
     else:
         raise credentials_exception
+
 
 @router.delete("/delete_job_form/{id}", tags=["JobForm"], response_model=bool)
 def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> bool:
@@ -86,8 +87,7 @@ def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: 
     if account["role"] == "Employer":
         x = repo.get_one(form_id)
         print("XXXX", x)
-        if  x.account_id == account["id"]:
-        # print(x.account_id)
+        if x.account_id == account["id"]:
             return repo.delete(form_id)
         else:
             raise credentials_exception1
@@ -95,12 +95,8 @@ def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: 
         raise credentials_exception
 
 
-
 @router.post("/apply/{employer_id}", tags=["JobForm"], response_model=ApplicantsOut)
-def sendApplications(employer_id: int,
-    repo: JobFormRepository = Depends(),
-                    repo1: EmployeeInfoRepo = Depends(),
-                    account: dict = Depends(authenticator.get_current_account_data)) -> ApplicantsOut:
+def sendApplications(employer_id: int, repo: JobFormRepository = Depends(), repo1: EmployeeInfoRepo = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> ApplicantsOut:
     if account["role"] == "Employee":
         EmployeeInfo = repo1.get_one(account["id"]).dict()
         EmployeeInfo["account_id"] = account
@@ -109,15 +105,12 @@ def sendApplications(employer_id: int,
         EmployeeInfo = repo.send_application(EmployeeInfo)
         return EmployeeInfo
 
+
 @router.get("/get_applicants", tags=["JobForm"], response_model=Applicants)
 def getApplicants(repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> Applicants:
     credentials_exception = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are employee. Only the employer have this access",
-    )
-    credentials_exception1 = HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="You did not make this. Access denied",
     )
     if account["role"] == "Employer":
         x = repo.get_applicants()

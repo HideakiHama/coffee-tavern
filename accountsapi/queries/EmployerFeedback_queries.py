@@ -35,10 +35,10 @@ class EmployerFeedbackFormOut2(BaseModel):
 
 # Employer Feedback of Employee
 class EmployerFeedbackRepository:
-    ## GET ##
+    # GET #
     def get_one(self, EmployerFeedback_id: int) -> Optional[EmployerFeedbackFormOut]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -58,13 +58,13 @@ class EmployerFeedbackRepository:
                     if record is None:
                         return None
                     return self.record_to_employer_feedback_out(record)  # refactored
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get employer feedback form"}
 
-    ## GET ##
+    # GET #
     def get_all_feedbacks(self) -> List[EmployerFeedbackFormOut2]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -78,15 +78,15 @@ class EmployerFeedbackRepository:
                     self.record_to_employer_feedback_out(record)
                     for record in resultList
                 ]
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get feedbacks"}
 
-    ## GET ##
+    # GET #
     def get_all_with_id(
         self, account_id: int
     ) -> Union[List[EmployerFeedbackFormOut2], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -108,15 +108,15 @@ class EmployerFeedbackRepository:
                         list1.append(i)
 
                 return list1
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get employer feedback form"}
 
-    ## POST ##
+    # POST #
     def create(
         self, FeedbackForm: EmployerFeedbackFormIn, account_id: int
     ) -> EmployerFeedbackFormOut:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -138,12 +138,12 @@ class EmployerFeedbackRepository:
         except ValidationError:
             return {"message": "Couldn't create feedback"}
 
-    ## PUT ##
+    # PUT #
     def update(
         self, EmployerFeedback_id: int, FeedbackForm: EmployerFeedbackFormIn
     ) -> Union[EmployerFeedbackFormOut2, Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -166,10 +166,10 @@ class EmployerFeedbackRepository:
         except Exception:
             return {"message": "Could not update the Feedback"}
 
-    ## DELETE ##
+    # DELETE #
     def delete(self, EmployerFeedback_id: int) -> bool:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
