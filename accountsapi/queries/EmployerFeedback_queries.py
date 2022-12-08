@@ -60,7 +60,29 @@ class EmployerFeedbackRepository:
             return {"message": "Could not get employer feedback form"}
 
     ## GET ##
-    def get_all(self, account_id: int) -> Union[List[EmployerFeedbackFormOut2], Error]:
+    def get_all_feedbacks(self) -> List[EmployerFeedbackFormOut2]:
+        try:
+            with pool.connection() as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id, employee_name, date, description, account_id
+                        FROM employer_form
+                        ORDER BY id
+                        """
+                    )
+                    resultList = list(result)
+                return [
+                    self.record_to_employer_feedback_out(record)
+                    for record in resultList
+                ]
+        except Exception as e:
+            return {"message": "Could not get feedbacks"}
+
+    ## GET ##
+    def get_all_with_id(
+        self, account_id: int
+    ) -> Union[List[EmployerFeedbackFormOut2], Error]:
         try:
             with pool.connection() as conn:
                 with conn.cursor() as db:
@@ -133,7 +155,7 @@ class EmployerFeedbackRepository:
                             FeedbackForm.employee_name,
                             FeedbackForm.date,
                             FeedbackForm.description,
-                            EmployerFeedback_id,                      
+                            EmployerFeedback_id,
                         ],
                     )
                     return self.feedback_post_in_to_out(
@@ -164,7 +186,6 @@ class EmployerFeedbackRepository:
 
     # refactored function for # GET #
     def record_to_employer_feedback_out(self, record):
-
         return EmployerFeedbackFormOut2(
             id=record[0],
             employee_name=record[1],

@@ -63,18 +63,25 @@ def get_one_employer_feedback_form(
 
 
 ## GET ##
-# getting list of feedback from employers
+# getting list of feedback from specific employers
 @router.get(
     "/employer-feedbacks/{account_id}",
     tags=["Employer Feedback Form"],
     response_model=Union[List[EmployerFeedbackFormOut2], Error],
 )
-def get_all(
+def get_all_with_id(
     account_id: int,
     repo: EmployerFeedbackRepository = Depends(),
     account: dict = Depends(authenticator.get_current_account_data),
 ):
-    return repo.get_all(account_id)
+    return repo.get_all_with_id(account_id)
+
+
+## GET ##
+# Get all the EmployerFeedbacks Regardless of who wrote it
+@router.get("/get_all_employerFeedbacks", tags=["Employer Feedback Form"])
+def get_all_employer_feedbacks(repo: EmployerFeedbackRepository = Depends()):
+    return repo.get_all_feedbacks()
 
 
 ## PUT ##

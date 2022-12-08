@@ -10,7 +10,7 @@ function EmployeeProfileList() {
     // const { token } = useAuthContext();
 
 
-    //Navigate to the individual profile
+    //Navigate to the individual profile and carry the id data with it
     const navigate = useNavigate();
     const employeeFeedbackEdit = (id) => {
       console.log("###ID###", id)
