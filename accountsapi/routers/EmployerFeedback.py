@@ -100,7 +100,6 @@ def Edit_Employer_Feedback(
     )
 
     x = repo.get_one(EmployerFeedback_id)
-    # print(x.account_id)
     if x.account_id == account["id"]:
         return repo.update(EmployerFeedback_id, FeedbackForm)
     raise credentials_exception

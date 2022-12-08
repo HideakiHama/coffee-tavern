@@ -52,8 +52,8 @@ function EmployerFeedbackList() {
                 <td>{employer.employee_name}</td>
                 <td>{employer.date}</td>
                 <td>{employer.description}</td>
-                <td><button onClick={() => employerFeedbackEdit(employer.id)}>Edit My Feedback</button></td>
-                <td><button onClick={() => allEmployeeFeedback(employer.employee_name)}>Check All Feedbacks</button></td>
+                <td><button onClick={() => employerFeedbackEdit(employer.id)} className="btn waves-effect waves-light">Edit My Feedback</button></td>
+                <td><button onClick={() => allEmployeeFeedback(employer.employee_name)} className="btn waves-effect waves-light">Check All Feedbacks</button></td>
               </tr>
               )}
           </tbody>

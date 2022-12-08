@@ -73,6 +73,10 @@ function EmployeeFeedbackEdit(){
       navigate("/employee-feedbacks-list")
       }
 
+    // Go back to the their employee list
+    const handleGoBack =  async () => {
+      navigate("/employee-feedbacks-list")
+    };
 
     return (
       <div className="row">
@@ -105,15 +109,16 @@ function EmployeeFeedbackEdit(){
                   <button className="btn waves-effect waves-light" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
+                  <button onClick={handleDelete} className="btn waves-effect waves-light">Delete
+                            <i className="material-icons right">Feedback</i>
+                  </button>
+                  <button onClick={handleGoBack} className="btn waves-effect waves-light">Go
+                            <i className="material-icons right">Back</i>
+                  </button>
               </div>
             </div>
           </div>
         </form>
-        <div>
-        <button onClick={handleDelete} className="btn waves-effect waves-light" type="submit" name="action">Delete
-                            <i className="material-icons right">Feedback</i>
-        </button>
-        </div>
     </div>
     );
 

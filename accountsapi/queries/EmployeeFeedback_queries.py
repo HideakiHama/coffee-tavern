@@ -97,7 +97,6 @@ class EmployeeFeedbackRepository:
                         """
                     )
                     resultList = list(result)
-                    # print(resultList)
                 y = [
                     self.record_to_employee_feedback_out(record).dict()
                     for record in resultList

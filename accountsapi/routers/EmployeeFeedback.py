@@ -99,7 +99,6 @@ def Edit_Employee_Feedback(
     )
 
     x = repo.get_one(EmployeeFeedback_id)
-    # print(x.account_id)
     if x.account_id == account["id"]:
         return repo.update(EmployeeFeedback_id, FeedbackForm)
     raise credentials_exception
@@ -123,7 +122,6 @@ def Delete_Employee_Feedback(
     )
 
     x = repo.get_one(EmployeeFeedback_id)
-    print(x.account_id)
     if x.account_id == account["id"]:
         return repo.delete(EmployeeFeedback_id)
     raise credentials_exception

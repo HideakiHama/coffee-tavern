@@ -17,7 +17,6 @@ function EmployeeFeedbackList() {
 
     //Transfer Employer Name to All Feedback Link
     const allEmployerFeedback = (employer_name) => {
-      console.log("EMPLOYER NAME",employer_name)
       navigate("/all-employer-feedback", {state:{employer_name:employer_name}})
     }
 
@@ -51,9 +50,8 @@ function EmployeeFeedbackList() {
                 <td>{employee.employer_name}</td>
                 <td>{employee.date}</td>
                 <td>{employee.description}</td>
-
-                <td><button onClick={() => employeeFeedbackEdit(employee.id)}>Edit My Feedback</button></td>
-                <td><button onClick={() => allEmployerFeedback(employee.employer_name)}>Check All Feedbacks</button></td>
+                <td><button onClick={() => employeeFeedbackEdit(employee.id)} className="btn waves-effect waves-light">Edit My Feedback</button></td>
+                <td><button onClick={() => allEmployerFeedback(employee.employer_name)} className="btn waves-effect waves-light">Check All Feedbacks</button></td>
               </tr>
               )}
           </tbody>
