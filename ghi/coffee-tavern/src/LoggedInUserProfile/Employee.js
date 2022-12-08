@@ -11,7 +11,7 @@ import jwt_decode from 'jwt-decode';
 
 const theme = createTheme();
 
-const EmployeeProfile = () => {
+const EmployeeProfile = ({id}) => {
 
   const [name, setName] = useState('');
   const [career, setCareer] = useState('');
@@ -47,7 +47,7 @@ const EmployeeProfile = () => {
       }
     }
     getEmployeeInfo()
-  }, [token])
+  }, [id, token])
 
   return (
     <ThemeProvider theme={theme}>

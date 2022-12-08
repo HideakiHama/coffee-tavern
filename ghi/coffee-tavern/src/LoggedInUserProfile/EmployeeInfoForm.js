@@ -19,7 +19,7 @@ function EmployeeInfoForm({id}) {
 
             const decoded = jwt_decode(token)
             const id = decoded.account["id"]
-            
+
             const infoURL = `http://localhost:8000/users/${id}/get_employee_info`
 
             const infoResponse = await fetch(infoURL, {
@@ -119,7 +119,7 @@ function EmployeeInfoForm({id}) {
                         </div>
                     </div>
                 </div>
-                <a href="/user/employee">Back to Profile</a>
+                <a href="/user/current/profile">Back to Profile</a>
             </form>
         </div>
     )
