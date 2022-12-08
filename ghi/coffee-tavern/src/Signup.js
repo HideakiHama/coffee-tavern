@@ -12,56 +12,26 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useToken } from './useToken';
-
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const [login, signup] = useToken();
+  const [token, login, logout, signup] = useToken();
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
 
-  const clearSignup = () => {
-    setUserName("");
-    setEmail("");
-    setPassword("");
-}
+
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    signup(password, email, username)
-
-
-
-    // const signUpURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/api/accounts`;
-    // console.log({
-    //   "email": username,
-    //           "username": email,
-    //           "password": password,
-    //           "role": role
-    // })
-    // const fetchConfig = {
-    //         method: 'post',
-    //         body: JSON.stringify({
-    //           email: username,
-    //           username: email,
-    //           password: password,
-    //           role: role
-    //         }),
-    //         headers: {"Content-type": "application/json"
-    //     }};
-    // const response = await fetch(signUpURL, fetchConfig);
-    // console.log("RESPONSE", response)
-    // const data1 = await response.json();
-    // if (response.ok){
-    //   login(username, password);
-    //   clearSignup()
-    // }
+    // const data = new FormData(event.currentTarget);
+    // console.log(data.get("firstName"), data.get("email"), data.get("password"), data.get("role"))
+    console.log(password, email, username, role)
+    signup(password, email, username, role);
   };
 
   const roles = ["Employee", "Employer"]

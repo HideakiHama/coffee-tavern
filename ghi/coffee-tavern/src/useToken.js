@@ -84,10 +84,13 @@ export function useToken() {
   }
 
   async function login(username, password) {
+    console.log("!")
     const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/token`;
     const form = new FormData();
     form.append("username", username);
     form.append("password", password);
+    console.log("FORMDATA user", form.get("username"))
+    console.log("FORMDATA pass", form.get("password"))
     const response = await fetch(url, {
       method: "post",
       credentials: "include",
@@ -102,20 +105,23 @@ export function useToken() {
     return handleErrorMessage(error);
   }
 
-  async function signup(password, email, firstName) {
+  async function signup(password, email, username, role) {
     const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/api/accounts/`;
     const response = await fetch(url, {
       method: "post",
+      credentials: "include",
       body: JSON.stringify({
         password: password,
         email: email,
-        first_name: firstName,
+        user_name: username,
+        role: role
       }),
       headers: {
         "Content-Type": "application/json",
       },
     });
     if (response.ok) {
+      console.log("RESPONSE", response)
       await login(email, password);
     }
     return false;

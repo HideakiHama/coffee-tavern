@@ -10,7 +10,7 @@ function Nav() {
         <ul id="nav-mobile" className="left hide-on-med-and-down">
             <li><NavLink className="dropdown-item" aria-current="page" to="/">Home</NavLink></li>
             <Testing />
-            <li><NavLink className="dropdown-item" aria-current="page" to="/upload_resume/">Upload Resume</NavLink></li>
+            {/* <li><NavLink className="dropdown-item" aria-current="page" to="/upload_resume/">Upload Resume</NavLink></li> */}
             <li><NavLink className="dropdown-item" aria-current="page" to="/create_form">Create Job Post</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/get_all_form">Board of Jobs</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedback">Employer Feedback Form</NavLink></li>

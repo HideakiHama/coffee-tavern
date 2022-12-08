@@ -1,8 +1,8 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 import TagView from './TagListView';
-
+// import { useAuthContext } from '../useToken';
 
 
 function TagForm(){
@@ -10,15 +10,27 @@ function TagForm(){
     const [tagsList, setTagsList] = useState([])
     // const [id, setId] = useState('')
     const [tag, setTag] = useState('')
-
+    // const { token } = useAuthContext();
     // read tags get_tag_url()
-    // useEffect(() => { 
+    // useEffect(() => {
     //     axios.get('http://localhost8100/get_all_tags')
     //     .then(res => {
     //         console.log("this is useEffect", res)
     //         setTagsList(res.data)
     //     },[])
     // });
+
+    useEffect (() => {
+        const getTags = async () => {
+            const response = await fetch('http://localhost:8100/get_all_tags');
+            const data = await response.json();
+            console.log("DATAA", data)
+            setTagsList(data)
+            // console.log("TAGS", tagsList)
+
+        }
+        getTags()
+    }, [])
 
     // const getTagHandler = () => {
     //     axios.get('http://localhost8100/get_all_tags')
@@ -29,17 +41,21 @@ function TagForm(){
     //     };
     // const get_tag_url = async(Tag_id) => {
     //     Tag_id = 1
-    
+
     // const response = await axios.get('http://localhost8100/get_all_tags')
     //     setTagsList(response.data)
     // }
-    
+
     // post tags
-    const addTagHandler = () => {
-        axios.post('http://localhost8100/create_tag_form')
-        .then(res => console.log(res))
-        setTagsList([...tagsList, tag]);
-    };
+
+
+    // const addTagHandler = () => {
+    //     axios.post('http://localhost8100/create_tag_form')
+    //     .then(res => console.log(res))
+    //     setTagsList([...tagsList, tag]);
+    // };
+
+
     //{'id': id, 'tag': tag}
 
 
@@ -60,11 +76,13 @@ function TagForm(){
             <button className="btn btn-outline-primary mx-2 mb-3" style={{
                 'borderRadius':'50px',
                 'font-weight': 'bold',
-            }} onClick={addTagHandler}>Create Tag</button>
+            }}
+            // onClick={addTagHandler}
+            >Create Tag</button>
             </span>
         <h5 className="card text-white bg-dark mb-3">Your Tags</h5>
         <div>
-            <TagView tagsList = {tagsList}/>
+            {/* <TagView {...tagsList}/> */}
         </div>
         </div>
         </div>

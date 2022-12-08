@@ -21,10 +21,7 @@ export default function SignIn() {
   const [token, login, logout] = useToken();
   const navigate = useNavigate();
 
-  if (token){
-    logout()
-    return;
-  }
+  logout()
 
   const handleSubmit = (event) => {
     event.preventDefault();

@@ -1,11 +1,14 @@
 import { useAuthContext } from './useToken';
 import { NavLink } from 'react-router-dom';
-
+import { useEffect, useState } from "react";
 
 const Testing = () => {
+    const [account, setAccount] = useState("");
+
+
     const { token } = useAuthContext();
 
-    if (token) {
+    if (token && ) {
         return (
         <li>
         <NavLink className="dropdown-item" aria-current="page" to="/token">logout</NavLink>

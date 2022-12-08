@@ -6,14 +6,14 @@ function TagView(props){
     //     tag: 'bartender'
     // }, {
     //     id: 1,
-    //     tag: 'barista' 
+    //     tag: 'barista'
     // }]
-    console.log("this is props in TagView" , props.tagsList)
+    console.log("this is props in TagView" , props)
     return (
         <div>
             <ul>
                 {/* {tagVar.map(tags => < TagItems Tags={tags}/>)} */}
-                {props.tagsList.map(tags => < TagItems Tags={tags}/>)}
+                {props.map((tags) => <TagItems Tags={tags}/>)}
                 {/* uncomment the props one, once database is working */}
             </ul>
         </div>
