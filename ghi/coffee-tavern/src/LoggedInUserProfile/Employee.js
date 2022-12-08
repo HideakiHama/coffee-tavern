@@ -18,6 +18,7 @@ const EmployeeProfile = () => {
   const [location, setLocation] = useState('');
   const [education, setEducation] = useState('');
   const [about, setAbout] = useState('');
+  const [pic, setPic] = useState('')
 
   const { token } = useAuthContext();
 
@@ -33,15 +34,18 @@ const EmployeeProfile = () => {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`}
       });
-
+      console.log("hello")
       if (employeeResponse.ok) {
         const info = await employeeResponse.json();
-
+        
         setName(info.full_name)
         setCareer(info.career_title)
         setLocation(info.location)
         setEducation(info.education)
         setAbout(info.about)
+        setPic(info.pic_url)
+
+        console.log(info.pic_url)
       }
     }
     getEmployeeInfo()
@@ -57,7 +61,7 @@ const EmployeeProfile = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${pic})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -65,10 +69,10 @@ const EmployeeProfile = () => {
             backgroundPosition: 'center',
           }}
         />
-        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+        <Grid item xs={12} sm={8} md={5} component={Paper} elevation={24} square>
           <Box
             sx={{
-              my: 8,
+              my: 10,
               mx: 4,
               display: 'flex',
               flexDirection: 'column',
@@ -87,6 +91,7 @@ const EmployeeProfile = () => {
                 <li>{education}</li>
                 <li>{about}</li>
               </ul>
+              {/* <img src={pic} alt="Profile Pic"/> */}
             </Typography>
             <a href="/user/employee/info-form">Edit Info</a>
           </Box>
