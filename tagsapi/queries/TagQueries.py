@@ -1,6 +1,8 @@
 from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
-from queries.pool import pool
+from queries.pool import keepalive_kwargs
+import os
+from psycopg import connect
 
 
 class Error(BaseModel):
@@ -25,7 +27,7 @@ class TagRepository:
     ## GET ##
     def get_one(self, tag: str) -> Optional[Tags]:
         try:
-            with pool.connections() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -46,7 +48,7 @@ class TagRepository:
     ## GET ##
     def get_all(self) -> Union[List[TagOut], Error]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -65,7 +67,7 @@ class TagRepository:
     ## POST ##
     def create(self, TagForm: TagIn) -> Tags:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -85,7 +87,7 @@ class TagRepository:
     ## DELETE ##
     def delete(self, Tag_id: int) -> bool:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """

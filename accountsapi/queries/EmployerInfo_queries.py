@@ -6,10 +6,10 @@ from queries.pool import keepalive_kwargs
 
 class Error(BaseModel):
     message: str
-    
+
 class EmployerInfo(BaseModel):
     pass
-    
+
 class EmployerInfoIn(BaseModel):
     company_name: Optional[str]
     job_type: Optional[str]
@@ -22,9 +22,9 @@ class EmployerInfoOut(BaseModel):
     location: Optional[str]
     about: Optional[str]
     account_id: int
-    
+
 class EmployerInfoRepo:
-    
+
     def create(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
         try:
             # connect the database
@@ -51,7 +51,7 @@ class EmployerInfoRepo:
                     return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
-        
+
     def get_one(self, account_id: int) -> Optional[EmployerInfoOut]:
         try:
             # connect the database
@@ -78,7 +78,7 @@ class EmployerInfoRepo:
                     return self.record_employer_form_out(record)
         except Exception as e:
             return {"message": "Could not get employer info"}
-        
+
     def update(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
         try:
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
@@ -104,7 +104,7 @@ class EmployerInfoRepo:
                     return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
-        
+
     def record_employer_form_out(self, record):
         return EmployerInfoOut(
             company_name=record[0],

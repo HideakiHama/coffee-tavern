@@ -17,25 +17,26 @@ function EmployeeFeedbackList() {
 
     //Transfer Employer Name to All Feedback Link
     const allEmployerFeedback = (employer_name) => {
+      console.log("EMPLOYER NAME",employer_name)
       navigate("/all-employer-feedback", {state:{employer_name:employer_name}})
     }
 
-    //NEED TO FIX THIS
-    useEffect(() =>{
-      getEmployeeFeedbacksUrl();
-    }, []);
 
-    const getEmployeeFeedbacksUrl = async () => {
-      const decoded = jwt_decode(token)
-      const account_id = decoded.account["id"]   //Decode jwt token to get User ID
-      console.log("####", account_id)
-      const response = await axios.get(`http://localhost:8000/employee-feedbacks/${account_id}`,
-      {headers: { Authorization: `Bearer ${token}`}});
-      setEmployee(response.data)};
+    useEffect(() =>{
+      const getEmployeeFeedbacksUrl = async () => {
+        if (token) {
+        const decoded = jwt_decode(token)
+        const account_id = decoded.account["id"]   //Decode jwt token to get User ID
+        const response = await axios.get(`http://localhost:8000/employee-feedbacks/${account_id}`,
+        {headers: { Authorization: `Bearer ${token}`}});
+        setEmployee(response.data)}};
+      getEmployeeFeedbacksUrl();
+    }, [token]);
+
 
     return (
       <div>
-        <h1>My past feedbacks</h1>
+        <h2>My Past Feedbacks to Employer</h2>
         <table>
           <thead>
             <tr>
@@ -51,8 +52,8 @@ function EmployeeFeedbackList() {
                 <td>{employee.date}</td>
                 <td>{employee.description}</td>
 
-                <td><button onClick={() => employeeFeedbackEdit(employee.id)}>Edit</button></td>
-                <td><button onClick={() => allEmployerFeedback(employee.employer_name)}>Check all feedbacks</button></td>
+                <td><button onClick={() => employeeFeedbackEdit(employee.id)}>Edit My Feedback</button></td>
+                <td><button onClick={() => allEmployerFeedback(employee.employer_name)}>Check All Feedbacks</button></td>
               </tr>
               )}
           </tbody>

@@ -4,6 +4,7 @@ import axios from "axios"
 import 'materialize-css/dist/css/materialize.min.css'
 import { useAuthContext } from '../useToken';
 import jwt_decode from "jwt-decode";
+import { useNavigate } from 'react-router-dom';
 
 function EmployerFeedbackForm() {
 
@@ -14,6 +15,7 @@ function EmployerFeedbackForm() {
     const { token } = useAuthContext();
     const decoded = jwt_decode(token)
     const account_id = decoded.account["id"]   //Decode jwt token to get User ID
+    const navigate = useNavigate();
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -22,6 +24,7 @@ function EmployerFeedbackForm() {
       await axios.post(`http://localhost:8000/employer-feedback-form/${account_id}`, submit,
       {headers: { Authorization: `Bearer ${token}`,}})      //checks if the user logged in
       setInputs({employee_name: '', date: '', description:''})
+      navigate("/")
     }
 
       const handleInputChange = (event) => {
@@ -33,17 +36,17 @@ function EmployerFeedbackForm() {
 
       return (
         <div className="row">
-          <h1>Feedback form</h1>
+          <h2>Create a Feedback to My Employee</h2>
           <form className="col s12" onSubmit={handleSubmit}>
             <div className="row">
               <div className="form-floating col s6">
                 <input type="text" name ="employee_name" onChange={handleInputChange}
                 value ={inputs['employee_name']} required></input>
 
-                <label>Employee Name</label>
+                <label>Employee's Name</label>
               </div>
               <div className="form-floating col s6">
-                <input type="text" name ="date" onChange={handleInputChange}
+                <input type="date" name ="date" onChange={handleInputChange}
                 value ={inputs["date"]} required></input>
                 <label >Date</label>
               </div>

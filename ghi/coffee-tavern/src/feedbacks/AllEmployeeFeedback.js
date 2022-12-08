@@ -1,7 +1,7 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate  } from "react-router-dom";
 
 //Employer checking Employee's list of feedbacks
 function AllEmployeeFeedback(){
@@ -9,29 +9,33 @@ function AllEmployeeFeedback(){
   const { token } = useAuthContext();
   const location = useLocation();
   const employee_name = location.state.employee_name
+  const navigate = useNavigate();
 
 
-  //NEED TO FIX THIS
   useEffect(() =>{
-    getAllEmployerFeedbackUrl();
-  }, []);
-
-
-  // Getting Employee's Feedback from all the Employer
-  const getAllEmployerFeedbackUrl = async () => {
+      // Getting Employee's Feedback from all the Employer
+    const getAllEmployerFeedbackUrl = async () => {
+    if (token){
     const response = await axios.get(`http://localhost:8000/get_all_employerFeedbacks`,);
     // {headers: { Authorization: `Bearer ${token}`}});
-    setEmployees(response.data)};
+    setEmployees(response.data)}};
+    getAllEmployerFeedbackUrl();
+  }, [token]);
+
+  const handleGoBack =  async () => {
+    navigate("/employer-feedbacks-list")
+  };
 
 
   return (
     <div>
-      <h1>List of feedbacks for {employee_name}</h1>
+      <h2>Everyone's Feedbacks to {employee_name}</h2>
       <table>
         <thead>
           <tr>
             <th>Date</th>
             <th>Description</th>
+            <th><button onClick={handleGoBack}>Go Back</button></th>
           </tr>
         </thead>
         <tbody>
