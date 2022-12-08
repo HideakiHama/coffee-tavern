@@ -17,7 +17,6 @@ function Nav() {
             <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedbacks-list">Past Employer Feedbacks</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedback">Employee Feedback Form</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedbacks-list">Past Employee Feedbacks</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/user/employee">My Profile</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/token">Log Out</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/create_tag_form">Tags</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-profile-list">Employee Profile List</NavLink></li>

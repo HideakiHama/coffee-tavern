@@ -20,19 +20,19 @@ services:
     volumes:
       - ./accountsapi:/app
 
-  # tagsapi:
-  #     build:
-  #       context: ./tagsapi
-  #       dockerfile: Dockerfile.dev
-  #     ports:
-  #       - "8100:8100"
-  #     volumes:
-  #       - ./tagsapi:/app
-  #     environment:
-  #       DATABASE_URL: postgres://mjlcehbq:68CQlz4J0QGLvquHOSHqQjs97X_vpuyS@arjuna.db.elephantsql.com/mjlcehbq
-  #       # WAIT_HOSTS: db:5432
-  #       PORT: 8100
-  #       SIGNING_KEY: aki
+  tagsapi:
+      build:
+        context: ./tagsapi
+        dockerfile: Dockerfile.dev
+      ports:
+        - "8100:8100"
+      volumes:
+        - ./tagsapi:/app
+      environment:
+        DATABASE_URL: postgres://mjlcehbq:68CQlz4J0QGLvquHOSHqQjs97X_vpuyS@arjuna.db.elephantsql.com/mjlcehbq
+        # WAIT_HOSTS: db:5432
+        PORT: 8100
+        SIGNING_KEY: aki
 
   react:
     image: node:lts-bullseye

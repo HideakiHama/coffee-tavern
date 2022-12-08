@@ -27,7 +27,6 @@ def get_employee_info_by_id(
     account_id: int,
     repo: EmployeeInfoRepo = Depends(),
     repo1: AccountRepo = Depends(),
-    account: dict = Depends(authenticator.get_current_account_data)
     ) -> EmployeeInfoOut:
     EmployeeInfo = repo.get_one(account_id).dict()
     EmployeeInfo["account_id"] = repo1.getId(account_id).dict()
