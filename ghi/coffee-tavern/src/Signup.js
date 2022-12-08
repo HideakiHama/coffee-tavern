@@ -14,6 +14,7 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useState } from "react";
 import { useToken } from './useToken';
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
@@ -23,6 +24,7 @@ export default function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("");
+  const navigate = useNavigate();
 
 
 
@@ -32,6 +34,7 @@ export default function SignUp() {
     // console.log(data.get("firstName"), data.get("email"), data.get("password"), data.get("role"))
     console.log(password, email, username, role)
     signup(password, email, username, role);
+    navigate("/");
   };
 
   const roles = ["Employee", "Employer"]

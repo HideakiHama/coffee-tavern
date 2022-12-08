@@ -8,7 +8,7 @@ const Testing = () => {
 
     const { token } = useAuthContext();
 
-    if (token && ) {
+    if (token) {
         return (
         <li>
         <NavLink className="dropdown-item" aria-current="page" to="/token">logout</NavLink>
