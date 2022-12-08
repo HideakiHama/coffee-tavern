@@ -65,7 +65,7 @@ class EmployeeFeedbackRepository:
     ## GET ##
     def get_all_feedbacks(self) -> List[EmployeeFeedbackFormOut2]:
         try:
-            with pool.connection() as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """

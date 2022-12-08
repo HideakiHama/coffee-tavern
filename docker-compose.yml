@@ -11,9 +11,9 @@ services:
     environment:
       # URL for updated Accounts api 2 on elephant sql
       DATABASE_URL: postgres://nomzfggc:6bglQKZvY6RA8TTdlIc6Iz-D6e65l9kq@arjuna.db.elephantsql.com/nomzfggc
-      # WAIT_HOSTS: db:5432
-      # DATABASE_URL: postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
       WAIT_HOSTS: db:5432
+      # DATABASE_URL: postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
+      # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki
     ports:
@@ -52,13 +52,13 @@ services:
       REACT_APP_TAGS_API_HOST: http://localhost:8100
 
 # comment this before deployment
-  db:
-    image: postgres:14.5-bullseye
-    environment:
-      POSTGRES_PASSWORD: tavern
-      POSTGRES_USER: coffee
-      POSTGRES_DB: coffee_tavern
-    ports:
-      - "15432:5432"
-    volumes:
-      - coffee_tavern-data:/var/lib/postgresql/data
+  # db:
+  #   image: postgres:14.5-bullseye
+  #   environment:
+  #     POSTGRES_PASSWORD: tavern
+  #     POSTGRES_USER: coffee
+  #     POSTGRES_DB: coffee_tavern
+  #   ports:
+  #     - "15432:5432"
+  #   volumes:
+  #     - coffee_tavern-data:/var/lib/postgresql/data

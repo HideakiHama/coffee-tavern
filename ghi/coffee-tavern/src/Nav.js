@@ -21,7 +21,7 @@ function Nav() {
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedback-update">Edit Employee Feedbacks</NavLink></li>
 
             
-            <li><NavLink className="dropdown-item" aria-current="page" to="/user/employee">My Profile</NavLink></li>
+            <li><NavLink className="dropdown-item" aria-current="page" to="/user/current/profile">My Profile</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/api/accounts">Signup</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/token">Log Out</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/create_tag_form">Tags</NavLink></li>
