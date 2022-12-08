@@ -29,7 +29,7 @@ function EmployeeInfoForm({id}) {
 
             if (infoResponse.ok) {
                 const info = await infoResponse.json()
-                console.log(info)
+
                 if (info) {
                     setFullName(info.full_name)
                     setCareerTitle(info.career_title)

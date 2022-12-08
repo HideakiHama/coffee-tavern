@@ -11,19 +11,20 @@ import jwt_decode from 'jwt-decode';
 
 const theme = createTheme();
 
-const EmployerProfile = () => {
+const EmployerProfile = ({id}) => {
 
   const [name, setName] = useState('');
   const [job, setJob] = useState('');
   const [location, setLocation] = useState('');
   const [about, setAbout] = useState('');
+  const [pic, setPic] = useState('')
 
   const { token } = useAuthContext();
 
   useEffect(() => {
     async function getEmployerInfo() {
-      const decoded = jwt_decode(token)
 
+      const decoded = jwt_decode(token)
       const id = decoded.account["id"]
 
       const employerURL = `http://localhost:8000/users/${id}/get_employer_info`;
@@ -40,10 +41,11 @@ const EmployerProfile = () => {
         setJob(info.job_type)
         setLocation(info.location)
         setAbout(info.about)
+        setPic(info.pic_url)
       }
     }
     getEmployerInfo()
-  }, [token])
+  }, [id, token])
 
   return (
     <ThemeProvider theme={theme}>
@@ -55,7 +57,7 @@ const EmployerProfile = () => {
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${pic})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
@@ -85,7 +87,9 @@ const EmployerProfile = () => {
                 <li>{about}</li>
               </ul>
             </Typography>
-            <a href="/user/employer/info-form">Edit Info</a>
+            <button className="btn waves-effect waves-light" type="submit" name="action">
+              <a href="/user/employer/info-form">Edit Info</a>
+            </button>
           </Box>
         </Grid>
       </Grid>

@@ -1,17 +1,24 @@
+import 'materialize-css/dist/css/materialize.min.css'
+import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
 
 function EmployerInfoForm({id}) {
-    // const [employerInfo, setEmployerInfo] = useState('')
+
     const [companyName, setCompanyName] = useState('')
     const [jobType, setJobType] = useState('')
     const [location, setLocation] = useState('')
     const [about, setAbout] = useState('')
+    const [pic, setPic] = useState('')
 
     const { token } = useAuthContext();
 
     useEffect(() => {
         async function getEmployerInfo () {
+
+            const decoded = jwt_decode(token)
+            const id = decoded.account["id"]
+
             const infoURL = `http://localhost:8000/users/${id}/get_employer_info`
 
             const infoResponse = await fetch(infoURL, {
@@ -27,6 +34,7 @@ function EmployerInfoForm({id}) {
                     setJobType(info.job_type)
                     setLocation(info.location)
                     setAbout(info.about)
+                    setPic(info.pic_url)
                 }
             }
         }
@@ -41,7 +49,8 @@ function EmployerInfoForm({id}) {
             "company_name": companyName,
             "job_type": jobType,
             "location": location,
-            "about": about
+            "about": about,
+            "pic_url": pic
         }
 
         const employerInfoURL = `http://localhost:8000/users/${id}/update_employer_info`
@@ -87,6 +96,12 @@ function EmployerInfoForm({id}) {
                     </div>
                 </div>
                 <div className="row">
+                    <div className="form-floating col s6">
+                        <input placeholder="Profile Picture URL"type="text" name="pic_url" value={pic} id="pic_url" onChange={e => setPic(e.target.value)}>
+                        </input>
+                    </div>
+                </div>
+                <div className="row">
                     <div className="col s12">
                         <div className="input-field inline">
                             <button className="btn waves-effect waves-light" type="submit" name="action">
@@ -95,7 +110,7 @@ function EmployerInfoForm({id}) {
                         </div>
                     </div>
                 </div>
-                <a href="/user/employer">Back to Profile</a>
+                <a href="/user/current/profile">Back to Profile</a>
             </form>
         </div>
     )
