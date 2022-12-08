@@ -4,6 +4,7 @@ import os
 from psycopg import connect
 from queries.pool import keepalive_kwargs
 
+
 class Error(BaseModel):
     message: str
 
@@ -31,7 +32,9 @@ class EmployeeInfoRepo:
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
@@ -59,7 +62,7 @@ class EmployeeInfoRepo:
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
         # try:
         # connect the database
-        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
             # get a cursor (something to run SQL with)
             with conn.cursor() as db:
                 # Run our SELECT statement
@@ -91,7 +94,9 @@ class EmployeeInfoRepo:
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -124,7 +129,35 @@ class EmployeeInfoRepo:
             location=record[2],
             education=record[3],
             about=record[4],
-            account_id=record[5]
+            account_id=record[5],
         )
         print("X", x)
         return x
+
+    ## GET ##
+    def get_all_profile(self) -> List[EmployeeInfoOut]:
+        try:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
+                print("HI")
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT
+                            full_name,
+                            career_title,
+                            location,
+                            education,
+                            about,
+                            account_id
+                        FROM employee_info
+                        ORDER BY full_name
+                        """
+                    )
+                    print("RESULT", result)
+                    resultList = list(result)
+                    print("RESULT LIST", resultList)
+                return [self.record_employee_form_out(record) for record in resultList]
+        except Exception as e:
+            return {"message": "Could not get feedbacks"}

@@ -6,6 +6,10 @@ import EmployerFeedbackList from './feedbacks/EmployerFeedbackList';
 import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
 import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
+import AllEmployeeFeedback from './feedbacks/AllEmployeeFeedback';
+import AllEmployerFeedback from './feedbacks/AllEmployerFeedback';
+
+
 import EmployeeProfile from './LoggedInUserProfile/Employee';
 import EmployerProfile from './LoggedInUserProfile/Employer';
 import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
@@ -65,6 +69,10 @@ render() {
                 <Route path = "/employee-feedback-update" element={<EmployeeFeedbackEdit/>}>
                 </Route>
                 <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
+                </Route>
+                <Route path = "/all-employee-feedback" element={<AllEmployeeFeedback/>}>
+                </Route>
+                <Route path = "/all-employer-feedback" element={<AllEmployerFeedback/>}>
                 </Route>
                 <Route path = "/employee-profile-list" element={<EmployeeProfileList/>}>
                 </Route>

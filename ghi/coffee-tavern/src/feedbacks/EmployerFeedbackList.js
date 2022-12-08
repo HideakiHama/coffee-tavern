@@ -11,10 +11,14 @@ function EmployerFeedbackList() {
 
     const navigate = useNavigate();
     const employerFeedbackEdit = (id) => {
-      console.log("###ID###", id)
       navigate("/employer-feedback-update", {state:{id:id}});
     };
 
+
+    //Transfer Employer Name to All Feedback Link
+    const allEmployerFeedback = (employee_name) => {
+      navigate("/all-employee-feedback", {state:{employee_name:employee_name}})
+    }
 
 
     useEffect(() =>{
@@ -46,6 +50,7 @@ function EmployerFeedbackList() {
                 <td>{employer.date}</td>
                 <td>{employer.description}</td>
                 <td><button onClick={() => employerFeedbackEdit(employer.id)}>Edit</button></td>
+                <td><button onClick={() => allEmployerFeedback(employer.employer_name)}>Check all feedbacks</button></td>
               </tr>
               )}
           </tbody>
