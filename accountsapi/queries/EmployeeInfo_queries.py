@@ -73,6 +73,7 @@ class EmployeeInfoRepo:
                         location,
                         education,
                         about,
+                        pic_url,
                         account_id
                     FROM employee_info
                     WHERE account_id = %s
@@ -132,4 +133,5 @@ class EmployeeInfoRepo:
             pic_url=record[5],
             account_id=record[6]
         )
+        print(x)
         return x
