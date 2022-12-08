@@ -9,10 +9,7 @@ lint-test-job:
   stage: test
   script:
     - pip install flake8
-<<<<<<< HEAD
-=======
     - flake8 sample_service
->>>>>>> d75ecd3589225fd0a9af0c2e93d3fd99aeba8fae
     - flake8 --max-line-length 200 accountsapi, tagsapi
 
 # Run the unit tests
