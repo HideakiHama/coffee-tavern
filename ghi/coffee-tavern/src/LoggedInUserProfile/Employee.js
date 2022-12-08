@@ -21,14 +21,10 @@ const EmployeeProfile = () => {
 
   const { token } = useAuthContext();
 
-  // const decoded = jwt_decode(token)
-
-  // const role = decoded.account["role"]
-
   useEffect(() => {
     async function getEmployeeInfo() {
+        
       const decoded = jwt_decode(token)
-
       const id = decoded.account["id"]
 
       const employeeURL = `http://localhost:8000/users/${id}/get_employee_info`;
@@ -37,11 +33,10 @@ const EmployeeProfile = () => {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`}
       });
-      console.log(employeeResponse)
+
       if (employeeResponse.ok) {
         const info = await employeeResponse.json();
-        console.log("info", info)
-        // set info
+
         setName(info.full_name)
         setCareer(info.career_title)
         setLocation(info.location)

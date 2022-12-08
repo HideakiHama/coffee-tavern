@@ -15,11 +15,8 @@ def create_employee_info(
     repo: EmployeeInfoRepo = Depends(),
     account: dict = Depends(authenticator.get_current_account_data)
 ) -> EmployeeInfoOut:
-    # if info["account_id"] == account["id"]:
     info = repo.create(employee_info, account["id"]).dict()
-    print("PRE", info)
     info["account_id"] = account
-    print(info)
     return info
 
 @router.get("/users/{account_id}/get_employee_info", tags=["User Info"])
@@ -39,7 +36,6 @@ def update_employee_info(
     account: dict = Depends(authenticator.get_current_account_data)
 ) -> EmployeeInfoOut:
     final = repo.get_one(account["id"])
-    print(final)
     Updated = repo.update(employee_info, account["id"]).dict()
     Updated["account_id"] = final.account_id
     return Updated

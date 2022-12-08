@@ -6,7 +6,7 @@ function MainPage() {
             alignItems: 'center',
             justifyContent: 'center',
         }}>
-        <div class="wrapper">
+        <div className="wrapper">
             <div className="px-4 py-5 my-5">
                 <h1 style= {{color:"green"}} className="display-5 fw-bold">Coffee Tavern</h1>
                 <div className="col-lg-6 mx-auto">

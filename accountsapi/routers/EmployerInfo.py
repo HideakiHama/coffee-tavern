@@ -13,9 +13,7 @@ def create_employer_info(
     account: dict = Depends(authenticator.get_current_account_data)
 ) -> EmployerInfoOut:
     info = repo.create(employer_info, account["id"]).dict()
-    print("PRE", info)
     info["account_id"] = account
-    print(info)
     return info
 
 @router.get('/users/{account_id}/get_employer_info', tags=["User Info"])
@@ -26,7 +24,6 @@ def get_employer_info_by_id(
     ) -> EmployerInfoOut:
     EmployerInfo = repo.get_one(account_id).dict()
     EmployerInfo["account_id"] = repo1.getId(account_id).dict()
-    print("EMPLOYER INFO", EmployerInfo)
     return EmployerInfo
 
 @router.put("/users/{account_id}/update_employer_info", tags=["User Info"])

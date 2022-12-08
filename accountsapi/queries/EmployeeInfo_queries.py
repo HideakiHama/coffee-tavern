@@ -14,6 +14,7 @@ class EmployeeInfoIn(BaseModel):
     location: Optional[str]
     education: Optional[str]
     about: Optional[str]
+    pic_url: Optional[str]
 
 
 class EmployeeInfoOut(BaseModel):
@@ -22,6 +23,7 @@ class EmployeeInfoOut(BaseModel):
     location: Optional[str]
     education: Optional[str]
     about: Optional[str]
+    pic_url: Optional[str]
     account_id: int
 
 
@@ -30,17 +32,14 @@ class EmployeeInfoRepo:
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            # connect the database
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
-                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO employee_info
-                            (full_name, career_title, location, education, about, account_id)
+                            (full_name, career_title, location, education, about, pic_url, account_id)
                         VALUES
-                            (%s, %s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s, %s)
                         """,
                         [
                             info.full_name,
@@ -48,44 +47,39 @@ class EmployeeInfoRepo:
                             info.location,
                             info.education,
                             info.about,
+                            info.pic_url,
                             account_id,
                         ],
                     )
-                    # get current user id
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
 
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
-        # try:
-        # connect the database
-        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
-            # get a cursor (something to run SQL with)
-            with conn.cursor() as db:
-                # Run our SELECT statement
-                result = db.execute(
-                    """
-                    SELECT
-                        full_name,
-                        career_title,
-                        location,
-                        education,
-                        about,
-                        account_id
-                    FROM employee_info
-                    WHERE account_id = %s
-                    """,
-                    [account_id],
-                )
-                record = result.fetchone()
-                print("record", record)
-                if record is None:
-                    return None
-                y = self.record_employee_form_out(record)
-                print("Y", y)
-                return y
-        # except Exception as e:
-        #     return {"message": "Could not get employee info"}
+        try:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT
+                            full_name,
+                            career_title,
+                            location,
+                            education,
+                            about,
+                            pic_url,
+                            account_id
+                        FROM employee_info
+                        WHERE account_id = %s
+                        """,
+                        [account_id],
+                    )
+                    record = result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_employee_form_out(record)
+        except Exception as e:
+            return {"message": "Could not get employee info"}
 
     def update(
         self, info: EmployeeInfoIn, account_id: int
@@ -101,7 +95,8 @@ class EmployeeInfoRepo:
                             career_title = %s,
                             location = %s,
                             education = %s,
-                            about = %s
+                            about = %s,
+                            pic_url = %s
                         WHERE account_id = (%s);
                         """,
                         [
@@ -110,6 +105,7 @@ class EmployeeInfoRepo:
                             info.location,
                             info.education,
                             info.about,
+                            info.pic_url,
                             account_id,
                         ],
                     )
@@ -124,7 +120,7 @@ class EmployeeInfoRepo:
             location=record[2],
             education=record[3],
             about=record[4],
-            account_id=record[5]
+            pic_url=record[5],
+            account_id=record[6]
         )
-        print("X", x)
         return x

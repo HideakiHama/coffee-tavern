@@ -10,8 +10,8 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       # DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
-      # URL for updated Accounts api 2 on elephant sql
-      DATABASE_URL: postgres://nomzfggc:6bglQKZvY6RA8TTdlIc6Iz-D6e65l9kq@arjuna.db.elephantsql.com/nomzfggc
+      # URL for updated Accounts api (added pic url) on elephant sql
+      DATABASE_URL: postgres://eorjodza:zEb3HY6Q98VMd6z73wYGEsgdPJGL5_Do@arjuna.db.elephantsql.com/eorjodza
       # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki

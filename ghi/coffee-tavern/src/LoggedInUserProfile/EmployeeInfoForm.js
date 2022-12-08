@@ -24,8 +24,7 @@ function EmployeeInfoForm({id}) {
 
             if (infoResponse.ok) {
                 const info = await infoResponse.json()
-                // setEmployeeInfo(info)
-                console.log(info)
+
                 if (info) {
                     setFullName(info.full_name)
                     setCareerTitle(info.career_title)
@@ -49,7 +48,7 @@ function EmployeeInfoForm({id}) {
             "education": education,
             "about": about
         }
-        console.log(data)
+        
         const employeeInfoURL = `http://localhost:8000/users/${id}/update_employee_info`
 
         const fetchConfig = {
