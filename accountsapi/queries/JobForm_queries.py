@@ -64,8 +64,25 @@ class JobPostFormOut2(BaseModel):
     description: str
     account_id: Account | None = None
 
+class Applicants(BaseModel):
+    id: int
+    # email: str
+    # position: str
+    full_name: str
+    education: str
+    account_id: Account | None = None
+class ApplicantsOut(BaseModel):
+    id: int
+    # email: str
+    # position: str
+    full_name: str
+    education: str
+    employer_id: int
+    account_id: Account | None = None
+
 class JobFormRepository:
     def get_one(self, JobForm_id: int) -> Optional[JobPostFormOut]:
+        print("EREE")
         try:
             # connect the database
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
@@ -89,6 +106,7 @@ class JobFormRepository:
                         [JobForm_id],
                     )
                     record = result.fetchone()
+                    print("RECORD", record)
                     if record is None:
                         return None
                     return self.record_JobForm_out(record)
@@ -108,7 +126,6 @@ class JobFormRepository:
                     )
                     resultList = list(result)
                 return [self.record_JobForm_all(record) for record in resultList]
-
         except Exception as e:
             return {"message": "Could not get any job form today"}
 
@@ -146,7 +163,6 @@ class JobFormRepository:
     def update(
         self, Form_id: int, UpdatedJobForm: JobPostFormIn
     ) -> Union[JobPostFormOut, Error]:
-        print("UpdatedJobForm", UpdatedJobForm)
         try:
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
@@ -194,9 +210,61 @@ class JobFormRepository:
             print(e)
             return False
 
+    def get_applicants(self) -> Union[List[ApplicantsOut], Error]:
+        try:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                    """
+                    SELECT id, account_id, employer_id, full_name, education
+                    FROM applied
+                    ORDER BY id
+                    """
+                    )
+                    resultList = list(result)
+                    print("RESULTLIST", resultList)
+                y = [self.record_Applicants_all(record) for record in resultList]
+                print("Y", y)
+                return y
+        except Exception as e:
+            return {"message": "Could not get any applicants"}
+
+    def send_application(self, Form: Applicants) -> ApplicantsOut:
+        print("Form", Form)
+        try:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        INSERT INTO applied
+                            (account_id, full_name, education, employer_id)
+                        VALUES
+                            (%s, %s, %s, %s)
+                        RETURNING id;
+                        """,
+                        [
+                            Form.account_id["id"],
+                            Form["full_name"],
+                            Form["education"],
+                            Form["employer_id"]
+                        ],
+                    )
+                    id = result.fetchone()[0]
+                    print(id)
+                    print("FORM1111", form)
+                    return self.Application_dict(id, Form)
+                return result
+        except Exception as e:
+            print(e)
+            return False
+
     def Job_Post_in_to_out(self, id: int, JobForm: JobPostFormIn):
         old_data = JobForm.dict()
         return JobPostFormOut1(id=id, **old_data)
+
+    def Application_dict(self, id: int, JobForm: Applicants):
+        # old_data = JobForm.dict()
+        return Applicants(id=id, **old_data)
 
     def record_JobForm_out(self, record):
         return JobPostFormOut(
@@ -220,3 +288,14 @@ class JobFormRepository:
             tag=record[4],
             description=record[5]
         )
+
+    def record_Applicants_all(self, record):
+        print(record)
+        z = Applicants(
+            id=record[0],
+            position=record[1],
+            full_name=record[2],
+            education=record[3],
+            applied_id=record[4]
+        )
+        print("Z", z)

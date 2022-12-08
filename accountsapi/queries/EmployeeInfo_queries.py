@@ -78,12 +78,10 @@ class EmployeeInfoRepo:
                     [account_id],
                 )
                 record = result.fetchone()
-                print("record", record)
                 if record is None:
                     return None
-                y = self.record_employee_form_out(record)
-                print("Y", y)
-                return y
+                return self.record_employee_form_out(record)
+
         # except Exception as e:
         #     return {"message": "Could not get employee info"}
 
@@ -118,7 +116,7 @@ class EmployeeInfoRepo:
             return {"message": "Update did not work"}
 
     def record_employee_form_out(self, record):
-        x = EmployeeInfoOut(
+        return EmployeeInfoOut(
             full_name=record[0],
             career_title=record[1],
             location=record[2],
@@ -126,5 +124,3 @@ class EmployeeInfoRepo:
             about=record[4],
             account_id=record[5]
         )
-        print("X", x)
-        return x

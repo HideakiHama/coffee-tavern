@@ -17,9 +17,7 @@ def create_employee_info(
 ) -> EmployeeInfoOut:
     # if info["account_id"] == account["id"]:
     info = repo.create(employee_info, account["id"]).dict()
-    print("PRE", info)
     info["account_id"] = account
-    print(info)
     return info
 
 @router.get("/users/{account_id}/get_employee_info", tags=["User Info"])

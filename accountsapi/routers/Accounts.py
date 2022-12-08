@@ -41,15 +41,11 @@ async def create_account(
     response: Response,
     repo: AccountRepo = Depends(),
 ):
-    print("HEHEHE")
     hashed_password = authenticator.hash_password(info.password)
-    print("PLZ")
     account = repo.create(info, hashed_password)
-    print(account)
     form = AccountForm(username=info.user_name, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     x = AccountToken(account=account, **token.dict())
-    print("XXXXX", x)
     return x
 
 

@@ -7,10 +7,13 @@ from queries.JobForm_queries import (
     Error,
     JobPostForm,
     JobPostFormOut1,
-    JobPostFormOut2
+    JobPostFormOut2,
+    Applicants,
+    ApplicantsOut
 )
 from queries.accounts import AccountRepo
 from authenticator import authenticator
+from queries.EmployeeInfo_queries import EmployeeInfoRepo
 
 router = APIRouter()
 
@@ -88,5 +91,37 @@ def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: 
             return repo.delete(form_id)
         else:
             raise credentials_exception1
+    else:
+        raise credentials_exception
+
+
+
+@router.post("/apply/{employer_id}", tags=["JobForm"], response_model=ApplicantsOut)
+def sendApplications(employer_id: int,
+    repo: JobFormRepository = Depends(),
+                    repo1: EmployeeInfoRepo = Depends(),
+                    account: dict = Depends(authenticator.get_current_account_data)) -> ApplicantsOut:
+    if account["role"] == "Employee":
+        EmployeeInfo = repo1.get_one(account["id"]).dict()
+        EmployeeInfo["account_id"] = account
+        EmployeeInfo["employer_id"] = employer_id
+        # print("EMPLOYEE", EmployeeInfo)
+        EmployeeInfo = repo.send_application(EmployeeInfo)
+        return EmployeeInfo
+
+@router.get("/get_applicants", tags=["JobForm"], response_model=Applicants)
+def getApplicants(repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> Applicants:
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You are employee. Only the employer have this access",
+    )
+    credentials_exception1 = HTTPException(
+        status_code=status.HTTP_403_FORBIDDEN,
+        detail="You did not make this. Access denied",
+    )
+    if account["role"] == "Employer":
+        x = repo.get_applicants()
+        print("X", x)
+        return x
     else:
         raise credentials_exception

@@ -57,17 +57,17 @@ export default function JobPostList() {
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
                   <CardContent sx={{ flexGrow: 1 }}>
                     <Typography gutterBottom variant="h5" component="h2">
-                      {jobForms.employer}
+                      Employer: {jobForms.employer}
                     </Typography>
                     <Typography>
-                      {jobForms.description}
+                      position: {jobForms.position}
                     </Typography>
                     <Typography>
-                      {jobForms.position}
+                      description: {jobForms.description}
                     </Typography>
                   </CardContent>
                   <CardActions>
-                    <Button size="small">View</Button>
+                    <Button size="small">Send Info</Button>
                   </CardActions>
                 </Card>
               </Grid>
