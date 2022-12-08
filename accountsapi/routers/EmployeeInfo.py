@@ -3,6 +3,7 @@ from typing import Union
 from queries.EmployeeInfo_queries import EmployeeInfoIn, EmployeeInfoRepo, EmployeeInfoOut, Error
 from queries.accounts import AccountRepo
 from RoleChecker import RoleChecker
+from authenticator import authenticator
 
 router = APIRouter()
 
@@ -11,38 +12,35 @@ checker = RoleChecker("Employer")
 @router.post("/users/{account_id}/create_employee_info", tags=["User Info"])
 def create_employee_info(
     employee_info: EmployeeInfoIn,
-    account_id: int,
     repo: EmployeeInfoRepo = Depends(),
-    repo1: AccountRepo = Depends(),
-    # checked_role: bool = Depends(checker),
+    account: dict = Depends(authenticator.get_current_account_data)
 ) -> EmployeeInfoOut:
-    # credentials_exception = HTTPException(
-    #     status_code=status.HTTP_403_FORBIDDEN,
-    #     detail="You are an employer, you should fill out employer info"
-    # )
-    # if checked_role:
-    info = repo.create(employee_info, account_id).dict()
-    info["account_id"] = repo1.get(account_id).dict()
+    # if info["account_id"] == account["id"]:
+    info = repo.create(employee_info, account["id"]).dict()
+    print("PRE", info)
+    info["account_id"] = account
+    print(info)
     return info
-    # raise credentials_exception
 
 @router.get("/users/{account_id}/get_employee_info", tags=["User Info"])
 def get_employee_info_by_id(
     account_id: int,
     repo: EmployeeInfoRepo = Depends(),
-    repo1: AccountRepo = Depends()
+    repo1: AccountRepo = Depends(),
+    account: dict = Depends(authenticator.get_current_account_data)
     ) -> EmployeeInfoOut:
     EmployeeInfo = repo.get_one(account_id).dict()
-    EmployeeInfo["account_id"] = repo1.get(account_id).dict()
+    EmployeeInfo["account_id"] = repo1.getId(account_id).dict()
     return EmployeeInfo
 
 @router.put("/users/{account_id}/update_employee_info", tags=["User Info"])
 def update_employee_info(
     employee_info: EmployeeInfoIn,
-    account_id: int,
     repo: EmployeeInfoRepo = Depends(),
-    repo1: AccountRepo = Depends()
+    account: dict = Depends(authenticator.get_current_account_data)
 ) -> EmployeeInfoOut:
-    Updated = repo.update(employee_info, account_id).dict()
-    Updated["account_id"] = repo1.get(account_id).dict()
+    final = repo.get_one(account["id"])
+    print(final)
+    Updated = repo.update(employee_info, account["id"]).dict()
+    Updated["account_id"] = final.account_id
     return Updated

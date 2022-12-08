@@ -1,10 +1,15 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
+import { useLocation } from "react-router-dom";
+
 
 function EmployeeFeedbackEdit(){
 
-  //Handles getting the data from the specific employer ID
+  const location = useLocation();
+  const id = location.state.id
+  console.log("##EDIT ID###", id)
+
   const [employer, setEmployer] = useState([]);
   const { token } = useAuthContext();
 
@@ -13,7 +18,7 @@ function EmployeeFeedbackEdit(){
   }, []);
 
   const getEmployeeFeedbacksUrl = async (EmployeeFeedback_id) => {
-    EmployeeFeedback_id = 1                                   //Temporary Employee ID
+    EmployeeFeedback_id = id
     const response = await axios.get(`http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`,
     {headers: { Authorization: `Bearer ${token}`}});
     setEmployer(response.data)};
@@ -30,7 +35,7 @@ function EmployeeFeedbackEdit(){
     // Editing Form
     const handleEdit = async (event,EmployeeFeedback_id) => {
       event.preventDefault();
-      EmployeeFeedback_id = 1                           //Temporary Employee ID
+      EmployeeFeedback_id = id
 
       if(!(inputs["employer_name"])){
         inputs["employer_name"] = employer.employer_name
@@ -59,7 +64,7 @@ function EmployeeFeedbackEdit(){
 
     // Delete Form
     const handleDelete = async (EmployeeFeedback_id) => {
-      EmployeeFeedback_id = 1                            //Temporary Employee ID
+      EmployeeFeedback_id = id                            //Temporary Employee ID
       await axios.delete(
         `http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`
         , {headers: { Authorization: `Bearer ${token}`}})
@@ -70,6 +75,7 @@ function EmployeeFeedbackEdit(){
 
     return (
       <div className="row">
+        <h1>Edit feedback</h1>
         <form className="col s12" onSubmit={handleEdit}>
           <div className="row">
             <div className="form-floating col s6">
@@ -95,7 +101,7 @@ function EmployeeFeedbackEdit(){
           <div className="row">
             <div className="col s12">
               <div className="input-field inline">
-                  <button className="btn waves-effect waves-light" type="submit" name="action">Edit
+                  <button className="btn waves-effect waves-light" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
               </div>

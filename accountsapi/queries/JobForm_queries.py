@@ -1,10 +1,10 @@
 from pydantic import BaseModel
 from typing import List, Optional, Union
 from datetime import date
-from queries.pool import keepalive_kwargs
+from queries.accounts import Account
 import os
 from psycopg import connect
-from queries.accounts import Account
+from queries.pool import keepalive_kwargs
 
 
 class Error(BaseModel):
@@ -113,8 +113,6 @@ class JobFormRepository:
             return {"message": "Could not get any job form today"}
 
     def create(self, JobForm: JobPostFormIn, account_id: int) -> Union[List[JobPostFormOut2], Error]:
-        print("ACC", account_id)
-        print("JOB", JobForm)
         try:
             # connect the database
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
@@ -141,7 +139,6 @@ class JobFormRepository:
                         ],
                     )
                     id = result.fetchone()[0]
-                    print("ID", id)
                     return self.Job_Post_in_to_out(id, JobForm)
         except Exception:
             return {"message": "Create did not work"}
@@ -177,7 +174,6 @@ class JobFormRepository:
                         ],
                     )
                     z = self.Job_Post_in_to_out(Form_id, UpdatedJobForm)
-                    print("z", z)
                     return z
         except Exception:
             return {"message": "Could not update the Job Form"}
@@ -200,7 +196,6 @@ class JobFormRepository:
 
     def Job_Post_in_to_out(self, id: int, JobForm: JobPostFormIn):
         old_data = JobForm.dict()
-        print("OLD", old_data)
         return JobPostFormOut1(id=id, **old_data)
 
     def record_JobForm_out(self, record):

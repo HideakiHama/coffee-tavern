@@ -1,10 +1,10 @@
 from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
-from queries.pool import keepalive_kwargs
-import os
-from psycopg import connect
 from datetime import date
 from queries.accounts import Account
+import os
+from psycopg import connect
+from queries.pool import keepalive_kwargs
 
 
 class Error(BaseModel):
@@ -62,7 +62,29 @@ class EmployerFeedbackRepository:
             return {"message": "Could not get employer feedback form"}
 
     ## GET ##
-    def get_all(self, account_id: int) -> Union[List[EmployerFeedbackFormOut2], Error]:
+    def get_all_feedbacks(self) -> List[EmployerFeedbackFormOut2]:
+        try:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT id, employee_name, date, description, account_id
+                        FROM employer_form
+                        ORDER BY id
+                        """
+                    )
+                    resultList = list(result)
+                return [
+                    self.record_to_employer_feedback_out(record)
+                    for record in resultList
+                ]
+        except Exception as e:
+            return {"message": "Could not get feedbacks"}
+
+    ## GET ##
+    def get_all_with_id(
+        self, account_id: int
+    ) -> Union[List[EmployerFeedbackFormOut2], Error]:
         try:
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
                 with conn.cursor() as db:
@@ -166,7 +188,6 @@ class EmployerFeedbackRepository:
 
     # refactored function for # GET #
     def record_to_employer_feedback_out(self, record):
-
         return EmployerFeedbackFormOut2(
             id=record[0],
             employee_name=record[1],

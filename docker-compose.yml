@@ -1,6 +1,6 @@
-# volumes:
-#   coffee_tavern-data:
-#     external: true
+volumes:
+  coffee_tavern-data:
+    external: true
   # tagsapi-data:
   #   external: true
 services:
@@ -9,7 +9,9 @@ services:
       context: ./accountsapi
       dockerfile: Dockerfile.dev
     environment:
-      DATABASE_URL: postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
+      # DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
+      # URL for updated Accounts api 2 on elephant sql
+      DATABASE_URL: postgres://nomzfggc:6bglQKZvY6RA8TTdlIc6Iz-D6e65l9kq@arjuna.db.elephantsql.com/nomzfggc
       # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki
@@ -48,7 +50,7 @@ services:
       REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
       REACT_APP_TAGS_API_HOST: http://localhost:8100
 
-## comment this before deployment
+# comment this before deployment
   # db:
   #   image: postgres:14.5-bullseye
   #   environment:

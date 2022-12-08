@@ -8,10 +8,17 @@ import TagView from './TagListView';
 function TagForm(){
 
     const [tagsList, setTagsList] = useState([])
-    // const [id, setId] = useState('')
     const [tag, setTag] = useState('')
-    // const { token } = useAuthContext();
+    // const [id, setId] = useState('')
+
     // read tags get_tag_url()
+
+    useEffect(() => {
+        axios.get('http://localhost:8100/get_all_tags')
+        .then(res =>
+            setTagsList(res.data))
+      }, [tag, setTag , tagsList, setTagsList]);
+
     // useEffect(() => {
     //     axios.get('http://localhost8100/get_all_tags')
     //     .then(res => {
@@ -19,18 +26,6 @@ function TagForm(){
     //         setTagsList(res.data)
     //     },[])
     // });
-
-    useEffect (() => {
-        const getTags = async () => {
-            const response = await fetch('http://localhost:8100/get_all_tags');
-            const data = await response.json();
-            console.log("DATAA", data)
-            setTagsList(data)
-            // console.log("TAGS", tagsList)
-
-        }
-        getTags()
-    }, [])
 
     // const getTagHandler = () => {
     //     axios.get('http://localhost8100/get_all_tags')
@@ -47,15 +42,11 @@ function TagForm(){
     // }
 
     // post tags
-
-
-    // const addTagHandler = () => {
-    //     axios.post('http://localhost8100/create_tag_form')
-    //     .then(res => console.log(res))
-    //     setTagsList([...tagsList, tag]);
-    // };
-
-
+    const addTagHandler = () => {
+        axios.post('http://localhost:8100/create_tag_form')
+        .then(res => console.log(res))
+        setTagsList([...tagsList, {tag}]);
+    };
     //{'id': id, 'tag': tag}
 
 

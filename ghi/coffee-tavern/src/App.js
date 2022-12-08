@@ -6,7 +6,12 @@ import EmployerFeedbackList from './feedbacks/EmployerFeedbackList';
 import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
 import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
+import EmployeeProfile from './LoggedInUserProfile/Employee';
+import EmployerProfile from './LoggedInUserProfile/Employer';
+import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
+import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
 
+import EmployeeProfileList from './listOfEmployee'
 import TagForm from './tags/TagForm';
 
 import React, { Component } from 'react';
@@ -61,8 +66,18 @@ render() {
                 </Route>
                 <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
                 </Route>
+                <Route path = "/employee-profile-list" element={<EmployeeProfileList/>}>
+                </Route>
                 <Route path = "/create_tag_form" element={<TagForm />}>
                 </Route>
+
+                {/* Lexey */}
+
+                <Route path = "/user/employee/" element={<EmployeeProfile id={this.state.id}/>} />
+                <Route path = "/user/employee/info-form" element={<EmployeeInfoForm id={this.state.id}/>} />
+                <Route path = "/user/employer" element={<EmployerProfile id={this.state.id}/>} />
+                <Route path = "/user/employer/info-form" element={<EmployerInfoForm id={this.state.id}/>} />
+
               </Routes>
             </div>
         </BrowserRouter>

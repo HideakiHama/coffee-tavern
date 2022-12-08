@@ -61,17 +61,24 @@ def get_one_employee_feedback_form(
 
 
 ## GET ##
-# getting list of feedback from employees
+# getting list of feedback from specific employees
 @router.get(
     "/employee-feedbacks/{account_id}",
     tags=["Employee Feedback Form"],
     response_model=Union[List[EmployeeFeedbackFormOut2], Error],
 )
-def get_all(
+def get_all_with_id(
     account_id: int,
     repo: EmployeeFeedbackRepository = Depends(),
 ):
-    return repo.get_all(account_id)
+    return repo.get_all_with_id(account_id)
+
+
+## GET ##
+# Get all the EmployeeFeedbacks Regardless of who wrote it
+@router.get("/get_all_employeeFeedbacks", tags=["Employee Feedback Form"])
+def get_all_employee_feedbacks(repo: EmployeeFeedbackRepository = Depends()):
+    return repo.get_all_feedbacks()
 
 
 ## PUT ##
@@ -117,7 +124,7 @@ def Delete_Employee_Feedback(
     )
 
     x = repo.get_one(EmployeeFeedback_id)
-    # print(x.account_id)
+    print(x.account_id)
     if x.account_id == account["id"]:
         return repo.delete(EmployeeFeedback_id)
     raise credentials_exception
