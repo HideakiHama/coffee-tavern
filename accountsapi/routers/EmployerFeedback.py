@@ -7,14 +7,13 @@ from queries.EmployerFeedback_queries import (
     EmployerFeedbackFormOut2,
     Error,
 )
-
 from authenticator import authenticator
 
 router = APIRouter()
 
 
 # POST #
-# creating new employer feedback form #
+# creating new employer feedback form
 @router.post(
     "/employer-feedback-form/{account_id}",
     tags=["Employer Feedback Form"],
@@ -83,7 +82,7 @@ def get_all_employer_feedbacks(repo: EmployerFeedbackRepository = Depends()):
 
 
 # PUT #
-# Edit feedback #
+# Edit feedback
 @router.put(
     "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],
@@ -108,7 +107,7 @@ def Edit_Employer_Feedback(
 
 
 # DELETE #
-# Delete feedback #
+# Delete feedback
 @router.delete(
     "/employer-feedback-form/{EmployerFeedback_id}",
     tags=["Employer Feedback Form"],

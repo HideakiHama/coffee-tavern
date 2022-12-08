@@ -1,10 +1,8 @@
-from fastapi import APIRouter, Depends, Response, HTTPException, status
-from typing import Union
+from fastapi import APIRouter, Depends
 from queries.EmployeeInfo_queries import (
     EmployeeInfoIn,
     EmployeeInfoRepo,
     EmployeeInfoOut,
-    Error,
 )
 from queries.accounts import AccountRepo
 from RoleChecker import RoleChecker
@@ -54,7 +52,7 @@ def update_employee_info(
     return Updated
 
 
-## GET ##
+# GET #
 # Get all the Employee Profile
 @router.get("/get_all_profile", tags=["User Info"])
 def get_all_employee_profile(repo: EmployeeInfoRepo = Depends()):

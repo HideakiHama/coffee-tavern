@@ -32,9 +32,7 @@ class EmployeeInfoRepo:
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
-            with connect(
-                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
-            ) as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
@@ -54,6 +52,7 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
+                    print(result)
                     # get current user id
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
@@ -94,9 +93,7 @@ class EmployeeInfoRepo:
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with connect(
-                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
-            ) as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -118,6 +115,7 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
+                    print(result)
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
@@ -134,7 +132,7 @@ class EmployeeInfoRepo:
         print("X", x)
         return x
 
-    ## GET ##
+    # GET #
     def get_all_profile(self) -> List[EmployeeInfoOut]:
         try:
             with connect(
@@ -159,5 +157,5 @@ class EmployeeInfoRepo:
                     resultList = list(result)
                     print("RESULT LIST", resultList)
                 return [self.record_employee_form_out(record) for record in resultList]
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get feedbacks"}

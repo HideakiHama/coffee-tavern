@@ -42,6 +42,7 @@ class JobPostFormOut(BaseModel):
     description: str
     account_id: int
 
+
 class JobPostFormOut1(BaseModel):
     id: int
     employer: str
@@ -64,11 +65,13 @@ class JobPostFormOut2(BaseModel):
     description: str
     account_id: Account | None = None
 
+
 class JobFormRepository:
     def get_one(self, JobForm_id: int) -> Optional[JobPostFormOut]:
         try:
             # connect the database
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our SELECT statement
@@ -92,12 +95,13 @@ class JobFormRepository:
                     if record is None:
                         return None
                     return self.record_JobForm_out(record)
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get that JobForm"}
 
     def get_all(self) -> Union[List[JobPostForm], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -109,13 +113,14 @@ class JobFormRepository:
                     resultList = list(result)
                 return [self.record_JobForm_all(record) for record in resultList]
 
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get any job form today"}
 
     def create(self, JobForm: JobPostFormIn, account_id: int) -> Union[List[JobPostFormOut2], Error]:
         try:
             # connect the database
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
@@ -148,7 +153,8 @@ class JobFormRepository:
     ) -> Union[JobPostFormOut, Error]:
         print("UpdatedJobForm", UpdatedJobForm)
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -180,7 +186,8 @@ class JobFormRepository:
 
     def delete(self, Form_id: int) -> bool:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -190,8 +197,7 @@ class JobFormRepository:
                         [Form_id],
                     )
                     return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
 
     def Job_Post_in_to_out(self, id: int, JobForm: JobPostFormIn):

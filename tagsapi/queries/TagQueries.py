@@ -1,4 +1,4 @@
-from pydantic import BaseModel, ValidationError
+from pydantic import BaseModel
 from typing import Optional, List, Union
 from queries.pool import keepalive_kwargs
 import os
@@ -24,10 +24,10 @@ class TagOut(BaseModel):
 
 
 class TagRepository:
-    ## GET ##
+    # GET
     def get_one(self, tag: str) -> Optional[Tags]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -42,13 +42,13 @@ class TagRepository:
                     if record is None:
                         return None
                     return self.record_to_tag_out(record)
-        except Exception as e:
+        except Exception:
             return {"message": "No tags available"}
 
-    ## GET ##
+    # GET
     def get_all(self) -> Union[List[TagOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -61,13 +61,13 @@ class TagRepository:
                 return [
                     self.record_to_tag_out(record) for record in resultList
                 ]  # refactored
-        except Exception as e:
+        except Exception:
             return {"message": "No tags available"}
 
-    ## POST ##
+    # POST
     def create(self, TagForm: TagIn) -> Tags:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -84,10 +84,10 @@ class TagRepository:
         except Exception:
             return {"message": "Couldn't create Tag"}
 
-    ## DELETE ##
+    # DELETE
     def delete(self, Tag_id: int) -> bool:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
