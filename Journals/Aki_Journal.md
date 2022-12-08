@@ -1,3 +1,19 @@
+### Dec 06 2022
+Today I worked on connecting backend without hard coding user id.  And worked on adding Delete & Edit button onto user's feedback list.
+How I was able to do this:
+##### Connection backend without hard coding user id:
+- First npm installed jwt-decode
+- Decode user token on the front end
+- Access user id
+- set that id into user_id variable
+##### How I was able to link user info onto the link when user clicked on the button:
+- I used useNavigation to let user navigate to specific location and added {state:{id:id}} to pass the id onto the navigation link.    navigate("/employee-feedback-update", {state:{id:id}})
+- I use uselocation on the linked side to take out user id from the previous file.
+example code   const location = useLocation(); const id = location.state.id;
+Instead of having delete and edit button on their feedback list I decided to link to 'update' page.
+My ah-ha moment was "jwt-decode" to decode token. "useNavigation & useLocation" to carry the data.
+Blocker: I can't manually get to the Edit Link (with the useLocation coded inside). Solution I deleted the link to the feedback edit on the nav bar.
+
 ### Dec 05 2022
 Today I worked on having Authenticator work on the feedback form and changing the login back to login by email and not by id.
 User can only login by id because our SQL inside our account.'get' function was wrong.  WHERE clause (filter) was set to ID instead of email. It made the data expect integer. instead of string.

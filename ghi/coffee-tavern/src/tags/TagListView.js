@@ -1,4 +1,4 @@
-import TagItems from "./Tags";
+import TagItem from "./Tag";
 
 function TagView(props){
     // let tagVar = [{
@@ -8,12 +8,12 @@ function TagView(props){
     //     id: 1,
     //     tag: 'barista' 
     // }]
-    console.log("this is props in TagView" , props.tagsList)
+    // console.log("this is props in TagView" , props.tagsList)
     return (
         <div>
             <ul>
                 {/* {tagVar.map(tags => < TagItems Tags={tags}/>)} */}
-                {props.tagsList.map(tags => < TagItems Tags={tags}/>)}
+                {props.tagsList.map( tag => < TagItem Tag={tag}/>)}
                 {/* uncomment the props one, once database is working */}
             </ul>
         </div>

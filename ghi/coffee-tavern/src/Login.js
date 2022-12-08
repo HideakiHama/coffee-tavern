@@ -29,7 +29,7 @@ export default function SignIn() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    login(data.get("email"), data.get("password"));
+    login(data.get("user_name"), data.get("password"));
     navigate("/")
   };
 
@@ -56,10 +56,10 @@ export default function SignIn() {
               margin="normal"
               required
               fullWidth
-              id="email"
-              label="Email Address"
-              name="email"
-              autoComplete="email"
+              id="user_name"
+              label="User Name"
+              name="user_name"
+              autoComplete="user_name"
               autoFocus
             />
             <TextField

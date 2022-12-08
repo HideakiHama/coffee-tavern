@@ -3,7 +3,7 @@ import axios from "axios"
 // import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css'
 import { useAuthContext } from '../useToken';
-
+import jwt_decode from "jwt-decode";
 
 function EmployeeFeedbackForm() {
 
@@ -12,8 +12,8 @@ function EmployeeFeedbackForm() {
                                           , description:''
                                           });
     const { token } = useAuthContext();
-
-    const account_id = 1
+    const decoded = jwt_decode(token)
+    const account_id = decoded.account["id"]   //Decode jwt token to get User ID
 
     const handleSubmit = async (event) => {
       event.preventDefault();
@@ -26,7 +26,6 @@ function EmployeeFeedbackForm() {
 
       const handleInputChange = (event) => {
       event.persist();
-
         setInputs(inputs => ({                         //setInputs
         ...inputs,
         [event.target.name]: event.target.value}));  //key: value of each value
@@ -34,6 +33,7 @@ function EmployeeFeedbackForm() {
 
       return (
         <div className="row">
+          <h1>Feedback form</h1>
           <form className="col s12" onSubmit={handleSubmit}>
             <div className="row">
               <div className="form-floating col s6">

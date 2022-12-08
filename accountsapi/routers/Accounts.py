@@ -45,21 +45,33 @@ async def create_account(
 
     account = repo.create(info, hashed_password)
     print(account)
-    form = AccountForm(username=info.email, password=info.password)
+    form = AccountForm(username=info.user_name, password=info.password)
     token = await authenticator.login(response, request, form, repo)
     x = AccountToken(account=account, **token.dict())
     print("XXXXX", x)
     return x
 
 
+# GET account by user ID
 @router.get("/api/get_account/{account_id}", tags=["Accounts"])
 async def get_one_account(
     account_id: int, response: Response, repo: AccountRepo = Depends()
 ) -> AccountOut:
-    AccountDetail = repo.get(account_id)
+    AccountDetail = repo.getId(account_id)
     if AccountDetail is None:
         response.status_code = 404
     return AccountDetail
+
+
+# GET account by user name
+# @router.get("/api/get_account/{user_name}", tags=["Accounts"])
+# async def get_one_account(
+#     user_name: str, response: Response, repo: AccountRepo = Depends()
+# ) -> AccountOut:
+#     AccountDetail = repo.get(user_name)
+#     if AccountDetail is None:
+#         response.status_code = 404
+#     return AccountDetail
 
 
 @router.get("/api/get_all_account", tags=["Accounts"])
