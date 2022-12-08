@@ -1,6 +1,8 @@
 import { NavLink } from 'react-router-dom';
+// import Testing from './logout';
 
 function Nav() {
+
   return (
   <nav>
   <div className="nav-wrapper teal">
@@ -18,6 +20,7 @@ function Nav() {
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedbacks-list">Past Employee Feedbacks</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/api/accounts">Signup</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/token">Log Out</NavLink></li>
+            <li><NavLink className="dropdown-item" aria-current="page" to="/create_tag_form">Tags</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-profile-list">Employee Profile List</NavLink></li>
         </ul>
     </div>

@@ -8,6 +8,7 @@ import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
 
 import EmployeeProfileList from './listOfEmployee'
+import TagForm from './tags/TagForm';
 
 import React, { Component } from 'react';
 import JobPostForm from './JobPost/JobPostForm';
@@ -62,7 +63,8 @@ render() {
                 <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
                 </Route>
                 <Route path = "/employee-profile-list" element={<EmployeeProfileList/>}>
-
+                </Route>
+                <Route path = "/create_tag_form" element={<TagForm />}>
                 </Route>
               </Routes>
             </div>

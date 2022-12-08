@@ -1,14 +1,16 @@
 from fastapi import APIRouter, Depends, Response
-from queries.TagQueries import TagOut, TagIn, TagRepository, Error
-from typing import List, Union
+from queries.TagQueries import TagOut, TagIn, Tags, TagRepository, Error
+from token_auth import get_current_user
+from typing import Union, List, Optional
 
 router = APIRouter()
 
 ## POST ##
 # creating a new tag #
+# account: dict = Depends(get_current_user)
 @router.post("/create_tag_form", tags=["TagForm"], response_model=TagOut)
-def create_tag(new_form: TagOut, repo: TagRepository = Depends()):
-    return repo.create(new_form)
+def create_tag(new_form: TagIn, repo: TagRepository = Depends()):
+    return repo.create(new_form).dict()
 
 
 ## GET ##
@@ -18,7 +20,7 @@ def create_tag(new_form: TagOut, repo: TagRepository = Depends()):
     tags=["TagForm"],
     response_model=Union[TagOut, Error],
 )
-def get_one_employer_feedback_form(
+def get_one_tag(
     Tag_id: int,
     response: Response,
     repo: TagRepository = Depends(),

@@ -1,6 +1,6 @@
-volumes:
-  coffee_tavern-data:
-    external: true
+# volumes:
+#   coffee_tavern-data:
+#     external: true
   # tagsapi-data:
   #   external: true
 services:
@@ -11,6 +11,8 @@ services:
     environment:
       DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
       WAIT_HOSTS: db:5432
+      # DATABASE_URL: postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
+      # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki
     ports:
@@ -27,10 +29,10 @@ services:
   #     volumes:
   #       - ./tagsapi:/app
   #     environment:
-  #       DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
-  #       WAIT_HOSTS: db:5432
+  #       DATABASE_URL: postgres://mjlcehbq:68CQlz4J0QGLvquHOSHqQjs97X_vpuyS@arjuna.db.elephantsql.com/mjlcehbq
+  #       # WAIT_HOSTS: db:5432
   #       PORT: 8100
-  #       SIGNING_KEY: curtis
+  #       SIGNING_KEY: aki
 
   react:
     image: node:lts-bullseye
@@ -46,6 +48,7 @@ services:
       HOST: "0.0.0.0"
       PUBLIC_URL: http://localhost:3000
       REACT_APP_SAMPLE_SERVICE_API_HOST: http://localhost:8000
+      REACT_APP_TAGS_API_HOST: http://localhost:8100
 
 # comment this before deployment
   db:
