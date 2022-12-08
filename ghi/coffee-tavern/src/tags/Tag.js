@@ -1,12 +1,14 @@
 import axios from 'axios'
 import React from 'react'
 
-function TagItems(props) {
+function TagItem(props) {
 
     console.log("this is props in TagItems", props)
 
-    const deleteTagHandler = (tag) => {
-        axios.delete('http://localhost:8100/delete_tag/${Tag_id}')
+    console.log("this is props in TagItems", props.Tag.tag)
+
+    const deleteTagHandler = (id) => {
+        axios.delete(`http://localhost:8100/delete_tag/${id}`)
             .then(res => console.log(res.data)) 
     
     
@@ -15,13 +17,14 @@ function TagItems(props) {
     return(
         <div>
             <p>
-                <span style={{ fontWeight: 'bold, underline'}}> {props['Tags']}
+                <span style={{ fontWeight: 'bold, underline'}}> 
+                    {props.Tag.tag}
                 </span> 
-                <button onClick={() => deleteTagHandler(props['Tags'])}
+                <button onClick={() => deleteTagHandler(props.Tag.id)}
                 className="btn btn-outline-danger my-2 mx-2" style={{'borderRadius':'50px'}}>X</button>
                 <hr></hr>
             </p>
         </div>
     )
 }
-export default TagItems
+export default TagItem
