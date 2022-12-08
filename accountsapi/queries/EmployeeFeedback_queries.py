@@ -1,7 +1,7 @@
 from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
 from datetime import date
-from queries.accounts import Account, AccountOut
+from queries.accounts import Account
 import os
 from psycopg import connect
 from queries.pool import keepalive_kwargs
@@ -35,10 +35,10 @@ class EmployeeFeedbackFormOut2(BaseModel):
 
 # Employer Feedback of Employee
 class EmployeeFeedbackRepository:
-    ## GET ##
+    # GET #
     def get_one(self, EmployeeFeedback_id: int) -> Optional[EmployeeFeedbackFormOut2]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -59,13 +59,13 @@ class EmployeeFeedbackRepository:
                     if record is None:
                         return None
                     return self.record_to_employee_feedback_out(record)  # refactored
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get employee feedback form"}
 
-    ## GET ##
+    # GET #
     def get_all_feedbacks(self) -> List[EmployeeFeedbackFormOut2]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -79,15 +79,15 @@ class EmployeeFeedbackRepository:
                     self.record_to_employee_feedback_out(record)
                     for record in resultList
                 ]
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get feedbacks"}
 
-    ## GET ##
+    # GET #
     def get_all_with_id(
         self, account_id: int
     ) -> Union[List[EmployeeFeedbackFormOut2], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -108,15 +108,15 @@ class EmployeeFeedbackRepository:
                         list1.append(i)
 
                 return list1
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get employee feedback form"}
 
-    ## POST ##
+    # POST #
     def create(
         self, FeedbackForm: EmployeeFeedbackFormIn, account_id: int
     ) -> List[EmployeeFeedbackFormOut]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -138,12 +138,12 @@ class EmployeeFeedbackRepository:
         except ValidationError:
             return {"message": "Couldn't create feedback"}
 
-    ## PUT ##
+    # PUT #
     def update(
         self, EmployeeFeedback_id: int, FeedbackForm: EmployeeFeedbackFormIn
     ) -> Union[EmployeeFeedbackFormOut, Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -166,10 +166,10 @@ class EmployeeFeedbackRepository:
         except Exception:
             return {"message": "Could not update the Feedback"}
 
-    ## DELETE ##
+    # DELETE #
     def delete(self, EmployeeFeedback_id: int) -> bool:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """

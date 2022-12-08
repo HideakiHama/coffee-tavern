@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from typing import Optional, List, Union, Literal
+from typing import Optional, List, Literal
 from queries.pool import keepalive_kwargs
 import os
 from psycopg import connect
@@ -34,7 +34,8 @@ class AccountOut(BaseModel):
 class AccountRepo:
     def get_all(self) -> List[AccountOut]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -45,11 +46,11 @@ class AccountRepo:
                     )
                     resultList = list(result)
                 return [self.account_all(record) for record in resultList]
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get account"}
 
     def get(self, user_name: str) -> Optional[Account]:
-        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -72,7 +73,7 @@ class AccountRepo:
 
     # For Getting account by user ID (/api/get_account/{account_id})
     def getId(self, user_name: str) -> Optional[Account]:
-        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -94,7 +95,7 @@ class AccountRepo:
                 )
 
     def create(self, account: AccountIn, hashed_password: str) -> Account:
-        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
             with conn.cursor() as db:
                 result = db.execute(
                     """
@@ -117,7 +118,7 @@ class AccountRepo:
 
     def delete(self, account_id: int) -> bool:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -127,8 +128,7 @@ class AccountRepo:
                         [account_id],
                     )
                     return True
-        except Exception as e:
-            print(e)
+        except Exception:
             return False
 
     def account_all(self, record):
