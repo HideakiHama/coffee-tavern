@@ -6,10 +6,10 @@ import EmployerFeedbackList from './feedbacks/EmployerFeedbackList';
 import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
 import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
-import EmployeeProfile from './UserProfile/Employee';
-import EmployerProfile from './UserProfile/Employer';
-import EmployeeInfoForm from './UserProfile/EmployeeInfoForm';
-import EmployerInfoForm from './UserProfile/EmployerInfoForm';
+import EmployeeProfile from './LoggedInUserProfile/Employee';
+import EmployerProfile from './LoggedInUserProfile/Employer';
+import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
+import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
 
 import TagForm from './tags/TagForm';
 
@@ -30,9 +30,7 @@ function GetToken() {
 export default class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      id: 1
-    };
+    this.state = {};
   }
 
 render() {

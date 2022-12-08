@@ -9,9 +9,12 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuthContext } from '../useToken'; 
 import {useEffect, useState} from 'react';
 
+// import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
+
 const theme = createTheme();
 
-const EmployeeProfile = ({id}) => {
+const EmployeeProfile = () => {
   // set state name, email, etc
 
   const [name, setName] = useState('');
@@ -22,9 +25,25 @@ const EmployeeProfile = ({id}) => {
 
   const { token } = useAuthContext();
 
+
+
+
+  const decoded = jwt_decode(token)
+
+  const role = decoded.account["role"]
+
+  console.log(role)
+
   useEffect(() => {
     async function getEmployeeInfo() {
-  
+      const decoded = jwt_decode(token)
+
+      console.log("decoded", decoded)
+
+      const id = decoded.account["id"]
+
+      console.log("hopefuly id....", id)
+
       const employeeURL = `http://localhost:8000/users/${id}/get_employee_info`;
 
       const employeeResponse = await fetch(employeeURL, {
@@ -44,7 +63,7 @@ const EmployeeProfile = ({id}) => {
       }
     }
     getEmployeeInfo()
-  }, [id, token])
+  }, [token])
 
   return (
     <ThemeProvider theme={theme}>
