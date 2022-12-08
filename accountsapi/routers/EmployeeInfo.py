@@ -24,13 +24,13 @@ def create_employee_info(
 
 @router.get("/users/{account_id}/get_employee_info", tags=["User Info"])
 def get_employee_info_by_id(
-    account_id: str,
+    account_id: int,
     repo: EmployeeInfoRepo = Depends(),
     repo1: AccountRepo = Depends(),
     account: dict = Depends(authenticator.get_current_account_data)
     ) -> EmployeeInfoOut:
     EmployeeInfo = repo.get_one(account_id).dict()
-    EmployeeInfo["account_id"] = repo1.get(account_id).dict()
+    EmployeeInfo["account_id"] = repo1.getId(account_id).dict()
     return EmployeeInfo
 
 @router.put("/users/{account_id}/update_employee_info", tags=["User Info"])
