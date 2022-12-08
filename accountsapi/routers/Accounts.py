@@ -1,8 +1,6 @@
 # accounts.py  in the router folder
 from fastapi import (
     Depends,
-    HTTPException,
-    status,
     Response,
     APIRouter,
     Request,
@@ -12,9 +10,8 @@ from authenticator import authenticator
 
 from pydantic import BaseModel
 
-from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
+from queries.accounts import AccountIn, AccountOut, AccountRepo
 
-from fastapi.security import OAuth2PasswordBearer, OAuth2PasswordRequestForm
 
 class AccountForm(BaseModel):
     username: str
@@ -42,14 +39,10 @@ async def create_account(
     repo: AccountRepo = Depends(),
 ):
     hashed_password = authenticator.hash_password(info.password)
-
     account = repo.create(info, hashed_password)
-    print(account)
     form = AccountForm(username=info.user_name, password=info.password)
     token = await authenticator.login(response, request, form, repo)
-    x = AccountToken(account=account, **token.dict())
-    print("XXXXX", x)
-    return x
+    return AccountToken(account=account, **token.dict())
 
 
 # GET account by user ID

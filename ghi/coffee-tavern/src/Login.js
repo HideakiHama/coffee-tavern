@@ -21,10 +21,7 @@ export default function SignIn() {
   const [token, login, logout] = useToken();
   const navigate = useNavigate();
 
-  if (token){
-    logout()
-    return;
-  }
+  logout()
 
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -85,13 +82,8 @@ export default function SignIn() {
               Sign In
             </Button>
             <Grid container>
-              <Grid item xs>
-                <Link href="#" variant="body2">
-                  Forgot password?
-                </Link>
-              </Grid>
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="http://localhost:3000/api/accounts" variant="body2">
                   {"Don't have an account? Sign Up"}
                 </Link>
               </Grid>

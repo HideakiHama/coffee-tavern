@@ -1,6 +1,6 @@
 steps = [
     [
-        ## Create the table
+        # Create the table
         """
         CREATE TABLE accounts (
             id SERIAL PRIMARY KEY NOT NULL,
@@ -10,14 +10,14 @@ steps = [
             role VARCHAR(10) NOT NULL
         );
         """,
-        ## Drop the table
+        # Drop the table
         """
         DROP TABLE accounts;
         """,
     ],
     [
-        ## Create the table
-        ## Add profile_picture
+        # Create the table
+        # Add profile_picture
         """
         CREATE TABLE employee_info (
             full_name VARCHAR(255),
@@ -29,13 +29,13 @@ steps = [
             account_id INTEGER
         );
         """,
-        ## Drop the table
+        # Drop the table
         """
         DROP TABLE employee_info;
         """,
     ],
     [
-        ## Create the table
+        # Create the table
         """
         CREATE TABLE employee_work_history (
             company VARCHAR(255),
@@ -46,14 +46,14 @@ steps = [
             account_id INTEGER REFERENCES accounts (id)
         );
         """,
-        ## Drop the table
+        # Drop the table
         """
         DROP TABLE employee_work_history;
         """,
     ],
     [
-        ## Create the table
-        ## Add profile_picture
+        # Create the table
+        # Add profile_picture
         """
         CREATE TABLE employer_info (
             company_name VARCHAR(255),
@@ -64,7 +64,7 @@ steps = [
             account_id INTEGER
         );
         """,
-        ## Drop the table
+        # Drop the table
         """
         DROP TABLE employer_info;
         """,

@@ -1,5 +1,5 @@
 from fastapi import APIRouter, Depends, Response, HTTPException, status
-from typing import List, Optional, Union
+from typing import List, Union
 from queries.JobForm_queries import (
     JobPostFormIn,
     JobPostFormOut,
@@ -9,10 +9,10 @@ from queries.JobForm_queries import (
     JobPostFormOut1,
     JobPostFormOut2
 )
-from queries.accounts import AccountRepo
 from authenticator import authenticator
 
 router = APIRouter()
+
 
 # creating new job form
 @router.post('/create_form/', tags=["JobForm"], response_model=JobPostFormOut2)
@@ -36,6 +36,7 @@ def create_job_form(
 def get_all_job_form(repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)):
     return repo.get_all()
 
+
 @router.get("/get_form/{form_id}", tags=["JobForm"], response_model=Union[JobPostFormOut, Error])
 def get_one_job_form(form_id: int, response: Response, repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> JobPostFormOut:
     FormDetail = repo.get_one(form_id)
@@ -43,7 +44,8 @@ def get_one_job_form(form_id: int, response: Response, repo: JobFormRepository =
         response.status_code = 404
     return FormDetail
 
-@router.put("/update_job_form/{id}", tags=["JobForm"], response_model=Union[JobPostFormOut1, Error],)
+
+@router.put("/update_job_form/{id}", tags=["JobForm"], response_model=Union[JobPostFormOut1, Error])
 def Update_Job_Form(
     form_id: int,
     UpdatedJobForm: JobPostFormIn,
@@ -60,15 +62,13 @@ def Update_Job_Form(
     )
     if account["role"] == "Employer":
         x = repo.get_one(form_id)
-        print("XXXX", x)
-        if  x.account_id == account["id"]:
-        # print(x.account_id)
+        if x.account_id == account["id"]:
             return repo.update(form_id, UpdatedJobForm).dict()
-
         else:
             raise credentials_exception1
     else:
         raise credentials_exception
+
 
 @router.delete("/delete_job_form/{id}", tags=["JobForm"], response_model=bool)
 def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> bool:
@@ -83,8 +83,7 @@ def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: 
     if account["role"] == "Employer":
         x = repo.get_one(form_id)
         print("XXXX", x)
-        if  x.account_id == account["id"]:
-        # print(x.account_id)
+        if x.account_id == account["id"]:
             return repo.delete(form_id)
         else:
             raise credentials_exception1

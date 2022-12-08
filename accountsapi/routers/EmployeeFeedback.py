@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, Response, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, status
 from typing import Union, List
 from queries.EmployeeFeedback_queries import (
     EmployeeFeedbackFormIn,
@@ -7,13 +7,12 @@ from queries.EmployeeFeedback_queries import (
     EmployeeFeedbackFormOut2,
     Error,
 )
-from queries.accounts import AccountRepo
 from authenticator import authenticator
 
 router = APIRouter()
 
 
-## POST ##
+# POST #
 # creating new employee feedback form #
 @router.post(
     "/employee-feedback-form/{account_id}",
@@ -30,13 +29,13 @@ def create_employee_feedback_form(
         detail="You are employer. Please use employer feedback form",
     )
     if account["role"] == "Employee":
-        not_final = repo.create(new_form, account["id"]).dict()  ####
+        not_final = repo.create(new_form, account["id"]).dict()  #
         not_final["account_id"] = account
         return not_final
     raise credentials_exception
 
 
-## GET ##
+# GET #
 # getting detail feedback from employee
 @router.get(
     "/employee-feedback-form/{EmployeeFeedback_id}",
@@ -60,7 +59,7 @@ def get_one_employee_feedback_form(
     raise credentials_exception
 
 
-## GET ##
+# GET #
 # getting list of feedback from specific employees
 @router.get(
     "/employee-feedbacks/{account_id}",
@@ -74,14 +73,14 @@ def get_all_with_id(
     return repo.get_all_with_id(account_id)
 
 
-## GET ##
+# GET #
 # Get all the EmployeeFeedbacks Regardless of who wrote it
 @router.get("/get_all_employeeFeedbacks", tags=["Employee Feedback Form"])
 def get_all_employee_feedbacks(repo: EmployeeFeedbackRepository = Depends()):
     return repo.get_all_feedbacks()
 
 
-## PUT ##
+# PUT #
 # Edit feedback #
 @router.put(
     "/employee-feedback-form/{EmployeeFeedback_id}",
@@ -106,7 +105,7 @@ def Edit_Employee_Feedback(
     raise credentials_exception
 
 
-## DELETE ##
+# DELETE #
 # Delete feedback #
 @router.delete(
     "/employee-feedback-form/{EmployeeFeedback_id}",

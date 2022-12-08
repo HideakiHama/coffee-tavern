@@ -12,31 +12,43 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
-function Copyright(props) {
-  return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { useState } from "react";
+import { useToken } from './useToken';
+import { useNavigate } from "react-router-dom";
 
 const theme = createTheme();
 
 export default function SignUp() {
-  const handleSubmit = (event) => {
+  const [token, login, logout, signup] = useToken();
+  const [username, setUserName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
+  const navigate = useNavigate();
+
+
+
+  const handleSubmit = async(event) => {
     event.preventDefault();
-    const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    // const data = new FormData(event.currentTarget);
+    // console.log(data.get("firstName"), data.get("email"), data.get("password"), data.get("role"))
+    console.log(password, email, username, role)
+    signup(password, email, username, role);
+    navigate("/");
   };
+
+  const roles = ["Employee", "Employer"]
+  const handleCheckEmployee = (event) => {
+    if (event.target.checked) {
+      setRole(roles[0])
+    }
+  }
+
+  const handleCheckEmployer = (event) => {
+    if (event.target.checked) {
+      setRole(roles[1])
+    }
+  }
 
   return (
     <ThemeProvider theme={theme}>
@@ -57,29 +69,21 @@ export default function SignUp() {
             Sign up
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
-            <Grid container spacing={2}>
-              <Grid item xs={12} sm={6}>
+              <Grid container spacing={2}>
+              <Grid item xs={12} sm={12}>
                 <TextField
                   autoComplete="given-name"
                   name="firstName"
                   required
                   fullWidth
                   id="firstName"
-                  label="First Name"
+                  label="User Name"
                   autoFocus
+                  value={username}
+                  onChange={(event => setUserName(event.target.value))}
                 />
               </Grid>
-              <Grid item xs={12} sm={6}>
-                <TextField
-                  required
-                  fullWidth
-                  id="lastName"
-                  label="Last Name"
-                  name="lastName"
-                  autoComplete="family-name"
-                />
-              </Grid>
-              <Grid item xs={12}>
+              <Grid item xs={12} >
                 <TextField
                   required
                   fullWidth
@@ -87,6 +91,8 @@ export default function SignUp() {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  value={email}
+                  onChange={(event => setEmail(event.target.value))}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -98,12 +104,18 @@ export default function SignUp() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
+                  value={password}
+                  onChange={(event => setPassword(event.target.value))}
                 />
               </Grid>
               <Grid item xs={12}>
-                <FormControlLabel
-                  control={<Checkbox value="allowExtraEmails" color="primary" />}
-                  label="I want to receive inspiration, marketing promotions and updates via email."
+                <FormControlLabel onChange={handleCheckEmployee}
+                  control={<Checkbox value="" id="Employee" color="primary" />}
+                  label="Employee"
+                />
+                <FormControlLabel onChange={handleCheckEmployer}
+                  control={<Checkbox value="" id="Employer" color="primary" />}
+                  label="Employer"
                 />
               </Grid>
             </Grid>
@@ -117,14 +129,13 @@ export default function SignUp() {
             </Button>
             <Grid container justifyContent="flex-end">
               <Grid item>
-                <Link href="#" variant="body2">
+                <Link href="http://localhost:3000/token" variant="body2">
                   Already have an account? Sign in
                 </Link>
               </Grid>
             </Grid>
           </Box>
         </Box>
-        <Copyright sx={{ mt: 5 }} />
       </Container>
     </ThemeProvider>
   );

@@ -4,6 +4,7 @@ import os
 from psycopg import connect
 from queries.pool import keepalive_kwargs
 
+
 class Error(BaseModel):
     message: str
 
@@ -32,7 +33,9 @@ class EmployeeInfoRepo:
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            # connect the database
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -56,36 +59,41 @@ class EmployeeInfoRepo:
             return {"message": "Create did not work"}
 
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
-        try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
-                with conn.cursor() as db:
-                    result = db.execute(
-                        """
-                        SELECT
-                            full_name,
-                            career_title,
-                            location,
-                            education,
-                            about,
-                            pic_url,
-                            account_id
-                        FROM employee_info
-                        WHERE account_id = %s
-                        """,
-                        [account_id],
-                    )
-                    record = result.fetchone()
-                    if record is None:
-                        return None
-                    return self.record_employee_form_out(record)
-        except Exception as e:
-            return {"message": "Could not get employee info"}
+        # try:
+        # connect the database
+        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            # get a cursor (something to run SQL with)
+            with conn.cursor() as db:
+                # Run our SELECT statement
+                result = db.execute(
+                    """
+                    SELECT
+                        full_name,
+                        career_title,
+                        location,
+                        education,
+                        about,
+                        account_id
+                    FROM employee_info
+                    WHERE account_id = %s
+                    """,
+                    [account_id],
+                )
+                record = result.fetchone()
+                print("record", record)
+                if record is None:
+                    return None
+                y = self.record_employee_form_out(record)
+                print("Y", y)
+                return y
+        # except Exception as e:
+        #     return {"message": "Could not get employee info"}
 
     def update(
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -109,6 +117,7 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
+                    print(result)
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}

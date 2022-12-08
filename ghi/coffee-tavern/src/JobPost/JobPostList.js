@@ -27,6 +27,7 @@ export default function JobPostList() {
 
   useEffect(() => {
     const getJobForm = async () => {
+      if (token) {
       const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/get_all_form`,  {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`,
@@ -35,27 +36,9 @@ export default function JobPostList() {
       const data = await response.json();
       setJobForm(data)
   }
+  }
     getJobForm()
-}, [])
-
-  // #add [token] maybe
-
-  // function handleClick() {
-  //   navigate("/create_form")
-  // }
-
-  // function PopupGfg(){
-  //   return(
-  //   <div>
-  //     <h4>Popup - GeeksforGeeks</h4>
-  //     <Popup trigger={<button> Click to open popup </button>}
-  //      position="right center">
-  //       <div>GeeksforGeeks</div>
-  //       <button>Click here</button>
-  //     </Popup>
-  //   </div>
-  //   )
-  // };
+}, [token])
 
   return (
     <ThemeProvider theme={theme}>

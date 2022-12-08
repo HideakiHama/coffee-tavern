@@ -1,6 +1,5 @@
-from fastapi import APIRouter, Depends, Response, HTTPException, status
-from typing import Union
-from queries.EmployeeInfo_queries import EmployeeInfoIn, EmployeeInfoRepo, EmployeeInfoOut, Error
+from fastapi import APIRouter, Depends
+from queries.EmployeeInfo_queries import EmployeeInfoIn, EmployeeInfoRepo, EmployeeInfoOut
 from queries.accounts import AccountRepo
 from RoleChecker import RoleChecker
 from authenticator import authenticator
@@ -8,6 +7,7 @@ from authenticator import authenticator
 router = APIRouter()
 
 checker = RoleChecker("Employer")
+
 
 @router.post("/users/{account_id}/create_employee_info", tags=["User Info"])
 def create_employee_info(
@@ -19,6 +19,7 @@ def create_employee_info(
     info["account_id"] = account
     return info
 
+
 @router.get("/users/{account_id}/get_employee_info", tags=["User Info"])
 def get_employee_info_by_id(
     account_id: int,
@@ -28,6 +29,7 @@ def get_employee_info_by_id(
     EmployeeInfo = repo.get_one(account_id).dict()
     EmployeeInfo["account_id"] = repo1.getId(account_id).dict()
     return EmployeeInfo
+
 
 @router.put("/users/{account_id}/update_employee_info", tags=["User Info"])
 def update_employee_info(

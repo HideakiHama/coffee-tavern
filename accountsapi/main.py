@@ -11,12 +11,12 @@ from routers import (
 from authenticator import authenticator
 from fastapi.middleware.cors import CORSMiddleware
 
-## Registration for models similar to Django admin
+# Registration for models similar to Django admin
 app = FastAPI()
 
 origins = [
     "http://localhost:3000",
-    "http://localhost:8000"
+    "http://localhost:8000",
 ]
 
 app.add_middleware(

@@ -1,11 +1,12 @@
 from fastapi import APIRouter, Depends, Response
-from queries.TagQueries import TagOut, TagIn, Tags, TagRepository, Error
-from token_auth import get_current_user
-from typing import Union, List, Optional
+from queries.TagQueries import TagOut, TagIn, TagRepository, Error
+# from token_auth import get_current_user
+from typing import Union, List
 
 router = APIRouter()
 
-## POST ##
+
+# POST
 # creating a new tag #
 # account: dict = Depends(get_current_user)
 @router.post("/create_tag_form", tags=["TagForm"], response_model=TagOut)
@@ -13,7 +14,7 @@ def create_tag(new_form: TagIn, repo: TagRepository = Depends()):
     return repo.create(new_form).dict()
 
 
-## GET ##
+# GET
 # getting detail feedback from employer
 @router.get(
     "/get-tag/{Tag_id}",
@@ -31,7 +32,7 @@ def get_one_tag(
     return Tag
 
 
-## GET ##
+# GET
 # getting list of tags
 @router.get(
     "/get_all_tags", tags=["TagForm"], response_model=Union[List[TagOut], Error]
@@ -40,8 +41,8 @@ def get_all(repo: TagRepository = Depends()):
     return repo.get_all()
 
 
-## DELETE ##
-# Delete tag #
+# DELETE
+# Delete tag
 @router.delete("/delete_tag/{Tag_id}", tags=["TagForm"], response_model=bool)
 def delete_tag(Tag_id: int, repo: TagRepository = Depends()):
     return repo.delete(Tag_id)

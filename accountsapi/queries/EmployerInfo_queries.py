@@ -4,12 +4,15 @@ import os
 from psycopg import connect
 from queries.pool import keepalive_kwargs
 
+
 class Error(BaseModel):
     message: str
-    
+
+
 class EmployerInfo(BaseModel):
     pass
-    
+
+
 class EmployerInfoIn(BaseModel):
     company_name: Optional[str]
     job_type: Optional[str]
@@ -24,12 +27,15 @@ class EmployerInfoOut(BaseModel):
     about: Optional[str]
     pic_url: Optional[str]
     account_id: int
-    
+
+
 class EmployerInfoRepo:
-    
     def create(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            # connect the database
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
+                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -50,10 +56,13 @@ class EmployerInfoRepo:
                     return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
-        
+
     def get_one(self, account_id: int) -> Optional[EmployerInfoOut]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            # connect the database
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
+                # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -73,12 +82,13 @@ class EmployerInfoRepo:
                     if record is None:
                         return None
                     return self.record_employer_form_out(record)
-        except Exception as e:
+        except Exception:
             return {"message": "Could not get employer info"}
-        
+
     def update(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs)  as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"],
+                         **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -100,10 +110,11 @@ class EmployerInfoRepo:
                             account_id
                         ]
                     )
+                    print(result)
                     return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
-        
+
     def record_employer_form_out(self, record):
         return EmployerInfoOut(
             company_name=record[0],

@@ -1,6 +1,6 @@
 steps = [
     [
-        ## Employer table
+        # Employer table
         """
         CREATE TABLE employer_form(
             id SERIAL PRIMARY KEY NOT NULL,
@@ -15,7 +15,7 @@ steps = [
         """,
     ],
     [
-        ## Employee table
+        # Employee table
         """
         CREATE TABLE employee_form(
             id SERIAL PRIMARY KEY NOT NULL,
