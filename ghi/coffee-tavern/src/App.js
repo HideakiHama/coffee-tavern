@@ -7,6 +7,8 @@ import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
 import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
 
+import EmployeeProfileList from './listOfEmployee'
+
 import React, { Component } from 'react';
 import JobPostForm from './JobPost/JobPostForm';
 import JobPostList from './JobPost/JobPostList';
@@ -58,6 +60,9 @@ render() {
                 <Route path = "/employee-feedback-update" element={<EmployeeFeedbackEdit/>}>
                 </Route>
                 <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
+                </Route>
+                <Route path = "/employee-profile-list" element={<EmployeeProfileList/>}>
+
                 </Route>
               </Routes>
             </div>

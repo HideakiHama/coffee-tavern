@@ -9,23 +9,23 @@ class Error(BaseModel):
 
 class Account(BaseModel):
     id: int
+    user_name: str
     email: str
     hashed_password: str
-    user_name: str
     role: str
 
 
 class AccountIn(BaseModel):
+    user_name: str
     email: str
     password: str
-    user_name: str
     role: Literal["Employee", "Employer"]
 
 
 class AccountOut(BaseModel):
     id: int
-    email: str
     user_name: str
+    email: str
     role: str
 
 
@@ -36,7 +36,7 @@ class AccountRepo:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, email, user_name, role
+                        SELECT id, user_name, email, role
                         FROM accounts
                         ORDER BY id
                         """
@@ -51,20 +51,43 @@ class AccountRepo:
             with conn.cursor() as db:
                 result = db.execute(
                     """
-                    SELECT id, email, hashed_password, user_name, role
+                    SELECT id, user_name, email, hashed_password, role
                     FROM accounts
                     WHERE user_name = %s
                     """,
-                    [user_name],  # email variable get replace with %s
+                    [user_name],
                 )
                 record = result.fetchone()
                 if record is None:
                     return None
                 return Account(
                     id=record[0],
-                    email=record[1],
-                    hashed_password=record[2],
-                    user_name=record[3],
+                    user_name=record[1],
+                    email=record[2],
+                    hashed_password=record[3],
+                    role=record[4],
+                )
+
+    # For Getting account by user ID (/api/get_account/{account_id})
+    def getId(self, user_name: str) -> Optional[Account]:
+        with pool.connection() as conn:
+            with conn.cursor() as db:
+                result = db.execute(
+                    """
+                    SELECT id, user_name, email, hashed_password, role
+                    FROM accounts
+                    WHERE id = %s
+                    """,
+                    [user_name],
+                )
+                record = result.fetchone()
+                if record is None:
+                    return None
+                return Account(
+                    id=record[0],
+                    user_name=record[1],
+                    email=record[2],
+                    hashed_password=record[3],
                     role=record[4],
                 )
 
@@ -74,12 +97,12 @@ class AccountRepo:
                 result = db.execute(
                     """
                     INSERT INTO accounts
-                        (email, hashed_password, user_name, role)
+                        (user_name, email, hashed_password, role)
                     VALUES
                         (%s, %s, %s, %s)
                     RETURNING id;
                     """,
-                    [account.email, hashed_password, account.user_name, account.role],
+                    [account.user_name, account.email, hashed_password, account.role],
                 )
                 id = result.fetchone()[0]
                 return Account(
@@ -108,5 +131,5 @@ class AccountRepo:
 
     def account_all(self, record):
         return AccountOut(
-            id=record[0], email=record[1], user_name=record[2], role=record[3]
+            id=record[0], user_name=record[1], email=record[2], role=record[3]
         )
