@@ -1,16 +1,15 @@
 steps = [
     [
         # Create the table
-        # Add profile_picture
         """
         CREATE TABLE tags (
             id SERIAL PRIMARY KEY NOT NULL,
-            tag VARCHAR(255)
+            name VARCHAR(255) NOT NULL UNIQUE,
         );
         """,
         # Drop the table
         """
         DROP TABLE tags;
         """,
-    ],
+    ]
 ]

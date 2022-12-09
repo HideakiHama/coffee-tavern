@@ -10,9 +10,9 @@ from queries.JobForm_queries import (
     JobPostFormOut2,
     ApplicantsOut
 )
-from queries.accounts import AccountRepo
 from authenticator import authenticator
 from queries.EmployeeInfo_queries import EmployeeInfoRepo
+from queries.accounts import AccountRepo
 
 router = APIRouter()
 
@@ -65,7 +65,6 @@ def Update_Job_Form(
     )
     if account["role"] == "Employer":
         x = repo.get_one(form_id)
-        print("XXXX", x)
         if x.account_id == account["id"]:
             return repo.update(form_id, UpdatedJobForm).dict()
         else:

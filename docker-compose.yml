@@ -1,6 +1,6 @@
-volumes:
-  coffee_tavern-data:
-    external: true
+# volumes:
+#   coffee_tavern-data:
+#     external: true
   # tagsapi-data:
   #   external: true
 services:

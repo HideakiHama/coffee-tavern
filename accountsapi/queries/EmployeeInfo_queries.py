@@ -125,5 +125,33 @@ class EmployeeInfoRepo:
             location=record[2],
             education=record[3],
             about=record[4],
-            account_id=record[5]
+            account_id=record[5],
         )
+
+    # GET #
+    def get_all_profile(self) -> List[EmployeeInfoOut]:
+        try:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
+                print("HI")
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT
+                            full_name,
+                            career_title,
+                            location,
+                            education,
+                            about,
+                            account_id
+                        FROM employee_info
+                        ORDER BY full_name
+                        """
+                    )
+                    print("RESULT", result)
+                    resultList = list(result)
+                    print("RESULT LIST", resultList)
+                return [self.record_employee_form_out(record) for record in resultList]
+        except Exception:
+            return {"message": "Could not get feedbacks"}

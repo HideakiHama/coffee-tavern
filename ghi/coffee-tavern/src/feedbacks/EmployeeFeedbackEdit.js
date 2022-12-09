@@ -1,30 +1,27 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 
 function EmployeeFeedbackEdit(){
 
   const location = useLocation();
   const id = location.state.id
-  console.log("##EDIT ID###", id)
 
   const [employer, setEmployer] = useState([]);
   const { token } = useAuthContext();
+  const navigate = useNavigate();
 
   useEffect(() =>{
+    const getEmployeeFeedbacksUrl = async ( ) => {
+      if (token) {
+      const EmployeeFeedback_id = id
+      const response = await axios.get(`http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`,
+      {headers: { Authorization: `Bearer ${token}`}});
+      setEmployer(response.data)}};
     getEmployeeFeedbacksUrl();
-  }, []);
-
-  const getEmployeeFeedbacksUrl = async (EmployeeFeedback_id) => {
-    EmployeeFeedback_id = id
-    const response = await axios.get(`http://localhost:8000/employee-feedback-form/${EmployeeFeedback_id}`,
-    {headers: { Authorization: `Bearer ${token}`}});
-    setEmployer(response.data)};
-
-
-
+  }, [token, id]);
 
 
     const [inputs, setInputs] = useState({employer_name: ''
@@ -51,6 +48,8 @@ function EmployeeFeedbackEdit(){
       {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employer_name:'', date: '', description:''})
       setEmployer({employer_name:'', date: '', description:''})
+
+      navigate("/employee-feedbacks-list")
     }
 
     // Response to the input change
@@ -70,12 +69,18 @@ function EmployeeFeedbackEdit(){
         , {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employer_name:'', date: '', description:''})
       setEmployer({employer_name:'', date: '', description:''})
+
+      navigate("/employee-feedbacks-list")
       }
 
+    // Go back to the their employee list
+    const handleGoBack =  async () => {
+      navigate("/employee-feedbacks-list")
+    };
 
     return (
       <div className="row">
-        <h1>Edit feedback</h1>
+        <h2>Edit My Feedback to {employer.employer_name}</h2>
         <form className="col s12" onSubmit={handleEdit}>
           <div className="row">
             <div className="form-floating col s6">
@@ -104,15 +109,17 @@ function EmployeeFeedbackEdit(){
                   <button className="btn waves-effect waves-light" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
+
               </div>
             </div>
           </div>
         </form>
-        <div>
-        <button onClick={handleDelete} className="btn waves-effect waves-light" type="submit" name="action">Delete
+        <button onClick={handleDelete} className="btn waves-effect waves-light">Delete
                             <i className="material-icons right">Feedback</i>
         </button>
-        </div>
+        <button onClick={handleGoBack} className="btn waves-effect waves-light">Go
+                            <i className="material-icons right">Back</i>
+        </button>
     </div>
     );
 

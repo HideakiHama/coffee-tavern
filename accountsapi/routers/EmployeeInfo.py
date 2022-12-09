@@ -13,7 +13,7 @@ checker = RoleChecker("Employer")
 def create_employee_info(
     employee_info: EmployeeInfoIn,
     repo: EmployeeInfoRepo = Depends(),
-    account: dict = Depends(authenticator.get_current_account_data)
+    account: dict = Depends(authenticator.get_current_account_data),
 ) -> EmployeeInfoOut:
     # if info["account_id"] == account["id"]:
     info = repo.create(employee_info, account["id"]).dict()
@@ -29,13 +29,16 @@ def get_employee_info_by_id(account_id: int, repo: EmployeeInfoRepo = Depends(),
 
 
 @router.put("/users/{account_id}/update_employee_info", tags=["User Info"])
-def update_employee_info(
-    employee_info: EmployeeInfoIn,
-    repo: EmployeeInfoRepo = Depends(),
-    account: dict = Depends(authenticator.get_current_account_data)
-) -> EmployeeInfoOut:
+def update_employee_info(employee_info: EmployeeInfoIn, repo: EmployeeInfoRepo = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> EmployeeInfoOut:
     final = repo.get_one(account["id"])
     print(final)
     Updated = repo.update(employee_info, account["id"]).dict()
     Updated["account_id"] = final.account_id
     return Updated
+
+
+# GET #
+# Get all the Employee Profile
+@router.get("/get_all_profile", tags=["User Info"])
+def get_all_employee_profile(repo: EmployeeInfoRepo = Depends()):
+    return repo.get_all_profile()

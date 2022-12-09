@@ -1,15 +1,12 @@
-import TagItem from "./Tag";
+import Tag from "./Tag";
 
-function TagView(props){
-    // console.log("this is props in TagView" , props.tagsList)
+function TagListView(props){
     return (
         <div>
             <ul>
-                {/* {tagVar.map(tags => < TagItems Tags={tags}/>)} */}
-                {props.tagsList.map(tags => <TagItem Tags={tags}/>)}
-                {/* uncomment the props one, once database is working */}
+                {props.tagList.map(tag => <Tag Tag={tag}/>)}
             </ul>
         </div>
     )
 }
-export default TagView
+export default TagListView

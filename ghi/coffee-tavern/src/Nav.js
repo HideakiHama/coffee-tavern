@@ -1,5 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import Testing from './logout';
+import EmployeeNav from './employeeNav';
+import EmployerNav from './employerNav';
 
 function Nav() {
 
@@ -10,13 +12,8 @@ function Nav() {
         <ul id="nav-mobile" className="left hide-on-med-and-down">
             <li><NavLink className="dropdown-item" aria-current="page" to="/">Home</NavLink></li>
             <Testing />
-            {/* <li><NavLink className="dropdown-item" aria-current="page" to="/upload_resume/">Upload Resume</NavLink></li> */}
-            <li><NavLink className="dropdown-item" aria-current="page" to="/create_form">Create Job Post</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/get_all_form">Board of Jobs</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedback">Employer Feedback Form</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedbacks-list">Past Employer Feedbacks</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedback">Employee Feedback Form</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedbacks-list">Past Employee Feedbacks</NavLink></li>
+            <EmployerNav />
+            <EmployeeNav />
             <li><NavLink className="dropdown-item" aria-current="page" to="/user/employee">My Profile</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/create_tag_form">Tags</NavLink></li>
             <li><NavLink className="dropdown-item" aria-current="page" to="/employee-profile-list">Employee Profile List</NavLink></li>

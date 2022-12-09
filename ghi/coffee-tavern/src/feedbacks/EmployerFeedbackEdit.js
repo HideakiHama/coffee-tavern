@@ -1,29 +1,28 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
-import { useLocation } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 function EmployerFeedbackEdit(){
 
   const location = useLocation();
   const id = location.state.id
-  console.log("##EDIT ID###", id)
   //Handles getting the data from the specific employee ID
   const [employee, setEmployee] = useState([]);
   const { token } = useAuthContext();
+  const navigate = useNavigate();
+
+
 
   useEffect(() =>{
+    const getEmployerFeedbacksUrl = async () => {
+      if (token) {
+      const EmployerFeedback_id = id                        //Temporary Employer ID
+      const response = await axios.get(`http://localhost:8000/employer-feedback-form/${EmployerFeedback_id}`,
+      {headers: { Authorization: `Bearer ${token}`}});
+      setEmployee(response.data)}};
     getEmployerFeedbacksUrl();
-  }, []);
-
-  const getEmployerFeedbacksUrl = async (EmployerFeedback_id) => {
-    EmployerFeedback_id = id                              //Temporary Employer ID
-    const response = await axios.get(`http://localhost:8000/employer-feedback-form/${EmployerFeedback_id}`,
-    {headers: { Authorization: `Bearer ${token}`}});
-    setEmployee(response.data)};
-
-
-
+  }, [token, id]);
 
 
     const [inputs, setInputs] = useState({employee_name: ''
@@ -50,6 +49,8 @@ function EmployerFeedbackEdit(){
       {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employee_name:'', date: '', description:''})
       setEmployee({employee_name:'', date: '', description:''})
+
+      navigate("/employer-feedbacks-list")
     }
 
     // Response to the input change
@@ -69,12 +70,19 @@ function EmployerFeedbackEdit(){
         {headers: { Authorization: `Bearer ${token}`}})
         setInputs({employee_name:'', date: '', description:''})
         setEmployee({employee_name:'', date: '', description:''})
+
+        navigate("/employer-feedbacks-list")
         }
+
+    // Go back to the their employer list
+    const handleGoBack =  async () => {
+      navigate("/employer-feedbacks-list")
+    };
 
 
     return (
       <div className="row">
-        <h1>Edit feedback</h1>
+        <h2>Edit My Feedback to {employee.employee_name}</h2>
         <form className="col s12" onSubmit={handleEdit}>
           <div className="row">
             <div className="form-floating col s6">
@@ -103,15 +111,17 @@ function EmployerFeedbackEdit(){
                   <button className="btn waves-effect waves-light" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
+
               </div>
             </div>
           </div>
         </form>
-        <div>
-        <button onClick={handleDelete} className="btn waves-effect waves-light" type="submit" name="action">Delete
+        <button onClick={handleDelete} className="btn waves-effect waves-light">Delete
                             <i className="material-icons right">Feedback</i>
-        </button>
-        </div>
+      </button>
+        <button onClick={handleGoBack} className="btn waves-effect waves-light">Go
+                            <i className="material-icons right">Back</i>
+      </button>
     </div>
     );
 

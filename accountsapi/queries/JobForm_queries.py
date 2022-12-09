@@ -136,9 +136,7 @@ class JobFormRepository:
                         """
                     )
                     resultList = list(result)
-                x = [self.record_JobForm_all(record) for record in resultList]
-                print("X", x)
-                return x
+                return [self.record_JobForm_all(record) for record in resultList]
         except Exception:
             return {"message": "Could not get any job form today"}
 

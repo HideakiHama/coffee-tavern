@@ -13,7 +13,7 @@ router = APIRouter()
 
 
 # POST #
-# creating new employee feedback form #
+# creating new employee feedback form
 @router.post(
     "/employee-feedback-form/{account_id}",
     tags=["Employee Feedback Form"],
@@ -68,15 +68,26 @@ def get_one_employee_feedback_form(
 )
 def get_all_with_id(
     account_id: int,
+    account: dict = Depends(authenticator.get_current_account_data),
     repo: EmployeeFeedbackRepository = Depends(),
 ):
-    return repo.get_all_with_id(account_id)
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="employee feedback not found",
+    )
+    AllIdEmployeeFeedback = repo.get_all_with_id(account_id)
+    if AllIdEmployeeFeedback:
+        return AllIdEmployeeFeedback
+    raise credentials_exception
 
 
 # GET #
 # Get all the EmployeeFeedbacks Regardless of who wrote it
 @router.get("/get_all_employeeFeedbacks", tags=["Employee Feedback Form"])
-def get_all_employee_feedbacks(repo: EmployeeFeedbackRepository = Depends()):
+def get_all_employee_feedbacks(
+    # account: dict = Depends(authenticator.get_current_account_data),
+    repo: EmployeeFeedbackRepository = Depends(),
+):
     return repo.get_all_feedbacks()
 
 
@@ -98,9 +109,8 @@ def Edit_Employee_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    x = repo.get_one(EmployeeFeedback_id)
-    # print(x.account_id)
-    if x.account_id == account["id"]:
+    # x = repo.get_one(EmployeeFeedback_id)
+    if account["role"] == "Employee":
         return repo.update(EmployeeFeedback_id, FeedbackForm)
     raise credentials_exception
 
@@ -122,8 +132,7 @@ def Delete_Employee_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    x = repo.get_one(EmployeeFeedback_id)
-    print(x.account_id)
-    if x.account_id == account["id"]:
+    # x = repo.get_one(EmployeeFeedback_id)
+    if account["role"] == "Employee":
         return repo.delete(EmployeeFeedback_id)
     raise credentials_exception
