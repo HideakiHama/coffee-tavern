@@ -28,7 +28,8 @@ steps = [
             account_id INT REFERENCES accounts(id),
             employer_id INT,
             full_name VARCHAR(255),
-            education VARCHAR(255)
+            education VARCHAR(255),
+            applied_id INT
         );
         """,
         # Drop the table

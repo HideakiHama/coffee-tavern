@@ -71,7 +71,7 @@ render() {
                 </Route>
                 <Route path = "/create_tag_form" element={<TagForm />}>
                 </Route>
-                <Route path = "/applicants" elment={<Apply />}>
+                <Route path = "/applicants" element={<Apply />}>
                 </Route>
 
                 {/* Lexey */}

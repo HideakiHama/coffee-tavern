@@ -52,7 +52,7 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
-                    print(result)
+                    print("RESULT", result)
                     # get current user id
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
