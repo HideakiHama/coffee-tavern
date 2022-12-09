@@ -4,6 +4,7 @@ import { useAuthContext } from '../useToken';
 import { useLocation, useNavigate } from "react-router-dom";
 import FadeLoader from "react-spinners/FadeLoader";
 
+//Editing their previous feedback to employees
 function EmployerFeedbackEdit(){
 
   const location = useLocation();
@@ -20,6 +21,7 @@ function EmployerFeedbackEdit(){
       setLoading(false)
     }, 5000)}, [])
 
+ //Getting the user's feedback to employee
   useEffect(() =>{
     const getEmployerFeedbacksUrl = async () => {
       if (token) {

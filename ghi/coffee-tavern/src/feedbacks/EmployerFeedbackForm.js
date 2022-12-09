@@ -6,6 +6,7 @@ import { useAuthContext } from '../useToken';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 
+//Employer Feedback to Employee
 function EmployerFeedbackForm() {
 
     const [inputs, setInputs] = useState({employee_name: ''
@@ -18,7 +19,7 @@ function EmployerFeedbackForm() {
     const navigate = useNavigate();
 
 
-
+    //Creating the feedback into employer feedbacks end point
     const handleSubmit = async (event) => {
       event.preventDefault();
       const { employee_name, date, description } = inputs;
@@ -31,7 +32,7 @@ function EmployerFeedbackForm() {
 
       const handleInputChange = (event) => {
       event.persist();
-        setInputs(inputs => ({                         //setInputs
+        setInputs(inputs => ({
         ...inputs,
         [event.target.name]: event.target.value}));  //key: value of each value
     }

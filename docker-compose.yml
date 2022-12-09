@@ -11,9 +11,7 @@ services:
     environment:
       # DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
       # URL for updated Accounts api 2 on elephant sql
-      DATABASE_URL: postgres://xgrfeidu:DEeMBXKjXH1E9XHcunCX-WlEoDlK0S7K@arjuna.db.elephantsql.com/xgrfeidu
-      # DATABASE_URL: postgres://nomzfggc:6bglQKZvY6RA8TTdlIc6Iz-D6e65l9kq@arjuna.db.elephantsql.com/nomzfggc
-
+      DATABASE_URL: postgres://snbufshr:KLJy0dWrnX5vhJfOIYAONvCgM1PbytS7@lallah.db.elephantsql.com/snbufshr
       # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki
@@ -31,7 +29,7 @@ services:
       volumes:
         - ./tagsapi:/app
       environment:
-        DATABASE_URL: postgres://mjlcehbq:68CQlz4J0QGLvquHOSHqQjs97X_vpuyS@arjuna.db.elephantsql.com/mjlcehbq
+        DATABASE_URL: postgres://tjekoxde:qNH_ZgvbJmON36vw0InZM-m2ptGxsy-F@lallah.db.elephantsql.com/tjekoxde
         # WAIT_HOSTS: db:5432
         PORT: 8100
         SIGNING_KEY: aki
