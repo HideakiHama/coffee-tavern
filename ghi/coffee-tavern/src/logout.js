@@ -1,11 +1,7 @@
 import { useAuthContext } from './useToken';
 import { NavLink } from 'react-router-dom';
-import { useEffect, useState } from "react";
 
 const Testing = () => {
-    const [account, setAccount] = useState("");
-
-
     const { token } = useAuthContext();
 
     if (token) {
@@ -26,7 +22,6 @@ const Testing = () => {
         </>
         )
     }
-
 }
 
 export default Testing

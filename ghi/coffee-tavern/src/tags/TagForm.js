@@ -2,23 +2,30 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import TagListView from './TagListView';
-// import { useAuthContext } from '../useToken';
+import { useAuthContext } from '../useToken';
 
 
 function TagForm(){
-
     const [tagsList, setTagsList] = useState([])
     const [tag, setTag] = useState('')
+    const { token } = useAuthContext();
 
     useEffect(() => {
         axios.get('http://localhost:8100/get_all_tags')
         .then(res =>
             setTagsList(res.data))
-      }, []);
+    }, []);
+
+
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
+
 
     // post tags
     const addTagHandler = () => {
-        axios.post('http://localhost:8100/create_tag_form',{'tag': tag})
+        axios.post('http://localhost:8100/create_tag_form',{'tag': tag},
+        config)
         .then(res => console.log(res))
         setTagsList([...tagsList, {tag}]);
     };
@@ -31,7 +38,7 @@ function TagForm(){
         <div className="card-body">
         <h5 className="card text-white bg-dark mb-3"> Add Tag </h5>
             <span className="card-text">
-    
+
             <input className="mb-w form-control desIn" onChange={event =>
             setTag(event.target.value)} placeholder="Tag Name"/>
             <button className="btn btn-outline-primary mx-2 mb-3" style={{

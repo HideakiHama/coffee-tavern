@@ -29,7 +29,7 @@ const EmployerProfile = ({id}) => {
       const employerResponse = await fetch(employerURL, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}`}
-      });
+      }, []);
 
       if (employerResponse.ok) {
         const info = await employerResponse.json();
@@ -42,7 +42,7 @@ const EmployerProfile = ({id}) => {
       }
     }
     getEmployerInfo()
-  }, [id])
+  }, [id, token])
 
   return (
     <ThemeProvider theme={theme}>

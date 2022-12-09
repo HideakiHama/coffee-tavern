@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 export default function SignUp() {
-  const [token, login, logout, signup] = useToken();
+  const signup = useToken()[3];
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

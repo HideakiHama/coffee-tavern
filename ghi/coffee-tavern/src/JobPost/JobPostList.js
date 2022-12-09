@@ -1,20 +1,13 @@
 import * as React from 'react';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import {useState, useEffect} from "react"
-// import { useNavigate } from 'react-router';
-import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import { useAuthContext } from '../useToken';
 
@@ -44,12 +37,12 @@ export default function JobPostList() {
 
 
   const sendInfo = async (employer_id) => {
-      const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/apply/${employer_id}`,  {
+      fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/apply/${employer_id}`,  {
         method: "POST",
         headers: { Authorization: `Bearer ${token}`,
       },
     });
-    const data = await response.json();
+    // const data = await response.json();
   }
 
 
@@ -66,11 +59,12 @@ export default function JobPostList() {
           {/* End hero unit */}
           <Grid container spacing={4}>
             {jobForm.filter(app => {
-              console.log("APP", app)
                         if (searchInput === "") {
-                            return app
+                            return true
                         } else if (app.employer.includes(searchInput)) {
-                            return app
+                            return true
+                        } else{
+                          return false
                         }
                     }).map((jobForms) => (
               <Grid item  xs={12} sm={6} md={4} key={jobForms.id}>
@@ -96,21 +90,6 @@ export default function JobPostList() {
           </Grid>
         </Container>
       </main>
-      {/* Footer */}
-      {/* <Box sx={{ bgcolor: 'background.paper', p: 6 }} component="footer">
-        <Typography variant="h6" align="center" gutterBottom>
-          Footer
-        </Typography>
-        <Typography
-          variant="subtitle1"
-          align="center"
-          color="text.secondary"
-          component="p"
-        >
-          Something here to give the footer a purpose!
-        </Typography>
-      </Box> */}
-      {/* End footer */}
     </ThemeProvider>
   );
 }
