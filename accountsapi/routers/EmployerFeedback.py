@@ -71,14 +71,31 @@ def get_all_with_id(
     repo: EmployerFeedbackRepository = Depends(),
     account: dict = Depends(authenticator.get_current_account_data),
 ):
-    return repo.get_all_with_id(account_id)
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="employer feedback not found",
+    )
+    AllIdEmployerFeedback = repo.get_all_with_id(account_id)
+    if AllIdEmployerFeedback:
+        return AllIdEmployerFeedback
+    raise credentials_exception
 
 
 # GET #
 # Get all the EmployerFeedbacks Regardless of who wrote it
 @router.get("/get_all_employerFeedbacks", tags=["Employer Feedback Form"])
-def get_all_employer_feedbacks(repo: EmployerFeedbackRepository = Depends()):
-    return repo.get_all_feedbacks()
+def get_all_employer_feedbacks(
+    account: dict = Depends(authenticator.get_current_account_data),
+    repo: EmployerFeedbackRepository = Depends(),
+):
+    credentials_exception = HTTPException(
+        status_code=status.HTTP_404_NOT_FOUND,
+        detail="employer feedback not found",
+    )
+    AllEmployerFeedback = repo.get_all_feedbacks()
+    if AllEmployerFeedback:
+        return AllEmployerFeedback
+    raise credentials_exception
 
 
 # PUT #
@@ -99,8 +116,8 @@ def Edit_Employer_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    x = repo.get_one(EmployerFeedback_id)
-    if x.account_id == account["id"]:
+    # x = repo.get_one(EmployerFeedback_id)
+    if account["role"] == "Employer":
         return repo.update(EmployerFeedback_id, FeedbackForm)
     raise credentials_exception
 
@@ -122,8 +139,7 @@ def Delete_Employer_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    x = repo.get_one(EmployerFeedback_id)
-
-    if x.account_id == account["id"]:
+    # x = repo.get_one(EmployerFeedback_id)
+    if account["role"] == "Employer":
         return repo.delete(EmployerFeedback_id)
     raise credentials_exception
