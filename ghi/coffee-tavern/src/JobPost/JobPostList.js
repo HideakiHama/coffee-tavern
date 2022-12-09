@@ -54,6 +54,7 @@ export default function JobPostList() {
         Hello World
       </div> */}
         {/* Hero unit */}
+        <h1>APPLY HERE</h1>
         <Container sx={{ py: 8 }} maxWidth="md">
         <input type="text" placeholder="Search here" onChange={(event) => setSearchInput(event.target.value)} value={searchInput} label="Search" />
           {/* End hero unit */}

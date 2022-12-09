@@ -79,17 +79,17 @@ const JobPostForm = () => {
                         <div className="form-floating mb-3">
                             <input placeholder="To_date" required type="date" name="to_date" value={to_date} onChange={(event) => setToDate(event.target.value)} id="to_date" className="form-control" />
                         </div>
-                        {/* <div className="form-floating mb-3">
+                        <div className="form-floating mb-3">
                             <input placeholder="Tags" required type="text" name="tag" value={tag} onChange={(event) => setTag(event.target.value)} id="tag" className="form-control" />
-                        </div> */}
-                        <div className="mb-3">
+                        </div>
+                        {/* <div className="mb-3">
                             <select value={tag} onChange={(event => setTag(event.target.value))} required id="tag" name="tag" className="form-select">
                                 <option value="">Add a Tag</option>
                                 {tags.map(tag => {
                                     return (<option key={tag.id} value={tag.id}>{tag.tag}</option>)
                                 })}
                             </select>
-                        </div>
+                        </div> */}
                         <div className="form-floating mb-3">
                             <input placeholder="Description" required type="text" name="description" value={description} onChange={(event) => setDescription(event.target.value)} id="description" className="form-control" />
                         </div>
