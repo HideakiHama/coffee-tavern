@@ -88,14 +88,7 @@ def get_all_employer_feedbacks(
     account: dict = Depends(authenticator.get_current_account_data),
     repo: EmployerFeedbackRepository = Depends(),
 ):
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_404_NOT_FOUND,
-        detail="employer feedback not found",
-    )
-    AllEmployerFeedback = repo.get_all_feedbacks()
-    if AllEmployerFeedback:
-        return AllEmployerFeedback
-    raise credentials_exception
+    return repo.get_all_feedbacks()
 
 
 # PUT #

@@ -16,8 +16,8 @@ function AllEmployeeFeedback(){
       // Getting Employee's Feedback from all the Employer
     const getAllEmployerFeedbackUrl = async () => {
     if (token){
-    const response = await axios.get(`http://localhost:8000/get_all_employerFeedbacks`,);
-    // {headers: { Authorization: `Bearer ${token}`}});
+    const response = await axios.get(`http://localhost:8000/get_all_employerFeedbacks`,
+    {headers: { Authorization: `Bearer ${token}`}});
     setEmployees(response.data)}};
     getAllEmployerFeedbackUrl();
   }, [token]);

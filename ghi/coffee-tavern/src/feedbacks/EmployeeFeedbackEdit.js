@@ -109,16 +109,17 @@ function EmployeeFeedbackEdit(){
                   <button className="btn waves-effect waves-light" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
-                  <button onClick={handleDelete} className="btn waves-effect waves-light">Delete
-                            <i className="material-icons right">Feedback</i>
-                  </button>
-                  <button onClick={handleGoBack} className="btn waves-effect waves-light">Go
-                            <i className="material-icons right">Back</i>
-                  </button>
+
               </div>
             </div>
           </div>
         </form>
+        <button onClick={handleDelete} className="btn waves-effect waves-light">Delete
+                            <i className="material-icons right">Feedback</i>
+        </button>
+        <button onClick={handleGoBack} className="btn waves-effect waves-light">Go
+                            <i className="material-icons right">Back</i>
+        </button>
     </div>
     );
 
