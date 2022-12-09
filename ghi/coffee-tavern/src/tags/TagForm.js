@@ -9,9 +9,6 @@ function TagForm(){
 
     const [tagsList, setTagsList] = useState([])
     const [tag, setTag] = useState('')
-    // const [id, setId] = useState('')
-
-    // read tags get_tag_url()
 
     useEffect(() => {
         axios.get('http://localhost:8100/get_all_tags')
@@ -19,23 +16,18 @@ function TagForm(){
             setTagsList(res.data))
       }, []);
 
-
     // post tags
     const addTagHandler = () => {
         axios.post('http://localhost:8100/create_tag_form',{'tag': tag})
         .then(res => console.log(res))
         setTagsList([...tagsList, {tag}]);
     };
-    //{'id': id, 'tag': tag}
-
-
 
     return(
         <div className="App list-group justify-content-center
         align-items-center mx-auto" style={{"width":"400px","backgroundColor": "white",
         "marginTop": "15px"}}>
         <h1 className="card text-white bg-primary mb-1" styleName="max-width: 20rem;">Tag Form</h1>
-        {/* <h6 className="card text-white bg-primary mb-3"> Create a Tag</h6> */}
         <div className="card-body">
         <h5 className="card text-white bg-dark mb-3"> Add Tag </h5>
             <span className="card-text">

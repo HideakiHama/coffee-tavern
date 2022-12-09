@@ -2,8 +2,6 @@ import axios from 'axios'
 import React from 'react'
 
 function Tag(props) {
-    // console.log("this is props in TagItems", props)
-    // console.log("this is props in TagItems", props.Tag.tag)
 
     const deleteTagHandler = (id) => {
         axios.delete(`http://localhost:8100/delete_tag/${id}`)
