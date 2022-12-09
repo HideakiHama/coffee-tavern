@@ -14,7 +14,6 @@ function Nav() {
             <Testing />
             <EmployerNav />
             <EmployeeNav />
-
         </ul>
     </div>
     </nav>

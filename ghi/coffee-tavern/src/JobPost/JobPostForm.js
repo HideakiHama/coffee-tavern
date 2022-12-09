@@ -51,9 +51,7 @@ const JobPostForm = () => {
             headers: { Authorization: `Bearer ${token}`, "Content-type": "application/json",
         }};
         const response = await fetch(JobFormURL, fetchConfig);
-        console.log("RESPONSE", response)
         const data = await response.json();
-        console.log("DATAA", data)
         if (response.ok){
             clearJobForm()
         }

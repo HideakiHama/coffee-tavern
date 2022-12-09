@@ -62,6 +62,7 @@ class EmployerInfoRepo:
             return {"message": "Create did not work"}
 
     def get_one(self, account_id: int) -> Optional[EmployerInfoOut]:
+        print(account_id)
         try:
             # connect the database
             with connect(
@@ -84,6 +85,7 @@ class EmployerInfoRepo:
                         [account_id],
                     )
                     record = result.fetchone()
+                    print("RECORddD", record)
                     if record is None:
                         return None
                     return self.record_employer_form_out(record)

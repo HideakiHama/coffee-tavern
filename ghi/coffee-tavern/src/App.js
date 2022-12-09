@@ -30,6 +30,7 @@ import MainPage from './MainPage';
 import UploadResume from './UploadResumeForm';
 import Nav from './Nav';
 import { AuthProvider, useToken } from './useToken';
+import Apply from './JobPost/Apply';
 
 function GetToken() {
   useToken();
@@ -82,6 +83,8 @@ render() {
                 <Route path = "/employer-profile-list" element={<EmployerProfileList/>}>
                 </Route>
                 <Route path = "/create_tag_form" element={<TagForm />}>
+                </Route>
+                <Route path = "/applicants" element={<Apply />}>
                 </Route>
                 <Route path = "/other-employee-profile" element={<OthersEmployeeProfile />}>
                 </Route>

@@ -34,8 +34,7 @@ class AccountOut(BaseModel):
 class AccountRepo:
     def get_all(self) -> List[AccountOut]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"],
-                         **keepalive_kwargs) as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """

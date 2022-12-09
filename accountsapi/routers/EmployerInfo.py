@@ -17,9 +17,7 @@ def create_employer_info(
     account: dict = Depends(authenticator.get_current_account_data),
 ) -> EmployerInfoOut:
     info = repo.create(employer_info, account["id"]).dict()
-    print("PRE", info)
     info["account_id"] = account
-    print(info)
     return info
 
 

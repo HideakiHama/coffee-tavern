@@ -169,8 +169,7 @@ class EmployerFeedbackRepository:
     # DELETE #
     def delete(self, EmployerFeedback_id: int) -> bool:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"],
-                         **keepalive_kwargs) as conn:
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
