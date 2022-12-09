@@ -2,7 +2,7 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useLocation, useNavigate } from "react-router-dom";
-
+import FadeLoader from "react-spinners/FadeLoader";
 
 function EmployeeFeedbackEdit(){
 
@@ -10,8 +10,15 @@ function EmployeeFeedbackEdit(){
   const id = location.state.id
 
   const [employer, setEmployer] = useState([]);
+  const [loading, setLoading] = useState(false)
   const { token } = useAuthContext();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() =>{
+      setLoading(false)
+    }, 5000)}, [])
 
   useEffect(() =>{
     const getEmployeeFeedbacksUrl = async ( ) => {
@@ -79,6 +86,17 @@ function EmployeeFeedbackEdit(){
     };
 
     return (
+      <div>
+      {loading?
+      <div className="sweet-loading">
+          <FadeLoader
+          color={'#36d7b7'}
+          loading={loading}
+          size={200}
+
+        />
+        </div>
+         :
       <div className="row">
         <h2>Edit My Feedback to {employer.employer_name}</h2>
         <form className="col s12" onSubmit={handleEdit}>
@@ -121,7 +139,8 @@ function EmployeeFeedbackEdit(){
                             <i className="material-icons right">Back</i>
         </button>
     </div>
+        }
+        </div>
     );
-
 }
 export default EmployeeFeedbackEdit

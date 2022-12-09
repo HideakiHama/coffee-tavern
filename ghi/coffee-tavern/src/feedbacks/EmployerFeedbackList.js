@@ -3,10 +3,11 @@ import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
-
+import FadeLoader from "react-spinners/FadeLoader";
 
 function EmployerFeedbackList() {
     const [employer, setEmployer] = useState([]);
+    const [loading, setLoading] = useState(false)
     const { token } = useAuthContext();
     const navigate = useNavigate();
 
@@ -21,6 +22,11 @@ function EmployerFeedbackList() {
       navigate("/all-employee-feedback", {state:{employee_name:employee_name}})
     }
 
+    useEffect(() => {
+      setLoading(true)
+      setTimeout(() =>{
+        setLoading(false)
+      }, 5000)}, [])
 
     useEffect(() =>{
       const getEmployerFeedbacksUrl = async () => {
@@ -36,6 +42,17 @@ function EmployerFeedbackList() {
 
 
     return (
+      <div>
+            {loading?
+            <div className="sweet-loading">
+                <FadeLoader
+                color={'#36d7b7'}
+                loading={loading}
+                size={200}
+
+              />
+              </div>
+               :
       <div>
         <h2>My Past Feedbacks to Employee</h2>
         <table>
@@ -59,7 +76,8 @@ function EmployerFeedbackList() {
           </tbody>
         </table>
       </div>
-
+}
+    </div>
     )
 }
 export default EmployerFeedbackList

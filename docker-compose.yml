@@ -12,6 +12,8 @@ services:
       # DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
       # URL for updated Accounts api 2 on elephant sql
       DATABASE_URL: postgres://xgrfeidu:DEeMBXKjXH1E9XHcunCX-WlEoDlK0S7K@arjuna.db.elephantsql.com/xgrfeidu
+      # DATABASE_URL: postgres://nomzfggc:6bglQKZvY6RA8TTdlIc6Iz-D6e65l9kq@arjuna.db.elephantsql.com/nomzfggc
+
       # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki
