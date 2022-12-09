@@ -14,9 +14,7 @@ function Nav() {
             <Testing />
             <EmployerNav />
             <EmployeeNav />
-            <li><NavLink className="dropdown-item" aria-current="page" to="/user/employee">My Profile</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/create_tag_form">Tags</NavLink></li>
-            <li><NavLink className="dropdown-item" aria-current="page" to="/employee-profile-list">Employee Profile List</NavLink></li>
+
         </ul>
     </div>
     </nav>

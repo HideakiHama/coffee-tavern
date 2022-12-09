@@ -14,8 +14,11 @@ import EmployeeProfile from './LoggedInUserProfile/Employee';
 import EmployerProfile from './LoggedInUserProfile/Employer';
 import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
 import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
+import OthersEmployeeProfile from './listOfProfiles/othersEmployeeProfile'
+import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile'
 
-import EmployeeProfileList from './listOfEmployee'
+import EmployeeProfileList from './listOfProfiles/listOfEmployees'
+import EmployerProfileList from './listOfProfiles/listOfEmployers'
 import TagForm from './tags/TagForm';
 
 import React, { Component } from 'react';
@@ -76,7 +79,13 @@ render() {
                 </Route>
                 <Route path = "/employee-profile-list" element={<EmployeeProfileList/>}>
                 </Route>
+                <Route path = "/employer-profile-list" element={<EmployerProfileList/>}>
+                </Route>
                 <Route path = "/create_tag_form" element={<TagForm />}>
+                </Route>
+                <Route path = "/other-employee-profile" element={<OthersEmployeeProfile />}>
+                </Route>
+                <Route path = "/other-employer-profile" element={<OthersEmployerProfile />}>
                 </Route>
 
                 {/* Lexey */}

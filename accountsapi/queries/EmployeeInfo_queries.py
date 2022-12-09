@@ -32,7 +32,9 @@ class EmployeeInfoRepo:
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     # Run our INSERT statement
@@ -93,7 +95,9 @@ class EmployeeInfoRepo:
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -153,9 +157,7 @@ class EmployeeInfoRepo:
                         ORDER BY full_name
                         """
                     )
-                    print("RESULT", result)
                     resultList = list(result)
-                    print("RESULT LIST", resultList)
                 return [self.record_employee_form_out(record) for record in resultList]
         except Exception:
-            return {"message": "Could not get feedbacks"}
+            return {"message": "Could not get list of employee"}

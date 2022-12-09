@@ -8,41 +8,31 @@ import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuthContext } from '../useToken';
 import {useEffect, useState} from 'react';
+import { useLocation } from "react-router-dom";
+import axios from "axios";
+
 
 const theme = createTheme();
 
-const EmployerProfile = ({id}) => {
+function OthersEmployeeProfile(){
   // set state name, email, etc
 
-  const [name, setName] = useState('');
-  const [job, setJob] = useState('');
-  const [location, setLocation] = useState('');
-  const [about, setAbout] = useState('');
-
+  const [otherEmployee, setOtherEmployee] = useState([])
   const { token } = useAuthContext();
+  const IdData = useLocation();
+  const account_id = IdData.state.account_id
+
 
   useEffect(() => {
-    async function getEmployerInfo() {
-
-      const employerURL = `http://localhost:8000/users/${id}/get_employer_info`;
-
-      const employerResponse = await fetch(employerURL, {
-        method: "GET",
-        headers: { Authorization: `Bearer ${token}`}
-      });
-
-      if (employerResponse.ok) {
-        const info = await employerResponse.json();
-        console.log(info)
-        // set info
-        setName(info.company_name)
-        setJob(info.job_type)
-        setLocation(info.location)
-        setAbout(info.about)
-      }
-    }
-    getEmployerInfo()
-  }, [id])
+    const getOthersEmployeeInfo = async () => {
+      if (token) {
+        const id = account_id
+        const response = await axios.get(`http://localhost:8000/users/${id}/get_employee_info`,
+        {headers: { Authorization: `Bearer ${token}`}});
+        setOtherEmployee(response.data)
+}};
+    getOthersEmployeeInfo();
+  }, [token, account_id]);
 
   return (
     <ThemeProvider theme={theme}>
@@ -74,17 +64,17 @@ const EmployerProfile = ({id}) => {
           >
             <Typography component="h1" variant="h2">
               <ul>
-                <li>{name}</li>
+                <li>{otherEmployee.full_name}</li>
               </ul>
             </Typography>
             <Typography componenet="h6" variant="h4">
               <ul>
-                <li>{job}</li>
-                <li>{location}</li>
-                <li>{about}</li>
+                <li>{otherEmployee.career_title}</li>
+                <li>{otherEmployee.location}</li>
+                <li>{otherEmployee.education}</li>
+                <li>{otherEmployee.about}</li>
               </ul>
             </Typography>
-            <a href="/user/employer/info-form">Edit Info</a>
           </Box>
         </Grid>
       </Grid>
@@ -92,4 +82,4 @@ const EmployerProfile = ({id}) => {
   );
 }
 
-export default EmployerProfile;
+export default OthersEmployeeProfile;

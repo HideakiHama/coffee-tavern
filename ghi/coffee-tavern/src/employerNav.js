@@ -14,10 +14,12 @@ const EmployerNav = () => {
         return (
 
         <>
-        <li><NavLink className="dropdown-item" aria-current="page" to="/get_all_form">Board of Jobs</NavLink></li>
         <li><NavLink className="dropdown-item" aria-current="page" to="/create_form">Create Job Post</NavLink></li>
-        <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedback">Create Feedback</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedback">Send Feedback</NavLink></li>
         <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedbacks-list">My Past Feedbacks</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/employee-profile-list">Employee Profiles</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/user/employer">My Profile</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/create_tag_form">Tags</NavLink></li>
         </>
 
         )

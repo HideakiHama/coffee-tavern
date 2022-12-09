@@ -54,6 +54,9 @@ def update_employee_info(
 
 # GET #
 # Get all the Employee Profile
-@router.get("/get_all_profile", tags=["User Info"])
-def get_all_employee_profile(repo: EmployeeInfoRepo = Depends()):
+@router.get("/get_all_employee_profile", tags=["User Info"])
+def get_all_employee_profile(
+    account: dict = Depends(authenticator.get_current_account_data),
+    repo: EmployeeInfoRepo = Depends(),
+):
     return repo.get_all_profile()

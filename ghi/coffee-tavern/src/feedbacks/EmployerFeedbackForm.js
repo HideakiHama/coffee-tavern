@@ -36,7 +36,7 @@ function EmployerFeedbackForm() {
 
       return (
         <div className="row">
-          <h2>Create a Feedback to My Employee</h2>
+          <h2>Send a Feedback to My Employee</h2>
           <form className="col s12" onSubmit={handleSubmit}>
             <div className="row">
               <div className="form-floating col s6">

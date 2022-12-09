@@ -15,8 +15,10 @@ const EmployeeNav = () => {
 
         <>
         <li><NavLink className="dropdown-item" aria-current="page" to="/get_all_form">Board of Jobs</NavLink></li>
-        <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedback">Create Feedback</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedback">Send Feedback</NavLink></li>
         <li><NavLink className="dropdown-item" aria-current="page" to="/employee-feedbacks-list">My Past Feedbacks</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/employer-profile-list">Employer Profiles</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/user/employee">My Profile</NavLink></li>
         </>
 
         )
