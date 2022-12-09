@@ -39,5 +39,6 @@ def update_employee_info(
 ) -> EmployeeInfoOut:
     final = repo.get_one(account["id"])
     Updated = repo.update(employee_info, account["id"]).dict()
+    print("final", final)
     Updated["account_id"] = final.account_id
     return Updated

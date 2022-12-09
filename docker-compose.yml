@@ -7,7 +7,7 @@ services:
   accountsapi:
     build:
       context: ./accountsapi
-      Dockerfile: Dockerfile.dev
+      dockerfile: Dockerfile.dev
     environment:
       # DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
       # URL for updated Accounts api (added pic url) on elephant sql

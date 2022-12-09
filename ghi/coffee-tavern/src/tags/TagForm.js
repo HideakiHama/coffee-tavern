@@ -17,7 +17,7 @@ function TagForm(){
         axios.get('http://localhost:8100/get_all_tags')
         .then(res =>
             setTagsList(res.data))
-      }, [tag, setTag , tagsList, setTagsList]);
+      }, []);
 
     // useEffect(() => {
     //     axios.get('http://localhost8100/get_all_tags')

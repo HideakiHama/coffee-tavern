@@ -7,7 +7,9 @@ import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
 import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
 import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
+import EmployeeInfoFormCreate from './LoggedInUserProfile/CreateEmployeeInfo';
 import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
+import EmployerInfoFormCreate from './LoggedInUserProfile/CreateEmployerInfo';
 import Profile from './LoggedInUserProfile/Profile';
 
 import EmployeeProfileList from './listOfEmployee'
@@ -73,7 +75,9 @@ render() {
                 {/* Lexey */}
 
                 <Route path = "/user/current/profile" element={<Profile/>} />
+                <Route path = "/user/employee/info-form/create" element={<EmployeeInfoFormCreate/>} />
                 <Route path = "/user/employee/info-form" element={<EmployeeInfoForm/>} />
+                <Route path = "/user/employer/info-form/create" element={<EmployerInfoFormCreate/>} />
                 <Route path = "/user/employer/info-form" element={<EmployerInfoForm/>} />
 
               </Routes>

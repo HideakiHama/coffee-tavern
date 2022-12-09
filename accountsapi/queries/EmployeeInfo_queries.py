@@ -61,6 +61,7 @@ class EmployeeInfoRepo:
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
         # try:
         # connect the database
+        print("ID", id)
         with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
             # get a cursor (something to run SQL with)
             with conn.cursor() as db:
