@@ -22,8 +22,8 @@ const theme = createTheme();
 
 export default function JobPostList() {
   const [jobForm, setJobForm] = useState([]);
+  const [ searchInput, setSearchInput ] = useState("");
   const { token } = useAuthContext();
-  // const navigate = useNavigate();
 
   useEffect(() => {
     const getJobForm = async () => {
@@ -62,9 +62,17 @@ export default function JobPostList() {
       </div> */}
         {/* Hero unit */}
         <Container sx={{ py: 8 }} maxWidth="md">
+        <input type="text" placeholder="Search here" onChange={(event) => setSearchInput(event.target.value)} value={searchInput} label="Search" />
           {/* End hero unit */}
           <Grid container spacing={4}>
-            {jobForm.map((jobForms) => (
+            {jobForm.filter(app => {
+              console.log("APP", app)
+                        if (searchInput === "") {
+                            return app
+                        } else if (app.employer.includes(searchInput)) {
+                            return app
+                        }
+                    }).map((jobForms) => (
               <Grid item  xs={12} sm={6} md={4} key={jobForms.id}>
                   <Card
                   sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}>
