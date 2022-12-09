@@ -1,7 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 
-function TagItem(props) {
+function Tag(props) {
     // console.log("this is props in TagItems", props)
     // console.log("this is props in TagItems", props.Tag.tag)
 
@@ -25,4 +25,4 @@ function TagItem(props) {
         </div>
     )
 }
-export default TagItem
+export default Tag
