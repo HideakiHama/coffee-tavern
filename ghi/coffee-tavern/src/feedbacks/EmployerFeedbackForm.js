@@ -42,7 +42,6 @@ function EmployerFeedbackForm() {
               <div className="form-floating col s6">
                 <input type="text" name ="employee_name" onChange={handleInputChange}
                 value ={inputs['employee_name']} required></input>
-
                 <label>Employee's Name</label>
               </div>
               <div className="form-floating col s6">
@@ -63,7 +62,6 @@ function EmployerFeedbackForm() {
             <div className="row">
               <div className="col s12">
                 <div className="input-field inline">
-
                     <button className="btn waves-effect waves-light" type="submit" name="action">Submit
                               <i className="material-icons right">Feedback</i>
                     </button>
@@ -76,4 +74,4 @@ function EmployerFeedbackForm() {
     }
 
 
- export default EmployerFeedbackForm
+export default EmployerFeedbackForm

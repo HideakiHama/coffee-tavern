@@ -111,7 +111,6 @@ function EmployerFeedbackEdit(){
                   <button className="btn waves-effect waves-light" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
-
               </div>
             </div>
           </div>

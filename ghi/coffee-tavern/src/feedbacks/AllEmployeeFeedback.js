@@ -36,7 +36,7 @@ function AllEmployeeFeedback(){
             <th>Date</th>
             <th>Description</th>
             <th><button onClick={handleGoBack} className="btn waves-effect waves-light">Go Back
-               </button></th>
+              </button></th>
           </tr>
         </thead>
         <tbody>

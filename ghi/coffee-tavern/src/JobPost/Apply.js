@@ -1,16 +1,11 @@
 import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
-import { useNavigate } from 'react-router-dom';
-import jwt_decode from "jwt-decode";
 
 
 function Apply() {
     const [account, setAccount] = useState([]);
     const { token } = useAuthContext();
-    console.log("ANYTHING")
-    const navigate = useNavigate();
-    console.log("HELLO")
 
     useEffect(() =>{
     const getApply = async ( ) => {

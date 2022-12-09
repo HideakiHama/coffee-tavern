@@ -2,7 +2,6 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useNavigate } from 'react-router-dom';
-// import jwt_decode from "jwt-decode";
 
 
 function EmployeeProfileList() {
@@ -29,8 +28,6 @@ function EmployeeProfileList() {
     }, [token]);
 
 
-
-
     return (
       <div>
         <h2>List of Employees</h2>
@@ -48,14 +45,12 @@ function EmployeeProfileList() {
                 <td>{employeeProfile.full_name}</td>
                 <td>{employeeProfile.location}</td>
                 <td>{employeeProfile.career_title}</td>
-
                 <td><button onClick={() => employeeFeedbackEdit(employeeProfile.account_id)}>Check Profile</button></td>
               </tr>
               )}
           </tbody>
         </table>
       </div>
-
     )
 }
 export default EmployeeProfileList
