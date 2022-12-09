@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, Response
 from queries.TagQueries import TagOut, TagIn, TagRepository, Error
 from token_auth import get_current_user
 from typing import Union, List
+from authenticator import authenticator
 
 router = APIRouter()
 
@@ -37,8 +38,10 @@ def get_one_tag(
 @router.get(
     "/get_all_tags", tags=["TagForm"], response_model=Union[List[TagOut], Error]
 )
+
 def get_all(repo: TagRepository = Depends(), account: dict = Depends(get_current_user)):
     return repo.get_all()
+
 
 
 # DELETE
