@@ -28,9 +28,8 @@ def create_employee_feedback_form(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You are employer. Please use employer feedback form",
     )
-
     if account["role"] == "Employee":
-        not_final = repo.create(new_form, account["id"]).dict() #
+        not_final = repo.create(new_form, account["id"]).dict()
         not_final["account_id"] = account
         return not_final
     raise credentials_exception

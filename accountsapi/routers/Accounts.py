@@ -10,7 +10,7 @@ from authenticator import authenticator
 
 from pydantic import BaseModel
 
-from queries.accounts import AccountIn, AccountOut, AccountRepo, Error
+from queries.accounts import AccountIn, AccountOut, AccountRepo
 
 
 class AccountForm(BaseModel):

@@ -18,6 +18,7 @@ class JobPostForm(BaseModel):
     location: str
     tag: str
     description: str
+    account_id: int
 
 
 class JobPostFormIn(BaseModel):
@@ -129,13 +130,15 @@ class JobFormRepository:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
-                        SELECT id, employer, position, location, tag, description
+                        SELECT id, employer, position, location, tag, description, account_id
                         FROM jobs
                         ORDER BY id
                         """
                     )
                     resultList = list(result)
-                return [self.record_JobForm_all(record) for record in resultList]
+                x = [self.record_JobForm_all(record) for record in resultList]
+                print("X", x)
+                return x
         except Exception:
             return {"message": "Could not get any job form today"}
 
@@ -224,11 +227,11 @@ class JobFormRepository:
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
-                    """
-                    SELECT id, account_id, employer_id, full_name, education
-                    FROM applied
-                    ORDER BY id
-                    """
+                        """
+                        SELECT id, account_id, employer_id, full_name, education
+                        FROM applied
+                        ORDER BY id
+                        """
                     )
                     resultList = list(result)
                 filtered = list(filter(lambda p: p[2] == curr_account_id, resultList))
@@ -304,13 +307,14 @@ class JobFormRepository:
             position=record[2],
             location=record[3],
             tag=record[4],
-            description=record[5]
+            description=record[5],
+            account_id=record[6]
         )
 
     def record_Applicants_all(self, record):
         return ApplicantsIn(
             id=record[0],
-            account_id = record[1],
+            account_id=record[1],
             employer_id=record[2],
             full_name=record[3],
             education=record[4],

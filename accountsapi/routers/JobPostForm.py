@@ -8,9 +8,7 @@ from queries.JobForm_queries import (
     JobPostForm,
     JobPostFormOut1,
     JobPostFormOut2,
-    Applicants,
-    ApplicantsOut,
-    ApplicantsIn
+    ApplicantsOut
 )
 from queries.accounts import AccountRepo
 from authenticator import authenticator
@@ -97,9 +95,7 @@ def Delete_Job_Form(form_id: int, repo: JobFormRepository = Depends(), account: 
 
 
 @router.post("/apply/{employer_id}", tags=["Apply"], response_model=ApplicantsOut)
-def sendApplications(employer_id: int, repo: JobFormRepository = Depends(),
-                    repo1: EmployeeInfoRepo = Depends(),
-                    account: dict = Depends(authenticator.get_current_account_data)) -> ApplicantsOut:
+def sendApplications(employer_id: int, repo: JobFormRepository = Depends(), repo1: EmployeeInfoRepo = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> ApplicantsOut:
     if account["role"] == "Employee":
         EmployeeInfo = repo1.get_one(account["id"])
         EmployeeInfo.account_id = account
@@ -116,7 +112,6 @@ def getApplicants(repo: JobFormRepository = Depends(), repo1: AccountRepo = Depe
     if account["role"] == "Employer":
         x = repo.get_all_applicants(account["id"])
         for i in x:
-            y = repo1.getId(i["account_id"])
             i["account_id"] = repo1.getId(i["account_id"]).dict()
         return x
     else:
@@ -124,14 +119,12 @@ def getApplicants(repo: JobFormRepository = Depends(), repo1: AccountRepo = Depe
 
 
 @router.delete("/delete_application/{id}", tags=["Apply"], response_model=bool)
-def Delete_Job_Form(apply_id: int, repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> bool:
-    credentials_exception = HTTPException(
-        status_code=status.HTTP_403_FORBIDDEN,
-        detail="You are employee. Only the employer have this access",
-    )
+def Delete_application_Form(apply_id: int, repo: JobFormRepository = Depends(), account: dict = Depends(authenticator.get_current_account_data)) -> bool:
     credentials_exception1 = HTTPException(
         status_code=status.HTTP_403_FORBIDDEN,
         detail="You did not make this. Access denied",
     )
     if account["role"] == "Employer":
         return repo.delete_apply(apply_id)
+    else:
+        raise credentials_exception1

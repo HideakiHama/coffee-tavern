@@ -35,10 +35,23 @@ export default function JobPostList() {
     });
       const data = await response.json();
       setJobForm(data)
+      console.log(data.account_id)
+
   }
   }
     getJobForm()
 }, [token])
+
+
+  const sendInfo = async (employer_id) => {
+      const response = await fetch(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/apply/${employer_id}`,  {
+        method: "POST",
+        headers: { Authorization: `Bearer ${token}`,
+      },
+    });
+    const data = await response.json();
+  }
+
 
   return (
     <ThemeProvider theme={theme}>
@@ -66,9 +79,9 @@ export default function JobPostList() {
                       description: {jobForms.description}
                     </Typography>
                   </CardContent>
-                  <CardActions>
-                    <Button size="small">Send Info</Button>
-                  </CardActions>
+                  {/* <CardActions> */}
+                    <Button size="small" onClick={(e) => sendInfo(jobForms.account_id)}>Send Info</Button>
+                  {/* </CardActions> */}
                 </Card>
               </Grid>
                 ))}
