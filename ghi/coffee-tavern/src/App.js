@@ -14,11 +14,11 @@ import EmployeeProfile from './LoggedInUserProfile/Employee';
 import EmployerProfile from './LoggedInUserProfile/Employer';
 import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
 import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
-import OthersEmployeeProfile from './listOfProfiles/othersEmployeeProfile'
-import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile'
+import OthersEmployeeProfile from './listOfProfiles/othersEmployeeProfile';
+import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile';
 
-import EmployeeProfileList from './listOfProfiles/listOfEmployees'
-import EmployerProfileList from './listOfProfiles/listOfEmployers'
+import EmployeeProfileList from './listOfProfiles/listOfEmployees';
+import EmployerProfileList from './listOfProfiles/listOfEmployers';
 import TagForm from './tags/TagForm';
 
 import React, { Component } from 'react';
