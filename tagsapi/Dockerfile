@@ -11,7 +11,7 @@ COPY main.py main.py
 # Modify these instructions to do that
 COPY queries queries
 COPY routers routers
-
+COPY token_auth.py token_auth.py
 
 # If you're using a relational database with migrations,
 # uncomment the following line
