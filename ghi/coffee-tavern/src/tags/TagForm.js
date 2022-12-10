@@ -21,7 +21,7 @@ function TagForm(){
         .then(res =>
             setTagsList(res.data))
         }
-    }, [token]);
+    }, [config, token]);
 
     // post tags
     const addTagHandler = () => {
