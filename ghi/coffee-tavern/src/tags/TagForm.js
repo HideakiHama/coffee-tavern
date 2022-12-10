@@ -16,23 +16,16 @@ function TagForm(){
     // };
 
     useEffect(() => {
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
         if (token) {
-        axios.get('http://localhost:8100/get_all_tags', config)
+        axios.get('http://localhost:8100/get_all_tags',  {headers: { Authorization: `Bearer ${token}` }})
         .then(res =>
             setTagsList(res.data))
         }
-    }, [config, token]);
+    }, [token]);
 
     // post tags
     const addTagHandler = () => {
-        const config = {
-            headers: { Authorization: `Bearer ${token}` }
-        };
-        axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/create_tag_form`,{'tag': tag},
-        config)
+        axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/create_tag_form`,{'tag': tag}, {headers: { Authorization: `Bearer ${token}` }})
         .then(res => console.log(res))
         setTagsList([...tagsList, {tag}]);
     };
