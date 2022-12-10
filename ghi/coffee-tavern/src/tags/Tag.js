@@ -3,11 +3,11 @@ import React from 'react'
 import { useAuthContext } from '../useToken';
 
 function Tag(props) {
-    const { token } = useAuthContext();
+    // const { token } = useAuthContext();
 
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
+    // const config = {
+    //     headers: { Authorization: `Bearer ${token}` }
+    // };
 
     const deleteTagHandler = (id) => {
         axios.delete(`${process.env.REACT_APP_TAGS_API_HOST}/delete_tag/${id}`)
