@@ -1,10 +1,51 @@
-## December 2, 2022
+## December 7, 2022
 
 Today, I worked on:
 
-* 
+* profiles
 
-I did
+I had to rewrite lost files. Made profile work and navigate to profile of 
+logged in user. Going to work on refactoring to one page, that checks the 
+role of the user and shows correct information. Working with Aki on the 
+navigation from clicking a users name to go to their profile. (non logged
+in user) 
+
+
+
+## December 6, 2022
+
+Today, I worked on: 
+
+* employee & employer info forms
+
+Today I figured out why updating the form was giving me an unauthorized 
+error. With Chris's help, he showed me how to grab the token that was 
+created upon signing in. I completed the employer form and added the links 
+to the forms on the profile pages, as well as a return to profile link 
+on the form.
+
+
+
+## December 5, 2022
+
+Today, I worked on:
+
+* employee form
+
+I got most of employee form to work, but getting back an unauthorized 
+error. Chris helped me with some backend refactoring. Made sure both front 
+and backend were still connected properly
+
+
+
+## December 4, 2022
+
+Today, I worked on:
+
+* profiles
+
+Set up a basic profile page just to show the data that's needed. Was able 
+to work with react hooks to make the page work smoother.
 
 
 

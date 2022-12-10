@@ -88,7 +88,7 @@ def get_all_with_id(
     tags=["Employee Feedback Form"],
 )
 def get_all_employee_feedbacks(
-    # account: dict = Depends(authenticator.get_current_account_data),
+    account: dict = Depends(authenticator.get_current_account_data),
     repo: EmployeeFeedbackRepository = Depends(),
 ):
     return repo.get_all_feedbacks()

@@ -25,6 +25,7 @@ steps = [
             location VARCHAR(255),
             education VARCHAR(255),
             about TEXT,
+            pic_url TEXT,
             account_id INTEGER
         );
         """,
@@ -59,6 +60,7 @@ steps = [
             job_type VARCHAR(255),
             location VARCHAR(255),
             about TEXT,
+            pic_url TEXT,
             account_id INTEGER
         );
         """,

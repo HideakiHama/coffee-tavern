@@ -93,7 +93,6 @@ class ApplicantsOut(BaseModel):
 
 class JobFormRepository:
     def get_one(self, JobForm_id: int) -> Optional[JobPostFormOut]:
-        print("EREE")
         try:
             # connect the database
             with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
@@ -117,7 +116,6 @@ class JobFormRepository:
                         [JobForm_id],
                     )
                     record = result.fetchone()
-                    print("RECORD", record)
                     if record is None:
                         return None
                     return self.record_JobForm_out(record)

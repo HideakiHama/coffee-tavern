@@ -2,52 +2,30 @@ import 'materialize-css/dist/css/materialize.min.css'
 import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
+import { useNavigate } from "react-router-dom";
 
-function EmployeeInfoForm() {
-
+function EmployeeInfoFormCreate({id}) {
     const [fullName, setFullName] = useState('')
     const [careerTitle, setCareerTitle] = useState('')
     const [location, setLocation] = useState('')
     const [education, setEducation] = useState('')
     const [about, setAbout] = useState('')
     const [pic, setPic] = useState('')
+    const navigate = useNavigate();
 
-    //
-    const [id, setId] = useState('');
+    const [decodedId, setDecodedId] = useState('')
 
-    const { token } = useAuthContext();
+    const { token } = useAuthContext()
 
-    
     useEffect(() => {
-        async function getEmployeeInfo () {
-
+        const getDecodedId = () => {
             const decoded = jwt_decode(token)
-            setId(decoded.account["id"])
-
-            const infoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/get_employee_info`
-
-            const infoResponse = await fetch(infoURL, {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}`}
-            })
-
-            if (infoResponse.ok) {
-                const info = await infoResponse.json()
-
-                if (info) {
-                    setFullName(info.full_name)
-                    setCareerTitle(info.career_title)
-                    setLocation(info.location)
-                    setEducation(info.education)
-                    setAbout(info.about)
-                    setPic(info.pic_url)
-                }
-            }
+            setDecodedId(decoded.account["id"])
         }
-
-        getEmployeeInfo()
-
-    }, [id, token])
+        if (token) {
+            getDecodedId()
+        }
+    }, [token])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -60,10 +38,10 @@ function EmployeeInfoForm() {
             "pic_url": pic
         }
         
-        const employeeInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/update_employee_info`
+        const employeeInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${decodedId}/create_employee_info`
 
         const fetchConfig = {
-            method: "PUT",
+            method: "POST",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",
@@ -74,6 +52,7 @@ function EmployeeInfoForm() {
 
         if (response.ok) {
             console.log("submit worked")
+            navigate("/user/current/profile");
         } else {
             console.log("submit didn't work", response)
         }
@@ -123,10 +102,9 @@ function EmployeeInfoForm() {
                         </div>
                     </div>
                 </div>
-                <a href="/user/current/profile">Back to Profile</a>
             </form>
         </div>
     )
 }
 
-export default EmployeeInfoForm;
+export default EmployeeInfoFormCreate;

@@ -10,22 +10,22 @@ function TagForm(){
     const [tag, setTag] = useState('')
     const { token } = useAuthContext();
 
+
+    // const config = {
+    //     headers: { Authorization: `Bearer ${token}` }
+    // };
+
     useEffect(() => {
-        axios.get('http://localhost:8100/get_all_tags')
+        if (token) {
+        axios.get('http://localhost:8100/get_all_tags',  {headers: { Authorization: `Bearer ${token}` }})
         .then(res =>
             setTagsList(res.data))
-    }, []);
-
-
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
-
+        }
+    }, [token]);
 
     // post tags
     const addTagHandler = () => {
-        axios.post('http://localhost:8100/create_tag_form',{'tag': tag},
-        config)
+        axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/create_tag_form`,{'tag': tag}, {headers: { Authorization: `Bearer ${token}` }})
         .then(res => console.log(res))
         setTagsList([...tagsList, {tag}]);
     };

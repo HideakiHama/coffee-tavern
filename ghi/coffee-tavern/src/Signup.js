@@ -32,9 +32,13 @@ export default function SignUp() {
     event.preventDefault();
     // const data = new FormData(event.currentTarget);
     // console.log(data.get("firstName"), data.get("email"), data.get("password"), data.get("role"))
-    console.log(password, email, username, role)
-    signup(password, email, username, role);
-    navigate("/");
+    await signup(password, email, username, role);
+    
+    if (role === "Employee") {
+      navigate("/user/employee/info-form/create");
+    } else if (role === "Employer") {
+      navigate("/user/employer/info-form/create");
+    }
   };
 
   const roles = ["Employee", "Employer"]
