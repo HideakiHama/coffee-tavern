@@ -19,11 +19,8 @@ lint-test-job:
 #   needs:
 #     - lint-test-job
 #   script:
-#     - cd coffee-tavern
-#     -
 #     - pip install -r requirements.txt
 #     - cd accountsapi
-#     -
 #     - python -m pytest
 
 # Build the React/JavaScript front-end

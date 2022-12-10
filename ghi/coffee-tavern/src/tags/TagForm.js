@@ -11,11 +11,14 @@ function TagForm(){
     const { token } = useAuthContext();
 
 
-    const config = {
-        headers: { Authorization: `Bearer ${token}` }
-    };
+    // const config = {
+    //     headers: { Authorization: `Bearer ${token}` }
+    // };
 
     useEffect(() => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
         if (token) {
         axios.get('http://localhost:8100/get_all_tags', config)
         .then(res =>
@@ -25,6 +28,9 @@ function TagForm(){
 
     // post tags
     const addTagHandler = () => {
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
         axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/create_tag_form`,{'tag': tag},
         config)
         .then(res => console.log(res))
