@@ -55,7 +55,7 @@ pages:
   needs:
     - build-front-end-job
   script:
-    - mv ghi/coffee-tavern /public
+    - mv ghi/coffee-tavern public
   artifacts:
     paths:
       - public
