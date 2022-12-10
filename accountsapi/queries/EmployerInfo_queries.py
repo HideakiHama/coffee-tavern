@@ -57,6 +57,7 @@ class EmployerInfoRepo:
                             account_id,
                         ],
                     )
+                    print(result)
                     return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
@@ -118,6 +119,7 @@ class EmployerInfoRepo:
                             account_id,
                         ],
                     )
+                    print(result)
                     return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
