@@ -38,7 +38,9 @@ class EmployeeFeedbackRepository:
     # GET #
     def get_one(self, EmployeeFeedback_id: int) -> Optional[EmployeeFeedbackFormOut2]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -65,7 +67,9 @@ class EmployeeFeedbackRepository:
     # GET #
     def get_all_feedbacks(self) -> List[EmployeeFeedbackFormOut2]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -87,7 +91,9 @@ class EmployeeFeedbackRepository:
         self, account_id: int
     ) -> Union[List[EmployeeFeedbackFormOut2], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -115,7 +121,9 @@ class EmployeeFeedbackRepository:
         self, FeedbackForm: EmployeeFeedbackFormIn, account_id: int
     ) -> List[EmployeeFeedbackFormOut]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -142,7 +150,9 @@ class EmployeeFeedbackRepository:
         self, EmployeeFeedback_id: int, FeedbackForm: EmployeeFeedbackFormIn
     ) -> Union[EmployeeFeedbackFormOut, Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """
@@ -168,7 +178,9 @@ class EmployeeFeedbackRepository:
     # DELETE #
     def delete(self, EmployeeFeedback_id: int) -> bool:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     db.execute(
                         """

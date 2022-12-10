@@ -2,23 +2,31 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useLocation, useNavigate } from "react-router-dom";
+import FadeLoader from "react-spinners/FadeLoader";
 
+//Editing their previous feedback to employees
 function EmployerFeedbackEdit(){
 
   const location = useLocation();
   const id = location.state.id
   //Handles getting the data from the specific employee ID
   const [employee, setEmployee] = useState([]);
+  const [loading, setLoading] = useState(false)
   const { token } = useAuthContext();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() =>{
+      setLoading(false)
+    }, 5000)}, [])
 
-
+ //Getting the user's feedback to employee
   useEffect(() =>{
     const getEmployerFeedbacksUrl = async () => {
       if (token) {
       const EmployerFeedback_id = id                        //Temporary Employer ID
-      const response = await axios.get(`http://localhost:8000/employer-feedback-form/${EmployerFeedback_id}`,
+      const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`,
       {headers: { Authorization: `Bearer ${token}`}});
       setEmployee(response.data)}};
     getEmployerFeedbacksUrl();
@@ -45,7 +53,7 @@ function EmployerFeedbackEdit(){
 
       const { employee_name, date, description } = inputs;
       const submit = { employee_name, date, description } ;
-      await axios.put(`http://localhost:8000/employer-feedback-form/${EmployerFeedback_id}`, submit,
+      await axios.put(`${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`, submit,
       {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employee_name:'', date: '', description:''})
       setEmployee({employee_name:'', date: '', description:''})
@@ -66,7 +74,7 @@ function EmployerFeedbackEdit(){
     const handleDelete = async (EmployerFeedback_id) => {
       EmployerFeedback_id = id                            //Temporary Employer ID
       await axios.delete(
-        `http://localhost:8000/employer-feedback-form/${EmployerFeedback_id}`,
+        `${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`,
         {headers: { Authorization: `Bearer ${token}`}})
         setInputs({employee_name:'', date: '', description:''})
         setEmployee({employee_name:'', date: '', description:''})
@@ -81,6 +89,17 @@ function EmployerFeedbackEdit(){
 
 
     return (
+      <div>
+      {loading?
+      <div className="sweet-loading">
+          <FadeLoader
+          color={'#36d7b7'}
+          loading={loading}
+          size={200}
+
+        />
+        </div>
+         :
       <div className="row">
         <h2>Edit My Feedback to {employee.employee_name}</h2>
         <form className="col s12" onSubmit={handleEdit}>
@@ -122,7 +141,8 @@ function EmployerFeedbackEdit(){
                             <i className="material-icons right">Back</i>
       </button>
     </div>
+    }
+    </div>
     );
-
 }
 export default EmployerFeedbackEdit

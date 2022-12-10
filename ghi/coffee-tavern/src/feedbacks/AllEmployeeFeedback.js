@@ -2,21 +2,28 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useLocation, useNavigate  } from "react-router-dom";
+import FadeLoader from "react-spinners/FadeLoader";
 
 //Employer checking Employee's list of feedbacks
 function AllEmployeeFeedback(){
   const [employees, setEmployees] = useState([])
+  const [loading, setLoading] = useState(false)
   const { token } = useAuthContext();
   const location = useLocation();
   const employee_name = location.state.employee_name
   const navigate = useNavigate();
 
+  useEffect(() => {
+    setLoading(true)
+    setTimeout(() =>{
+      setLoading(false)
+    }, 5000)}, [])
 
   useEffect(() =>{
       // Getting Employee's Feedback from all the Employer
     const getAllEmployerFeedbackUrl = async () => {
     if (token){
-    const response = await axios.get(`http://localhost:8000/get_all_employerFeedbacks`,
+    const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/get_all_employerFeedbacks`,
     {headers: { Authorization: `Bearer ${token}`}});
     setEmployees(response.data)}};
     getAllEmployerFeedbackUrl();
@@ -28,6 +35,17 @@ function AllEmployeeFeedback(){
 
 
   return (
+    <div>
+    {loading?
+    <div className="sweet-loading">
+        <FadeLoader
+        color={'#36d7b7'}
+        loading={loading}
+        size={200}
+
+      />
+      </div>
+       :
     <div>
       <h2>Everyone's Feedbacks to {employee_name}</h2>
       <table>
@@ -49,6 +67,7 @@ function AllEmployeeFeedback(){
         </tbody>
       </table>
     </div>
-
+  }
+    </div>
   )
 }export default AllEmployeeFeedback

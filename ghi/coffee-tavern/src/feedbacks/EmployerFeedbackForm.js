@@ -1,4 +1,4 @@
-import React, {useState } from 'react';
+import React, { useState } from 'react';
 import axios from "axios"
 // import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css'
@@ -6,6 +6,7 @@ import { useAuthContext } from '../useToken';
 import jwt_decode from "jwt-decode";
 import { useNavigate } from 'react-router-dom';
 
+//Employer Feedback to Employee
 function EmployerFeedbackForm() {
 
     const [inputs, setInputs] = useState({employee_name: ''
@@ -17,11 +18,13 @@ function EmployerFeedbackForm() {
     const account_id = decoded.account["id"]   //Decode jwt token to get User ID
     const navigate = useNavigate();
 
+
+    //Creating the feedback into employer feedbacks end point
     const handleSubmit = async (event) => {
       event.preventDefault();
       const { employee_name, date, description } = inputs;
       const submit = { employee_name, date, description } ;
-      await axios.post(`http://localhost:8000/employer-feedback-form/${account_id}`, submit,
+      await axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${account_id}`, submit,
       {headers: { Authorization: `Bearer ${token}`,}})      //checks if the user logged in
       setInputs({employee_name: '', date: '', description:''})
       navigate("/")
@@ -29,7 +32,7 @@ function EmployerFeedbackForm() {
 
       const handleInputChange = (event) => {
       event.persist();
-        setInputs(inputs => ({                         //setInputs
+        setInputs(inputs => ({
         ...inputs,
         [event.target.name]: event.target.value}));  //key: value of each value
     }

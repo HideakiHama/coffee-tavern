@@ -85,7 +85,7 @@ def get_all_with_id(
 # Get all the EmployerFeedbacks Regardless of who wrote it
 @router.get("/get_all_employerFeedbacks", tags=["Employer Feedback Form"])
 def get_all_employer_feedbacks(
-    account: dict = Depends(authenticator.get_current_account_data),
+    # account: dict = Depends(authenticator.get_current_account_data),
     repo: EmployerFeedbackRepository = Depends(),
 ):
     return repo.get_all_feedbacks()

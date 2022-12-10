@@ -3,10 +3,11 @@ import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from "jwt-decode";
-
+import FadeLoader from "react-spinners/FadeLoader";
 
 function EmployeeFeedbackList() {
     const [employee, setEmployee] = useState([]);
+    const [loading, setLoading] = useState(false)
     const { token } = useAuthContext();
     const navigate = useNavigate();
 
@@ -20,44 +21,64 @@ function EmployeeFeedbackList() {
       navigate("/all-employer-feedback", {state:{employer_name:employer_name}})
     }
 
-
     useEffect(() =>{
       const getEmployeeFeedbacksUrl = async () => {
         if (token) {
         const decoded = jwt_decode(token)
         const account_id = decoded.account["id"]   //Decode jwt token to get User ID
-        const response = await axios.get(`http://localhost:8000/employee-feedbacks/${account_id}`,
+        const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/employee-feedbacks/${account_id}`,
         {headers: { Authorization: `Bearer ${token}`}});
         setEmployee(response.data)}};
       getEmployeeFeedbacksUrl();
     }, [token]);
 
+    useEffect(() => {
+      setLoading(true)
+      setTimeout(() =>{
+        setLoading(false)
+      }, 5000)}, [])
+
 
     return (
       <div>
-        <h2>My Past Feedbacks to Employer</h2>
-        <table>
-          <thead>
-            <tr>
-              <th>Employer's name</th>
-              <th>Date</th>
-              <th>Description</th>
-            </tr>
-          </thead>
-          <tbody>
-            {employee && employee.map(employee =>
-              <tr key={employee.id}>
-                <td>{employee.employer_name}</td>
-                <td>{employee.date}</td>
-                <td>{employee.description}</td>
-                <td><button onClick={() => employeeFeedbackEdit(employee.id)} className="btn waves-effect waves-light">Edit My Feedback</button></td>
-                <td><button onClick={() => allEmployerFeedback(employee.employer_name)} className="btn waves-effect waves-light">Check All Feedbacks</button></td>
-              </tr>
-              )}
-          </tbody>
-        </table>
-      </div>
+            {loading?
+            <div className="sweet-loading">
+                <FadeLoader
+                color={'#36d7b7'}
+                loading={loading}
+                size={200}
 
+              />
+              </div>
+               :
+        <div>
+            <h2>My Past Feedbacks to Employer</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Employer's name</th>
+                  <th>Date</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+
+              <tbody>
+                {employee && employee.map(employee =>
+                  <tr key={employee.id}>
+                    <td>{employee.employer_name}</td>
+                    <td>{employee.date}</td>
+                    <td>{employee.description}</td>
+                    <td><button onClick={() => employeeFeedbackEdit(employee.id)} className="btn waves-effect waves-light">Edit My Feedback</button></td>
+                    <td><button onClick={() => allEmployerFeedback(employee.employer_name)} className="btn waves-effect waves-light">Check All Feedbacks</button></td>
+                  </tr>
+                  )}
+              </tbody>
+
+            </table>
+
+            </div>
+}
+          </div>
     )
 }
 export default EmployeeFeedbackList

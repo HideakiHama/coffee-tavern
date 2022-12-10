@@ -55,6 +55,7 @@ class TagRepository:
                         SELECT id, tag
                         FROM tags
                         ORDER BY id
+
                         """
                     )
                     resultList = list(result)

@@ -25,7 +25,7 @@ function TagForm(){
 
     // post tags
     const addTagHandler = () => {
-        axios.post('http://localhost:8100/create_tag_form',{'tag': tag},
+        axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/create_tag_form`,{'tag': tag},
         config)
         .then(res => console.log(res))
         setTagsList([...tagsList, {tag}]);
