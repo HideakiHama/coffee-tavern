@@ -13,7 +13,20 @@ function EmployerInfoFormCreate({id}) {
     const [pic, setPic] = useState('')
     const navigate = useNavigate();
 
+    const [decodedId, setDecodedId] = useState('')
+
     const { token } = useAuthContext();
+
+    useEffect(() => {
+        console.log("token2", token)
+        const getDecodedId = () => {
+            const decoded = jwt_decode(token)
+            setDecodedId(decoded.account["id"])
+        }
+        if (token) {
+            getDecodedId()
+        }
+    }, [token])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -24,11 +37,6 @@ function EmployerInfoFormCreate({id}) {
             "about": about,
             "pic_url": pic
         }
-
-        const decoded = jwt_decode(token)
-        const decodedId = decoded.account["id"]
-
-        console.log("DECODEDID", decodedId);
 
         const employerInfoURL = `http://localhost:8000/users/${decodedId}/create_employer_info`
 
@@ -44,11 +52,10 @@ function EmployerInfoFormCreate({id}) {
 
         if (response.ok) {
             console.log("submit worked")
+            navigate("/user/current/profile");
         } else {
             console.log("submit didn't work", response)
         }
-
-        navigate("/user/current/profile");
     }
 
     return (

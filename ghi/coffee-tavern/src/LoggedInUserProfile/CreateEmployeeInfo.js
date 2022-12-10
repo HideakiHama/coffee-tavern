@@ -5,7 +5,6 @@ import { useAuthContext } from '../useToken';
 import { useNavigate } from "react-router-dom";
 
 function EmployeeInfoFormCreate({id}) {
-
     const [fullName, setFullName] = useState('')
     const [careerTitle, setCareerTitle] = useState('')
     const [location, setLocation] = useState('')
@@ -14,24 +13,22 @@ function EmployeeInfoFormCreate({id}) {
     const [pic, setPic] = useState('')
     const navigate = useNavigate();
 
+    const [decodedId, setDecodedId] = useState('')
+
     const { token } = useAuthContext()
 
-    const decoded = jwt_decode(token)
-    const decodedId = decoded.account["id"]
+    console.log("token", token)
 
-    console.log("DECODED ID", decodedId)
-
-    //
-
-    // const [decodedId, setDecodedId] = useState('')
-
-    // useEffect(() => {
-    //     const getDecodedId = async => {
-    //         const decoded = jwt_decode(token)
-    //         setDecodedId(decoded.account["id"])
-    //     }
-    //     getDecodedId()
-    // }, [token])
+    useEffect(() => {
+        console.log("token2", token)
+        const getDecodedId = () => {
+            const decoded = jwt_decode(token)
+            setDecodedId(decoded.account["id"])
+        }
+        if (token) {
+            getDecodedId()
+        }
+    }, [token])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
@@ -43,8 +40,6 @@ function EmployeeInfoFormCreate({id}) {
             "about": about,
             "pic_url": pic
         }
-        const decoded = jwt_decode(token)
-        const decodedId = decoded.account["id"]
         
         const employeeInfoURL = `http://localhost:8000/users/${decodedId}/create_employee_info`
 
@@ -60,11 +55,10 @@ function EmployeeInfoFormCreate({id}) {
 
         if (response.ok) {
             console.log("submit worked")
+            navigate("/user/current/profile");
         } else {
             console.log("submit didn't work", response)
         }
-
-        navigate("/user/current/profile");
     }
 
     return (

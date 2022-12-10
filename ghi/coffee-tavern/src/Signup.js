@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 export default function SignUp() {
-  const [token, login, logout, signup] = useToken();
+  const signup = useToken()[3];
   const [username, setUserName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -33,7 +33,7 @@ export default function SignUp() {
     // const data = new FormData(event.currentTarget);
     // console.log(data.get("firstName"), data.get("email"), data.get("password"), data.get("role"))
     console.log(password, email, username, role)
-    signup(password, email, username, role);
+    await signup(password, email, username, role);
     
     if (role === "Employee") {
       navigate("/user/employee/info-form/create");

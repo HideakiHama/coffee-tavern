@@ -6,13 +6,22 @@ import EmployerFeedbackList from './feedbacks/EmployerFeedbackList';
 import EmployeeFeedbackList from './feedbacks/EmployeeFeedbackList';
 import EmployeeFeedbackEdit from './feedbacks/EmployeeFeedbackEdit';
 import EmployerFeedbackEdit from './feedbacks/EmployerFeedbackEdit';
+import AllEmployeeFeedback from './feedbacks/AllEmployeeFeedback';
+import AllEmployerFeedback from './feedbacks/AllEmployerFeedback';
+
+
+import EmployeeProfile from './LoggedInUserProfile/Employee';
+import EmployerProfile from './LoggedInUserProfile/Employer';
 import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
 import EmployeeInfoFormCreate from './LoggedInUserProfile/CreateEmployeeInfo';
 import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
 import EmployerInfoFormCreate from './LoggedInUserProfile/CreateEmployerInfo';
 import Profile from './LoggedInUserProfile/Profile';
+import OthersEmployeeProfile from './listOfProfiles/othersEmployeeProfile'
+import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile'
 
-import EmployeeProfileList from './listOfEmployee'
+import EmployeeProfileList from './listOfProfiles/listOfEmployees'
+import EmployerProfileList from './listOfProfiles/listOfEmployers'
 import TagForm from './tags/TagForm';
 
 import React, { Component } from 'react';
@@ -24,6 +33,7 @@ import MainPage from './MainPage';
 import UploadResume from './UploadResumeForm';
 import Nav from './Nav';
 import { AuthProvider, useToken } from './useToken';
+import Apply from './JobPost/Apply';
 
 function GetToken() {
   useToken();
@@ -67,9 +77,21 @@ render() {
                 </Route>
                 <Route path = "/employer-feedback-update" element={<EmployerFeedbackEdit/>}>
                 </Route>
+                <Route path = "/all-employee-feedback" element={<AllEmployeeFeedback/>}>
+                </Route>
+                <Route path = "/all-employer-feedback" element={<AllEmployerFeedback/>}>
+                </Route>
                 <Route path = "/employee-profile-list" element={<EmployeeProfileList/>}>
                 </Route>
+                <Route path = "/employer-profile-list" element={<EmployerProfileList/>}>
+                </Route>
                 <Route path = "/create_tag_form" element={<TagForm />}>
+                </Route>
+                <Route path = "/applicants" element={<Apply />}>
+                </Route>
+                <Route path = "/other-employee-profile" element={<OthersEmployeeProfile />}>
+                </Route>
+                <Route path = "/other-employer-profile" element={<OthersEmployerProfile />}>
                 </Route>
 
                 {/* Lexey */}

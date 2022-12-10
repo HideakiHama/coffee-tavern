@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const theme = createTheme();
 
 export default function SignIn() {
-  const [token, login, logout] = useToken();
+  const [, login, logout] = useToken();
   const navigate = useNavigate();
 
   logout()

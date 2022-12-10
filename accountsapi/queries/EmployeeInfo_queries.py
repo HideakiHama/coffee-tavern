@@ -34,7 +34,9 @@ class EmployeeInfoRepo:
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
             # connect the database
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     result = db.execute(
@@ -61,7 +63,7 @@ class EmployeeInfoRepo:
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
         # try:
         # connect the database
-        print("ID", id)
+        print("ID", account_id)
         with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
             # get a cursor (something to run SQL with)
             with conn.cursor() as db:
@@ -82,12 +84,11 @@ class EmployeeInfoRepo:
                     [account_id],
                 )
                 record = result.fetchone()
-                print("record", record)
+                print("RECORD!", record)
                 if record is None:
                     return None
-                y = self.record_employee_form_out(record)
-                print("Y", y)
-                return y
+                return self.record_employee_form_out(record)
+
         # except Exception as e:
         #     return {"message": "Could not get employee info"}
 
@@ -95,7 +96,9 @@ class EmployeeInfoRepo:
         self, info: EmployeeInfoIn, account_id: int
     ) -> Union[List[EmployeeInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -123,16 +126,43 @@ class EmployeeInfoRepo:
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
+        
+
+    # GET #
+    def get_all_profile(self) -> List[EmployeeInfoOut]:
+        try:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
+                print("HI")
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT
+                            full_name,
+                            career_title,
+                            location,
+                            education,
+                            about,
+                            account_id
+                        FROM employee_info
+                        ORDER BY full_name
+                        """
+                    )
+                    resultList = list(result)
+                return [self.record_employee_form_out(record) for record in resultList]
+        except Exception:
+            return {"message": "Could not get list of employee"}
+
 
     def record_employee_form_out(self, record):
-        x = EmployeeInfoOut(
+        print("RECORD", record)
+        return EmployeeInfoOut(
             full_name=record[0],
             career_title=record[1],
             location=record[2],
             education=record[3],
             about=record[4],
             pic_url=record[5],
-            account_id=record[6]
+            account_id=record[6],
         )
-        print(x)
-        return x

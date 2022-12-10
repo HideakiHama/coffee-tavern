@@ -5,7 +5,7 @@ import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import Typography from '@mui/material/Typography';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { useAuthContext } from '../useToken'; 
+import { useAuthContext } from '../useToken';
 import {useEffect, useState} from 'react';
 import jwt_decode from 'jwt-decode';
 
@@ -37,7 +37,7 @@ const EmployeeProfile = ({id}) => {
 
       if (employeeResponse.ok) {
         const info = await employeeResponse.json();
-        
+        console.log("INFO", info)
         setName(info.full_name)
         setCareer(info.career_title)
         setLocation(info.location)
@@ -48,7 +48,7 @@ const EmployeeProfile = ({id}) => {
     }
     getEmployeeInfo()
   }, [id, token])
-
+  
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>

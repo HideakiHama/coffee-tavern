@@ -20,6 +20,7 @@ class EmployerInfoIn(BaseModel):
     about: Optional[str]
     pic_url: Optional[str]
 
+
 class EmployerInfoOut(BaseModel):
     company_name: Optional[str]
     job_type: Optional[str]
@@ -30,11 +31,14 @@ class EmployerInfoOut(BaseModel):
 
 
 class EmployerInfoRepo:
-    def create(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
+    def create(
+        self, info: EmployerInfoIn, account_id: int
+    ) -> Union[List[EmployerInfoOut], Error]:
         try:
             # connect the database
-            with connect(conninfo=os.environ["DATABASE_URL"],
-                         **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     result = db.execute(
@@ -50,7 +54,7 @@ class EmployerInfoRepo:
                             info.location,
                             info.about,
                             info.pic_url,
-                            account_id
+                            account_id,
                         ],
                     )
                     return EmployerInfoOut(account_id=account_id, **info.dict())
@@ -58,10 +62,12 @@ class EmployerInfoRepo:
             return {"message": "Create did not work"}
 
     def get_one(self, account_id: int) -> Optional[EmployerInfoOut]:
+        print(account_id)
         try:
             # connect the database
-            with connect(conninfo=os.environ["DATABASE_URL"],
-                         **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
                     result = db.execute(
@@ -79,16 +85,20 @@ class EmployerInfoRepo:
                         [account_id],
                     )
                     record = result.fetchone()
+                    print("RECORddD", record)
                     if record is None:
                         return None
                     return self.record_employer_form_out(record)
         except Exception:
             return {"message": "Could not get employer info"}
 
-    def update(self, info: EmployerInfoIn, account_id: int) -> Union[List[EmployerInfoOut], Error]:
+    def update(
+        self, info: EmployerInfoIn, account_id: int
+    ) -> Union[List[EmployerInfoOut], Error]:
         try:
-            with connect(conninfo=os.environ["DATABASE_URL"],
-                         **keepalive_kwargs) as conn:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -107,8 +117,8 @@ class EmployerInfoRepo:
                             info.location,
                             info.about,
                             info.pic_url,
-                            account_id
-                        ]
+                            account_id,
+                        ],
                     )
                     print(result)
                     return EmployerInfoOut(account_id=account_id, **info.dict())
@@ -122,5 +132,30 @@ class EmployerInfoRepo:
             location=record[2],
             about=record[3],
             pic_url=record[4],
-            account_id=record[5]
+            account_id=record[5],
         )
+
+    # GET #
+    def get_all_profile(self) -> List[EmployerInfoOut]:
+        try:
+            with connect(
+                conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
+            ) as conn:
+                print("HI")
+                with conn.cursor() as db:
+                    result = db.execute(
+                        """
+                        SELECT
+                            company_name,
+                            job_type,
+                            location,
+                            about,
+                            account_id
+                        FROM employer_info
+                        ORDER BY company_name
+                        """
+                    )
+                    resultList = list(result)
+                return [self.record_employer_form_out(record) for record in resultList]
+        except Exception:
+            return {"message": "Could not get list of employer"}

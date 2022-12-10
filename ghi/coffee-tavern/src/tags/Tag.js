@@ -1,9 +1,7 @@
 import axios from 'axios'
 import React from 'react'
 
-function TagItem(props) {
-    // console.log("this is props in TagItems", props)
-    // console.log("this is props in TagItems", props.Tag.tag)
+function Tag(props) {
 
     const deleteTagHandler = (id) => {
         axios.delete(`http://localhost:8100/delete_tag/${id}`)
@@ -25,4 +23,4 @@ function TagItem(props) {
         </div>
     )
 }
-export default TagItem
+export default Tag

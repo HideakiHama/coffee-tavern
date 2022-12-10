@@ -3,7 +3,7 @@ import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
 
-function EmployeeInfoForm({id}) {
+function EmployeeInfoForm() {
 
     const [fullName, setFullName] = useState('')
     const [careerTitle, setCareerTitle] = useState('')
@@ -12,13 +12,18 @@ function EmployeeInfoForm({id}) {
     const [about, setAbout] = useState('')
     const [pic, setPic] = useState('')
 
-    const { token } = useAuthContext();
+    //
+    const [id, setId] = useState('');
 
+    const { token } = useAuthContext();
+    console.log("ID",id)
+
+    
     useEffect(() => {
         async function getEmployeeInfo () {
 
             const decoded = jwt_decode(token)
-            const id = decoded.account["id"]
+            setId(decoded.account["id"])
 
             const infoURL = `http://localhost:8000/users/${id}/get_employee_info`
 

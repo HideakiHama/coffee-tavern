@@ -30,9 +30,10 @@ const JobPostForm = () => {
             },});
             const data = await response.json();
             setTags(data);
+            console.log("TAGS", tags)
         }
         getTag()
-    }, [])
+    }, [tags, token])
 
     const handleSubmit = async(submit) => {
         submit.preventDefault()
@@ -51,9 +52,7 @@ const JobPostForm = () => {
             headers: { Authorization: `Bearer ${token}`, "Content-type": "application/json",
         }};
         const response = await fetch(JobFormURL, fetchConfig);
-        console.log("RESPONSE", response)
-        const data = await response.json();
-        console.log("DATAA", data)
+        // const data = await response.json();
         if (response.ok){
             clearJobForm()
         }
@@ -87,7 +86,6 @@ const JobPostForm = () => {
                             <select value={tag} onChange={(event => setTag(event.target.value))} required id="tag" name="tag" className="form-select">
                                 <option value="">Add a Tag</option>
                                 {tags.map(tag => {
-                                    console.log(tag)
                                     return (<option key={tag.id} value={tag.id}>{tag.tag}</option>)
                                 })}
                             </select>
