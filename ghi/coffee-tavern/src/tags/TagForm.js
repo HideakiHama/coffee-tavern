@@ -11,7 +11,7 @@ function TagForm(){
     const { token } = useAuthContext();
 
     useEffect(() => {
-        axios.get('http://localhost:8100/get_all_tags')
+        axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/get_all_tags`)
         .then(res =>
             setTagsList(res.data))
     }, []);
@@ -24,7 +24,7 @@ function TagForm(){
 
     // post tags
     const addTagHandler = () => {
-        axios.post('http://localhost:8100/create_tag_form',{'tag': tag},
+        axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/create_tag_form`,{'tag': tag},
         config)
         .then(res => console.log(res))
         setTagsList([...tagsList, {tag}]);

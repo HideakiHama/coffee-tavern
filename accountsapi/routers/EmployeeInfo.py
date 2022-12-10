@@ -5,12 +5,9 @@ from queries.EmployeeInfo_queries import (
     EmployeeInfoOut,
 )
 from queries.accounts import AccountRepo
-from RoleChecker import RoleChecker
 from authenticator import authenticator
 
 router = APIRouter()
-
-checker = RoleChecker("Employer")
 
 
 @router.post("/users/{account_id}/create_employee_info", tags=["User Info"])

@@ -4,10 +4,8 @@ import React from 'react'
 function Tag(props) {
 
     const deleteTagHandler = (id) => {
-        axios.delete(`http://localhost:8100/delete_tag/${id}`)
+        axios.delete(`${process.env.REACT_APP_TAGS_API_HOST}/delete_tag/${id}`)
             .then(res => console.log(res.data))
-
-
 
     }
     return(
