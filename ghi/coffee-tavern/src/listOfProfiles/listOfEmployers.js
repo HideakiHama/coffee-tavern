@@ -22,7 +22,7 @@ function EmployerProfileList() {
     useEffect(() =>{
       const getEmployerFeedbacksUrl = async () => {
         if (token){
-        const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/get_all_employer_profile`,
+        const response = await axios.get(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/get_all_employer_profile`,
         {headers: { Authorization: `Bearer ${token}`}});
         setEmployerProfiles(response.data)}};
       getEmployerFeedbacksUrl();

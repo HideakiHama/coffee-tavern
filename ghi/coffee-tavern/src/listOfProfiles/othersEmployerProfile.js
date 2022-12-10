@@ -27,7 +27,7 @@ function OthersEmployerProfile(){
     const getOthersEmployerInfo = async () => {
       if (token) {
         const id = account_id
-        const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/users/${id}/get_employer_info`,
+        const response = await axios.get(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/get_employer_info`,
         {headers: { Authorization: `Bearer ${token}`}});
         setOtherEmployer(response.data)
 }};
