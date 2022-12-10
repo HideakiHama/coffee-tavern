@@ -20,8 +20,11 @@ api-unit-test-job:
   needs:
     - lint-test-job
   script:
-    - cd sample_service
+    - cd coffee-tavern
+    - 
     - pip install -r requirements.txt
+    - cd accountsapi
+    - 
     - python -m pytest
 
 # Build the React/JavaScript front-end
@@ -53,7 +56,7 @@ pages:
   needs:
     - build-front-end-job
   script:
-    - mv ghi/coffee-tavern/public
+    - mv ghi/coffee-tavern /public
   artifacts:
     paths:
       - public
