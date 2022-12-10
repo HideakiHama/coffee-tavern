@@ -1,10 +1,16 @@
 import axios from 'axios'
 import React from 'react'
+import { useAuthContext } from '../useToken';
 
 function Tag(props) {
+    const { token } = useAuthContext();
+
+    const config = {
+        headers: { Authorization: `Bearer ${token}` }
+    };
 
     const deleteTagHandler = (id) => {
-        axios.delete(`http://localhost:8100/delete_tag/${id}`)
+        axios.delete(`http://localhost:8100/delete_tag/${id}`, config)
             .then(res => console.log(res.data))
 
 

@@ -36,13 +36,13 @@ build-front-end-job:
     # You need to substitute in your real values for
     # GROUP_NAME, PROJECT_NAME, & WEBSERVICE_NAME below.
     PUBLIC_URL: https://gitlab.com/caffeine-anonymous/coffee-tavern
-    REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
+    REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavern.onrender.com
   script:
     - cd ghi
     - cd coffee-tavern
     - npm install
     - npm run build
-    - cp build/index.html build/404.html
+    - cp coffee-tavern/index.html build/404.html
   artifacts:
     paths:
       - ghi/build/
@@ -57,7 +57,7 @@ pages:
   needs:
     - build-front-end-job
   script:
-    - mv ghi/build/ public
+    - mv ghi/coffee-tavern/build/ public
   artifacts:
     paths:
       - public
