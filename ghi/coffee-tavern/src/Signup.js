@@ -32,7 +32,6 @@ export default function SignUp() {
     event.preventDefault();
     // const data = new FormData(event.currentTarget);
     // console.log(data.get("firstName"), data.get("email"), data.get("password"), data.get("role"))
-    console.log(password, email, username, role)
     await signup(password, email, username, role);
     
     if (role === "Employee") {

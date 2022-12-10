@@ -12,10 +12,8 @@ const Profile = () => {
     const [account, setAccount] = useState({});
 
     useEffect(() => {
-        console.log("token", token)
         if (token) {
             const decodedAccount = jwt_decode(token);
-            console.log("decoded account", decodedAccount)
             setAccount(decodedAccount.account)
         }
     }, [token])

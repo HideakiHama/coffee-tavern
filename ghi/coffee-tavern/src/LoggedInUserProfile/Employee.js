@@ -37,7 +37,6 @@ const EmployeeProfile = ({id}) => {
 
       if (employeeResponse.ok) {
         const info = await employeeResponse.json();
-        console.log("INFO", info)
         setName(info.full_name)
         setCareer(info.career_title)
         setLocation(info.location)

@@ -61,36 +61,34 @@ class EmployeeInfoRepo:
             return {"message": "Create did not work"}
 
     def get_one(self, account_id: int) -> Optional[EmployeeInfoOut]:
-        # try:
-        # connect the database
-        print("ID", account_id)
-        with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
-            # get a cursor (something to run SQL with)
-            with conn.cursor() as db:
-                # Run our SELECT statement
-                result = db.execute(
-                    """
-                    SELECT
-                        full_name,
-                        career_title,
-                        location,
-                        education,
-                        about,
-                        pic_url,
-                        account_id
-                    FROM employee_info
-                    WHERE account_id = %s
-                    """,
-                    [account_id],
-                )
-                record = result.fetchone()
-                print("RECORD!", record)
-                if record is None:
-                    return None
-                return self.record_employee_form_out(record)
+        try:
+            # connect the database
+            with connect(conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs) as conn:
+                # get a cursor (something to run SQL with)
+                with conn.cursor() as db:
+                    # Run our SELECT statement
+                    result = db.execute(
+                        """
+                        SELECT
+                            full_name,
+                            career_title,
+                            location,
+                            education,
+                            about,
+                            pic_url,
+                            account_id
+                        FROM employee_info
+                        WHERE account_id = %s
+                        """,
+                        [account_id],
+                    )
+                    record = result.fetchone()
+                    if record is None:
+                        return None
+                    return self.record_employee_form_out(record)
 
-        # except Exception as e:
-        #     return {"message": "Could not get employee info"}
+        except Exception as e:
+            return {"message": "Could not get employee info"}
 
     def update(
         self, info: EmployeeInfoIn, account_id: int
@@ -122,7 +120,6 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
-                    print(result)
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
@@ -134,7 +131,6 @@ class EmployeeInfoRepo:
             with connect(
                 conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
             ) as conn:
-                print("HI")
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -157,7 +153,6 @@ class EmployeeInfoRepo:
 
 
     def record_employee_form_out(self, record):
-        print("RECORD", record)
         return EmployeeInfoOut(
             full_name=record[0],
             career_title=record[1],

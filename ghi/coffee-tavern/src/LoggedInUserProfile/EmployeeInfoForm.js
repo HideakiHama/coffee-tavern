@@ -16,7 +16,6 @@ function EmployeeInfoForm() {
     const [id, setId] = useState('');
 
     const { token } = useAuthContext();
-    console.log("ID",id)
 
     
     useEffect(() => {

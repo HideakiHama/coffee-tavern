@@ -17,10 +17,7 @@ function EmployeeInfoFormCreate({id}) {
 
     const { token } = useAuthContext()
 
-    console.log("token", token)
-
     useEffect(() => {
-        console.log("token2", token)
         const getDecodedId = () => {
             const decoded = jwt_decode(token)
             setDecodedId(decoded.account["id"])
