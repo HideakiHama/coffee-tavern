@@ -27,7 +27,7 @@ function OthersEmployeeProfile(){
     const getOthersEmployeeInfo = async () => {
       if (token) {
         const id = account_id
-        const response = await axios.get(`http://localhost:8000/users/${id}/get_employee_info`,
+        const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/users/${id}/get_employee_info`,
         {headers: { Authorization: `Bearer ${token}`}});
         setOtherEmployee(response.data)
 }};

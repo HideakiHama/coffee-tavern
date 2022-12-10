@@ -33,7 +33,7 @@ function EmployerFeedbackList() {
         if (token) {
         const decoded = jwt_decode(token)
         const account_id = decoded.account["id"]   //Decode jwt token to get User ID
-          const response = await axios.get(`http://localhost:8000/employer-feedbacks/${account_id}`,
+          const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/employer-feedbacks/${account_id}`,
           {headers: { Authorization: `Bearer ${token}`}});
           setEmployer(response.data)}};
       getEmployerFeedbacksUrl();
