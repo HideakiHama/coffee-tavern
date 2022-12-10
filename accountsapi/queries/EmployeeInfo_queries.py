@@ -144,6 +144,7 @@ class EmployeeInfoRepo:
                             location,
                             education,
                             about,
+                            pic_url,
                             account_id
                         FROM employee_info
                         ORDER BY full_name

@@ -150,6 +150,7 @@ class EmployerInfoRepo:
                             job_type,
                             location,
                             about,
+                            pic_url,
                             account_id
                         FROM employer_info
                         ORDER BY company_name
