@@ -10,17 +10,18 @@ function TagForm(){
     const [tag, setTag] = useState('')
     const { token } = useAuthContext();
 
-    useEffect(() => {
-        axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/get_all_tags`)
-        .then(res =>
-            setTagsList(res.data))
-    }, []);
-
 
     const config = {
         headers: { Authorization: `Bearer ${token}` }
     };
 
+    useEffect(() => {
+        if (token) {
+        axios.get('http://localhost:8100/get_all_tags', config)
+        .then(res =>
+            setTagsList(res.data))
+        }
+    }, [token]);
 
     // post tags
     const addTagHandler = () => {
