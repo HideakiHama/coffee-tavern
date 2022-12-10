@@ -10,18 +10,17 @@ import AllEmployeeFeedback from './feedbacks/AllEmployeeFeedback';
 import AllEmployerFeedback from './feedbacks/AllEmployerFeedback';
 
 
-import EmployeeProfile from './LoggedInUserProfile/Employee';
-import EmployerProfile from './LoggedInUserProfile/Employer';
+// import EmployeeProfile from './LoggedInUserProfile/Employee';
+// import EmployerProfile from './LoggedInUserProfile/Employer';
 import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
 import EmployeeInfoFormCreate from './LoggedInUserProfile/CreateEmployeeInfo';
-import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
 import EmployerInfoFormCreate from './LoggedInUserProfile/CreateEmployerInfo';
+import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
+import OthersEmployeeProfile from './listOfProfiles/othersEmployeeProfile';
+import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile';
 import Profile from './LoggedInUserProfile/Profile';
-import OthersEmployeeProfile from './listOfProfiles/othersEmployeeProfile'
-import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile'
-
-import EmployeeProfileList from './listOfProfiles/listOfEmployees'
-import EmployerProfileList from './listOfProfiles/listOfEmployers'
+import EmployeeProfileList from './listOfProfiles/listOfEmployees';
+import EmployerProfileList from './listOfProfiles/listOfEmployers';
 import TagForm from './tags/TagForm';
 
 import React, { Component } from 'react';

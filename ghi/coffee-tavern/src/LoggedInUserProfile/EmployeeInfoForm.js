@@ -24,7 +24,7 @@ function EmployeeInfoForm() {
             const decoded = jwt_decode(token)
             setId(decoded.account["id"])
 
-            const infoURL = `http://localhost:8000/users/${id}/get_employee_info`
+            const infoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/get_employee_info`
 
             const infoResponse = await fetch(infoURL, {
                 method: "GET",
@@ -60,7 +60,7 @@ function EmployeeInfoForm() {
             "pic_url": pic
         }
         
-        const employeeInfoURL = `http://localhost:8000/users/${id}/update_employee_info`
+        const employeeInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/update_employee_info`
 
         const fetchConfig = {
             method: "PUT",

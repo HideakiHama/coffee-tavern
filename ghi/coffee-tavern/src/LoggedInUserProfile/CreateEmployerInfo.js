@@ -37,7 +37,7 @@ function EmployerInfoFormCreate({id}) {
             "pic_url": pic
         }
 
-        const employerInfoURL = `http://localhost:8000/users/${decodedId}/create_employer_info`
+        const employerInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${decodedId}/create_employer_info`
 
         const fetchConfig = {
             method: "POST",

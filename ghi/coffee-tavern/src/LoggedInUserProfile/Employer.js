@@ -27,7 +27,7 @@ const EmployerProfile = ({id}) => {
       const decoded = jwt_decode(token)
       const id = decoded.account["id"]
 
-      const employerURL = `http://localhost:8000/users/${id}/get_employer_info`;
+      const employerURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/get_employer_info`;
 
       const employerResponse = await fetch(employerURL, {
         method: "GET",
