@@ -45,6 +45,25 @@ build-front-end-job:
   artifacts:
     paths:
       - ghi/coffee-tavern/build
+
+build-front-end-job2:
+  stage: build
+  image: node:lts-bullseye
+  needs:
+    - lint-test-job
+    - api-unit-test-job
+  variables:
+    PUBLIC_URL: https://caffeine-anonymous.gitlab.io/coffee-tavern/
+    REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavernn.onrender.com
+    REACT_APP_SAMPLE_SERVICE_API_HOST2: https://coffee-tavern.onrender.com
+  script:
+    - cd ghi
+    - cd coffee-tavern
+    - npm install
+    - npm run build
+    - cp build/index.html build/404.html
+  artifacts:
+    paths:
       - ghi/coffee-tavern/tags/build
 
 # Deploy the React/JavaScript front-end to GitLab pages
