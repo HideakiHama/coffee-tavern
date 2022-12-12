@@ -17,7 +17,7 @@ function TagForm(){
 
     useEffect(() => {
         if (token) {
-        axios.get('http://localhost:8100/get_all_tags',  {headers: { Authorization: `Bearer ${token}` }})
+        axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/get_all_tags`,  {headers: { Authorization: `Bearer ${token}` }})
         .then(res =>
             setTagsList(res.data))
         }
