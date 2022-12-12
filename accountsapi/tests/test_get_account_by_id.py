@@ -4,13 +4,14 @@ from queries.accounts import Account, AccountRepo
 
 client = TestClient(app)
 
-test_account = Account (
+test_account = Account(
     id=1,
     user_name="lexey",
     email="lexey@email.com",
     hashed_password="123abc",
     role="Employee",
 )
+
 
 class TestAccountQueries:
     def getId(self, user_name="lexey"):

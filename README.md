@@ -23,7 +23,8 @@
     - Docker
 
 # Unit-Test
-> test_get_accounts.py -> Curtis Cheung
+> test_get_all_accounts.py -> Curtis Cheung
+> test_get_account_by_id.py -> Lexey Olsen
 
 Run these commands in terminal to set up the application
 
