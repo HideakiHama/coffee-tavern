@@ -1,6 +1,7 @@
 from fastapi.testclient import TestClient
 from main import app
 from queries.EmployerFeedback_queries import EmployerFeedbackFormOut2, EmployerFeedbackRepository
+from authenticator import authenticator
 
 client = TestClient(app)
 
@@ -19,6 +20,7 @@ class TestEmployerFeedbackRepo:
 
 
 def test_get_all_employer_feedbacks():
+    app.dependency_overrides[authenticator.get_current_account_data] = lambda: test_employer_feedback
     app.dependency_overrides[EmployerFeedbackRepository] = TestEmployerFeedbackRepo
     response = client.get('/get_all_employerFeedbacks')
     assert response.status_code == 200
