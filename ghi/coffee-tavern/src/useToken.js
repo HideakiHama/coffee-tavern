@@ -84,13 +84,10 @@ export function useToken() {
   }
 
   async function login(username, password) {
-    console.log("!")
     const url = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/token`;
     const form = new FormData();
     form.append("username", username);
     form.append("password", password);
-    console.log("username", username)
-    console.log("pass", password)
     const response = await fetch(url, {
       method: "post",
       credentials: "include",
@@ -98,7 +95,6 @@ export function useToken() {
     });
     if (response.ok) {
       const token = await getTokenInternal();
-      console.log("setting token")
       setToken(token);
       return;
     }
@@ -122,7 +118,6 @@ export function useToken() {
       },
     });
     if (response.ok) {
-      console.log("RESPONSE", response)
       await login(username, password);
     }
     return false;

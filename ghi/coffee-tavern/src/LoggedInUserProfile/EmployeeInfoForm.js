@@ -2,6 +2,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
+import { useNavigate } from "react-router-dom";
 
 function EmployeeInfoForm() {
 
@@ -11,13 +12,14 @@ function EmployeeInfoForm() {
     const [education, setEducation] = useState('')
     const [about, setAbout] = useState('')
     const [pic, setPic] = useState('')
+    const navigate = useNavigate();
 
     //
     const [id, setId] = useState('');
 
     const { token } = useAuthContext();
 
-    
+
     useEffect(() => {
         async function getEmployeeInfo () {
 
@@ -59,7 +61,7 @@ function EmployeeInfoForm() {
             "about": about,
             "pic_url": pic
         }
-        
+
         const employeeInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/update_employee_info`
 
         const fetchConfig = {
@@ -73,9 +75,7 @@ function EmployeeInfoForm() {
         const response = await fetch(employeeInfoURL, fetchConfig)
 
         if (response.ok) {
-            console.log("submit worked")
-        } else {
-            console.log("submit didn't work", response)
+            navigate("/user/current/profile");
         }
     }
 

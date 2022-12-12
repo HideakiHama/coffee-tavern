@@ -32,7 +32,6 @@ const JobPostForm = () => {
             },});
             const data = await response.json();
             setTags(data);
-            console.log("data", data)
         }
     }
         getTag()
@@ -89,7 +88,6 @@ const JobPostForm = () => {
                             <select value={tag} onChange={(event => setTag(event.target.value))} required id="tag" name="tag" className="form-select">
                                 <option value="">Add a Tag</option>
                                 {tags.map(tag => {
-                                    console.log(tag)
                                     return (<option key={tag.id} value={tag.id}>{tag.tag}</option>)
                                 })}
                             </select>

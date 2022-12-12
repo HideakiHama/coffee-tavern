@@ -30,10 +30,8 @@ export default function SignUp() {
 
   const handleSubmit = async(event) => {
     event.preventDefault();
-    // const data = new FormData(event.currentTarget);
-    // console.log(data.get("firstName"), data.get("email"), data.get("password"), data.get("role"))
     await signup(password, email, username, role);
-    
+
     if (role === "Employee") {
       navigate("/user/employee/info-form/create");
     } else if (role === "Employer") {

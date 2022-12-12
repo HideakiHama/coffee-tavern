@@ -12,7 +12,6 @@ function EmployeeProfileList() {
     //Navigate to the individual profile and carry the id data with it
     const navigate = useNavigate();
     const employeeFeedbackEdit = (account_id) => {
-      console.log("###ID###", account_id)
       navigate("/other-employee-profile", {state:{account_id:account_id}});
     };
 

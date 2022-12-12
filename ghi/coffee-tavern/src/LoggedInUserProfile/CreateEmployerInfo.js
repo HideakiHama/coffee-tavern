@@ -50,10 +50,7 @@ function EmployerInfoFormCreate({id}) {
         const response = await fetch(employerInfoURL, fetchConfig)
 
         if (response.ok) {
-            console.log("submit worked")
             navigate("/user/current/profile");
-        } else {
-            console.log("submit didn't work", response)
         }
     }
 
