@@ -2,6 +2,7 @@ import 'materialize-css/dist/css/materialize.min.css'
 import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
+import { NavLink } from 'react-router-dom';
 import { useNavigate } from "react-router-dom";
 
 function EmployeeInfoForm() {
@@ -123,7 +124,7 @@ function EmployeeInfoForm() {
                         </div>
                     </div>
                 </div>
-                <a href="/user/current/profile">Back to Profile</a>
+                <NavLink to="/user/current/profile">Back to Profile</NavLink>
             </form>
         </div>
     )

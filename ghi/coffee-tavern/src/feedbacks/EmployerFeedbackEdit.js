@@ -53,7 +53,7 @@ function EmployerFeedbackEdit(){
 
       const { employee_name, date, description } = inputs;
       const submit = { employee_name, date, description } ;
-      await axios.put(`${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`, submit,
+      await axios.put(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`, submit,
       {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employee_name:'', date: '', description:''})
       setEmployee({employee_name:'', date: '', description:''})
@@ -74,7 +74,7 @@ function EmployerFeedbackEdit(){
     const handleDelete = async (EmployerFeedback_id) => {
       EmployerFeedback_id = id                            //Temporary Employer ID
       await axios.delete(
-        `${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`,
+        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`,
         {headers: { Authorization: `Bearer ${token}`}})
         setInputs({employee_name:'', date: '', description:''})
         setEmployee({employee_name:'', date: '', description:''})

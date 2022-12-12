@@ -8,6 +8,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useAuthContext } from '../useToken';
 import {useEffect, useState} from 'react';
 import jwt_decode from 'jwt-decode';
+import { NavLink } from 'react-router-dom';
 
 const theme = createTheme();
 
@@ -90,7 +91,7 @@ const EmployeeProfile = ({id}) => {
               </ul>
             </Typography>
             <button className="btn waves-effect waves-light" type="submit" name="action">
-              <a href="/user/employee/info-form">Edit Info</a>
+              <NavLink to="/user/employee/info-form">Edit Info</NavLink>
             </button>
           </Box>
         </Grid>
