@@ -75,7 +75,7 @@ pages:
     - build-front-end-job
   needs:
     - build-front-end-job
-    - build-fron-end-job2
+    - build-front-end-job2
   script:
     - mv ghi/coffee-tavern/build public
     - mv ghi/coffee-tavern/tags/build public
