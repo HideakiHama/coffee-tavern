@@ -6,7 +6,7 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             account_id INT REFERENCES accounts(id),
             employee_name VARCHAR(255),
-            date DATE NOT NULL,
+            date VARCHAR(10) NOT NULL,
             description TEXT
         );
         """,
@@ -21,7 +21,7 @@ steps = [
             id SERIAL PRIMARY KEY NOT NULL,
             account_id INT REFERENCES accounts(id),
             employer_name VARCHAR(255),
-            date DATE NOT NULL,
+            date VARCHAR(10) NOT NULL,
             description TEXT
         );
         """,

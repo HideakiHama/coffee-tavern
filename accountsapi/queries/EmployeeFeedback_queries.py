@@ -1,6 +1,5 @@
 from pydantic import BaseModel, ValidationError
 from typing import Optional, List, Union
-from datetime import date
 from queries.accounts import Account
 import os
 from psycopg import connect
@@ -13,14 +12,14 @@ class Error(BaseModel):
 
 class EmployeeFeedbackFormIn(BaseModel):
     employer_name: str
-    date: date
+    date: str
     description: str
 
 
 class EmployeeFeedbackFormOut(BaseModel):
     id: int
     employer_name: str
-    date: date
+    date: str
     description: str
     account_id: Account | None = None
 
