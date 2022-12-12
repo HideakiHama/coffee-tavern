@@ -33,7 +33,7 @@ build-front-end-job:
     - lint-test-job
     - api-unit-test-job
   variables:
-    PUBLIC_URL: https://caffeine-anonymous.gitlab.io/coffee-tavern/
+    PUBLIC_URL: https://caffeine-anonymous.gitlab.io/coffee-tavern
     REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavernn.onrender.com
     REACT_APP_SAMPLE_SERVICE_API_HOST2: https://coffee-tavern.onrender.com
   script:
