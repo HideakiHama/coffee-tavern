@@ -37,7 +37,7 @@ def get_one_tag(
 @router.get(
     "/get_all_tags", tags=["TagForm"], response_model=Union[List[TagOut], Error]
 )
-def get_all(repo: TagRepository = Depends(), account: dict = Depends(get_current_user)):
+def get_all(repo: TagRepository = Depends()):
     return repo.get_all()
 
 
