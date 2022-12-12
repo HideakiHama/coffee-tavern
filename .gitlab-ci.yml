@@ -73,7 +73,6 @@ pages:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   dependencies:
     - build-front-end-job
-    - build-front-end-job2
   needs:
     - build-front-end-job
     - build-fron-end-job2
