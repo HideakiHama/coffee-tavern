@@ -19,8 +19,8 @@ api-unit-test-job:
   needs:
     - lint-test-job
   script:
-    - pip install -r requirements.txt
     - cd accountsapi
+    - pip install -r requirements.txt
     - python -m pytest
 
 # Build the React/JavaScript front-end
