@@ -79,7 +79,7 @@ function EmployerInfoFormCreate({id}) {
                 </div>
                 <div className="row">
                     <div className="form-floating col s6">
-                        <input placeholder="Profile Picture URL"type="text" name="pic_url" value={pic} id="pic_url" onChange={e => setPic(e.target.value)}>
+                        <input placeholder="Profile Picture URL" type="text" name="pic_url" value={pic} id="pic_url" onChange={e => setPic(e.target.value)}>
                         </input>
                     </div>
                 </div>

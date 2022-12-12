@@ -88,29 +88,29 @@ function EmployeeInfoForm() {
                         </input>
                     </div>
                     <div className="form-floating col s6">
-                        <input placeholder="Career Title"type="text" name="career_title" value={careerTitle} id="career_title" onChange={e => setCareerTitle(e.target.value)}>
+                        <input placeholder="Career Title" type="text" name="career_title" value={careerTitle} id="career_title" onChange={e => setCareerTitle(e.target.value)}>
                         </input>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-floating col s6">
-                        <input placeholder="Location"type="text" name="location" value={location} id="location" onChange={e => setLocation(e.target.value)}>
+                        <input placeholder="Location" type="text" name="location" value={location} id="location" onChange={e => setLocation(e.target.value)}>
                         </input>
                     </div>
                     <div className="form-floating col s6">
-                        <input placeholder="Education"type="text" name="education" value={education} id="education" onChange={e => setEducation(e.target.value)}>
-                        </input>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="form-floating col s6">
-                        <input placeholder="About"type="text" name="about" value={about} id="about" onChange={e => setAbout(e.target.value)}>
+                        <input placeholder="Education" type="text" name="education" value={education} id="education" onChange={e => setEducation(e.target.value)}>
                         </input>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-floating col s6">
-                        <input placeholder="Profile Picture URL"type="text" name="pic_url" value={pic} id="pic_url" onChange={e => setPic(e.target.value)}>
+                        <input placeholder="About" type="text" name="about" value={about} id="about" onChange={e => setAbout(e.target.value)}>
+                        </input>
+                    </div>
+                </div>
+                <div className="row">
+                    <div className="form-floating col s6">
+                        <input placeholder="Profile Picture URL" type="text" name="pic_url" value={pic} id="pic_url" onChange={e => setPic(e.target.value)}>
                         </input>
                     </div>
                 </div>
