@@ -13,15 +13,15 @@ lint-test-job:
     - flake8 --max-line-length 200 tagsapi
 
 
-# api-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - pip install -r requirements.txt
-#     - cd accountsapi
-#     - python -m pytest
+api-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  script:
+    - pip install -r requirements.txt
+    - cd accountsapi
+    - python -m pytest
 
 # Build the React/JavaScript front-end
 build-front-end-job:
