@@ -56,6 +56,37 @@ $ bash thanos.sh
 ```
 
 ## Application Design
+
+<details><summary> GUI Map</summary>
+
+![Alt text](Images/CT-home-page.png)
+![Alt text](Images/CT-signup.png)
+![Alt text](Images/CT-login.png)
+
+**Employee Map**
+
+![Alt text](Images/CT-employee-createinfo.png)
+![Alt text](Images/CT-employee-profilepage.png)
+![Alt text](Images/CT-employee-editinfo.png)
+![Alt text](Images/CT-Board-of-jobs.png)
+![Alt text](Images/CT-send-feedback-to-employee.png)
+![Alt text](Images/CT-list-of-employees-feedbacks-to-employers.png)
+![Alt text](Images/CT-list-of-employers.png)
+
+**Employer Map**
+
+![Alt text](Images/CT-employer-create-info.png)
+![Alt text](Images/CT-employer-profile.png)
+![Alt text](Images/CT-employer-edit-info.png)
+![Alt text](Images/CT-employer-create-job-post.png)
+![Alt text](Images/CT-employee-feedbacks-from-employer.png)
+![Alt text](Images/CT-employer-send-feedback-to-employee.png)
+![Alt text](Images/CT-list-of-employees.png)
+![Alt text](Images/CT-employer-applicants.png)
+![Alt text](Images/CT-tag-form.png)
+
+</details>
+
 <details><summary>Api Endpoints</summary>
 
 <details><summary>Job Form</summary>
