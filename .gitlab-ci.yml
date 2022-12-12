@@ -33,8 +33,9 @@ build-front-end-job:
     - lint-test-job
     - api-unit-test-job
   variables:
-    PUBLIC_URL: https://gitlab.com/caffeine-anonymous/coffee-tavern
-    REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
+    PUBLIC_URL: https://gitlab.com/caffeine-anonymous/coffee-tavern/
+    REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavernn.onrender.com
+    REACT_APP_SAMPLE_SERVICE_API_HOST2: https://coffee-tavern.onrender.com
   script:
     - cd ghi
     - cd coffee-tavern
