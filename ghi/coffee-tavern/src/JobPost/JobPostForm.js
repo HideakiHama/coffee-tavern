@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../useToken';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const JobPostForm = () => {
     const [employer, setEmployer] = useState("");
