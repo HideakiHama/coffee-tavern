@@ -18,6 +18,8 @@ api-unit-test-job:
   stage: test
   needs:
     - lint-test-job
+  variables:
+    - SIGNING_KEY: aki
   script:
     - cd accountsapi
     - pip install -r requirements.txt
@@ -29,6 +31,7 @@ build-front-end-job:
   image: node:lts-bullseye
   needs:
     - lint-test-job
+    - api-unit-test-job
   variables:
     PUBLIC_URL: https://gitlab.com/caffeine-anonymous/coffee-tavern
     REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
