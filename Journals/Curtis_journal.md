@@ -46,3 +46,7 @@
 > At this point we will be pair programming this to get it done.
 > Was able to get the TagsApi started and on docker. 
 > Working on seperate database for the seperate microservice.
+
+## Dec 6 -
+> Worked on Tags API Microservice
+> 

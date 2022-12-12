@@ -20,7 +20,7 @@ class EmployerFeedbackFormIn(BaseModel):
 class EmployerFeedbackFormOut(BaseModel):
     id: int
     employee_name: str
-    date: date
+    date: date 
     description: str
     account_id: Account | None = None
 
