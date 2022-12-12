@@ -109,7 +109,6 @@ def Edit_Employer_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    # x = repo.get_one(EmployerFeedback_id)
     if account["role"] == "Employer":
         return repo.update(EmployerFeedback_id, FeedbackForm)
     raise credentials_exception
@@ -132,7 +131,6 @@ def Delete_Employer_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    # x = repo.get_one(EmployerFeedback_id)
     if account["role"] == "Employer":
         return repo.delete(EmployerFeedback_id)
     raise credentials_exception
