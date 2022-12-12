@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useAuthContext } from '../useToken';
-import 'bootstrap/dist/css/bootstrap.min.css';
+// import 'bootstrap/dist/css/bootstrap.min.css';
 
 const JobPostForm = () => {
     const [employer, setEmployer] = useState("");
@@ -32,7 +32,6 @@ const JobPostForm = () => {
             },});
             const data = await response.json();
             setTags(data);
-            console.log("data", data)
         }
     }
         getTag()
@@ -70,26 +69,27 @@ const JobPostForm = () => {
                         <div className="form-floating mb-3">
                             <input placeholder="Employer" required type="text" name="employer" value={employer} onChange={(event) => setEmployer(event.target.value)} id="employer" className="form-control" />
                         </div>
+                        <h6>Employer</h6>
                         <div className="form-floating mb-3">
                             <input placeholder="Position" required type="text" name="position" value={position} onChange={(event) => setPosition(event.target.value)} id="position" className="form-control" />
                         </div>
+                        <h6>Position</h6>
                         <div className="form-floating mb-3">
                             <input placeholder="Location" required type="text" name="location" value={location} onChange={(event) => setLocation(event.target.value)} id="location" className="form-control" />
                         </div>
+                        <h6>Location</h6>
                         <div className="form-floating mb-3">
                             <input placeholder="From_date" required type="date" name="from_date" value={from_date} onChange={(event) => setFromDate(event.target.value)} id="from_date" className="form-control" />
                         </div>
+                        <h6>Start-Date</h6>
                         <div className="form-floating mb-3">
                             <input placeholder="To_date" required type="date" name="to_date" value={to_date} onChange={(event) => setToDate(event.target.value)} id="to_date" className="form-control" />
                         </div>
-                        {/* <div className="form-floating mb-3">
-                            <input placeholder="Tags" required type="text" name="tag" value={tag} onChange={(event) => setTag(event.target.value)} id="tag" className="form-control" />
-                        </div> */}
+                        <h6>End-Date</h6>
                         <div className="mb-3">
                             <select value={tag} onChange={(event => setTag(event.target.value))} required id="tag" name="tag" className="form-select">
                                 <option value="">Add a Tag</option>
                                 {tags.map(tag => {
-                                    console.log(tag)
                                     return (<option key={tag.id} value={tag.id}>{tag.tag}</option>)
                                 })}
                             </select>
@@ -97,6 +97,7 @@ const JobPostForm = () => {
                         <div className="form-floating mb-3">
                             <input placeholder="Description" required type="text" name="description" value={description} onChange={(event) => setDescription(event.target.value)} id="description" className="form-control" />
                         </div>
+                        <h6>Description</h6>
                         <button className="btn btn-primary">Create</button>
                     </form>
                 </div>

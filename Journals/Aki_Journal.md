@@ -1,3 +1,10 @@
+### Dec 09 2022
+Today we work as group to work on deploying our project to Render (for backend) and GitLab(for CI/CD). With our instructors help we were able to successfully deploy faster then expected.  Toward the end of the day we worked on individual unit test.
+
+### Dec 08 2022
+Today I worked on how feedback button on the Nav bar changes depends on the role the user sign up as. For example, if a user sign up as an employer they will see only Employer feedback feature. Eventually I discussed with the group what other buttons should be separated from user.   We named the file "employerNav.js" and "employeeNav.js".
+Our biggest blocker was deploying our project into Render.
+
 ### Dec 07 2022
 Today in the morning I helped Lexey with frontend side of getting a list of Employee to display. I also added a feature where a employer can click on a button to display individual employee profile (using 'useNavigate' and 'useLocation')
 In the Afternoon I worked on backend.  I made a router and queries that grabs all the data of feedbacks regardless of who the user wrote it.  My biggest-blocker was when user create a feedback the name have to match whats in the data (If the user are employee giving feedback to the employer the name of the employer have to match in the list of employer in the backend).   I know better way to do this but we were running out of time.   I decided to use useNavigate to carry the data to the list of employee,for example, useLocation to take out that data.  I grabbed all the employer data and used filter, include, and map method to get the list of feedbacks form specific employee or employer.

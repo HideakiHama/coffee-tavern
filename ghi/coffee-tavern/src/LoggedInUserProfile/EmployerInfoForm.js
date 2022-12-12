@@ -2,6 +2,8 @@ import 'materialize-css/dist/css/materialize.min.css'
 import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
+import { useNavigate } from "react-router-dom";
+
 
 function EmployerInfoForm({id}) {
 
@@ -10,6 +12,7 @@ function EmployerInfoForm({id}) {
     const [location, setLocation] = useState('')
     const [about, setAbout] = useState('')
     const [pic, setPic] = useState('')
+    const navigate = useNavigate();
 
     const { token } = useAuthContext();
 
@@ -66,9 +69,7 @@ function EmployerInfoForm({id}) {
         const response = await fetch(employerInfoURL, fetchConfig)
 
         if (response.ok) {
-            console.log("submit worked")
-        } else {
-            console.log("submit didn't work", response)
+            navigate("/user/current/profile");
         }
     }
 

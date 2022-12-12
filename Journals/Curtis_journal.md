@@ -47,6 +47,24 @@
 > Was able to get the TagsApi started and on docker. 
 > Working on seperate database for the seperate microservice.
 
-## Dec 6 -
+## Dec 6 - Tuesday
 > Worked on Tags API Microservice
-> 
+> Finished endpoints for tagsapi
+
+## Dec 7 - Wednesday
+> Worked on Tags front end
+> Finished tagsapi, put all CRUD onto one page.
+> Created a tagsform component and put a list component in it.
+> Within the List component I put an item component which also has a delete function.
+
+## Dec 8 - Thursday
+> Finished connecting back end to front end, now just needs auth on tags api
+
+## Dec 9 - Friday
+> Everything for Tags api finished now working on unit testing and everything else including deployment
+> Deployment successful, was able to deploy on render and gitlab
+> All that is left is the unit test
+
+## Dec 11 - Sunday
+> Finished creating my unit test , Group 13 met up on discord and we all worked together on 4 unit tests. 
+> All that is left is to have our gitlab run unit tests successfully. MONDAY PROBLEM HAHA

@@ -19,7 +19,7 @@ function EmployerFeedbackEdit(){
     setLoading(true)
     setTimeout(() =>{
       setLoading(false)
-    }, 5000)}, [])
+    }, 1000)}, [])
 
  //Getting the user's feedback to employee
   useEffect(() =>{
@@ -91,7 +91,7 @@ function EmployerFeedbackEdit(){
     return (
       <div>
       {loading?
-      <div className="sweet-loading">
+      <div className="d-flex justify-content-center p-5">
           <FadeLoader
           color={'#36d7b7'}
           loading={loading}
@@ -134,10 +134,10 @@ function EmployerFeedbackEdit(){
             </div>
           </div>
         </form>
-        <button onClick={handleDelete} className="btn waves-effect waves-light">Delete
+        <button onClick={handleDelete} className="btn waves-effect teal">Delete
                             <i className="material-icons right">Feedback</i>
       </button>
-        <button onClick={handleGoBack} className="btn waves-effect waves-light">Go
+        <button onClick={handleGoBack} className="btn waves-effect teal">Go
                             <i className="material-icons right">Back</i>
       </button>
     </div>

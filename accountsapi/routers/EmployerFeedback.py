@@ -85,7 +85,7 @@ def get_all_with_id(
 # Get all the EmployerFeedbacks Regardless of who wrote it
 @router.get("/get_all_employerFeedbacks", tags=["Employer Feedback Form"])
 def get_all_employer_feedbacks(
-    # account: dict = Depends(authenticator.get_current_account_data),
+    account: dict = Depends(authenticator.get_current_account_data),
     repo: EmployerFeedbackRepository = Depends(),
 ):
     return repo.get_all_feedbacks()
@@ -109,7 +109,6 @@ def Edit_Employer_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    # x = repo.get_one(EmployerFeedback_id)
     if account["role"] == "Employer":
         return repo.update(EmployerFeedback_id, FeedbackForm)
     raise credentials_exception
@@ -132,7 +131,6 @@ def Delete_Employer_Feedback(
         detail="You are employee. Only the employer can edit",
     )
 
-    # x = repo.get_one(EmployerFeedback_id)
     if account["role"] == "Employer":
         return repo.delete(EmployerFeedback_id)
     raise credentials_exception

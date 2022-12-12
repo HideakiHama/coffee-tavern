@@ -28,7 +28,6 @@ export default function JobPostList() {
     });
       const data = await response.json();
       setJobForm(data)
-      console.log(data.account_id)
 
   }
   }

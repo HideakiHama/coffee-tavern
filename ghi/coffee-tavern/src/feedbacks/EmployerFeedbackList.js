@@ -26,7 +26,7 @@ function EmployerFeedbackList() {
       setLoading(true)
       setTimeout(() =>{
         setLoading(false)
-      }, 5000)}, [])
+      }, 1000)}, [])
 
     useEffect(() =>{
       const getEmployerFeedbacksUrl = async () => {
@@ -44,7 +44,7 @@ function EmployerFeedbackList() {
     return (
       <div>
             {loading?
-            <div className="sweet-loading">
+            <div className="d-flex justify-content-center p-5">
                 <FadeLoader
                 color={'#36d7b7'}
                 loading={loading}
@@ -69,8 +69,8 @@ function EmployerFeedbackList() {
                 <td>{employer.employee_name}</td>
                 <td>{employer.date}</td>
                 <td>{employer.description}</td>
-                <td><button onClick={() => employerFeedbackEdit(employer.id)} className="btn waves-effect waves-light">Edit My Feedback</button></td>
-                <td><button onClick={() => allEmployeeFeedback(employer.employee_name)} className="btn waves-effect waves-light">Check All Feedbacks</button></td>
+                <td><button onClick={() => employerFeedbackEdit(employer.id)} className="btn waves-effect teal">Edit My Feedback</button></td>
+                <td><button onClick={() => allEmployeeFeedback(employer.employee_name)} className="btn waves-effect teal">Check All Feedbacks</button></td>
               </tr>
               )}
           </tbody>

@@ -37,7 +37,7 @@ function EmployeeInfoFormCreate({id}) {
             "about": about,
             "pic_url": pic
         }
-        
+
         const employeeInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${decodedId}/create_employee_info`
 
         const fetchConfig = {
@@ -51,10 +51,7 @@ function EmployeeInfoFormCreate({id}) {
         const response = await fetch(employeeInfoURL, fetchConfig)
 
         if (response.ok) {
-            console.log("submit worked")
             navigate("/user/current/profile");
-        } else {
-            console.log("submit didn't work", response)
         }
     }
 

@@ -13,15 +13,17 @@ lint-test-job:
     - flake8 --max-line-length 200 tagsapi
 
 
-# api-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - pip install -r requirements.txt
-#     - cd accountsapi
-#     - python -m pytest
+api-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  variables:
+    SIGNING_KEY: aki
+  script:
+    - cd accountsapi
+    - pip install -r requirements.txt
+    - python -m pytest
 
 # Build the React/JavaScript front-end
 build-front-end-job:
@@ -29,9 +31,11 @@ build-front-end-job:
   image: node:lts-bullseye
   needs:
     - lint-test-job
+    - api-unit-test-job
   variables:
-    PUBLIC_URL: https://gitlab.com/caffeine-anonymous/coffee-tavern
-    REACT_APP_SAMPLE_SERVICE_API_HOST: https://WEBSERVICE_NAME.onrender.com
+    PUBLIC_URL: https://caffeine-anonymous.gitlab.io/coffee-tavern/
+    REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavernn.onrender.com
+    REACT_APP_SAMPLE_SERVICE_API_HOST2: https://coffee-tavern.onrender.com
   script:
     - cd ghi
     - cd coffee-tavern
@@ -40,7 +44,7 @@ build-front-end-job:
     - cp build/index.html build/404.html
   artifacts:
     paths:
-      - ghi/coffee-tavern/
+      - ghi/coffee-tavern/build
 
 # Deploy the React/JavaScript front-end to GitLab pages
 pages:
@@ -52,7 +56,7 @@ pages:
   needs:
     - build-front-end-job
   script:
-    - mv ghi/coffee-tavern public
+    - mv ghi/coffee-tavern/build public
   artifacts:
     paths:
       - public

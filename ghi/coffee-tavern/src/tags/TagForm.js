@@ -1,4 +1,4 @@
-import React, { useState, useEffect }  from 'react';
+import React, { useState, useEffect  }  from 'react';
 import axios from "axios";
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import TagListView from './TagListView';
@@ -26,7 +26,6 @@ function TagForm(){
     // post tags
     const addTagHandler = () => {
         axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/create_tag_form`,{'tag': tag}, {headers: { Authorization: `Bearer ${token}` }})
-        .then(res => console.log(res))
         setTagsList([...tagsList, {tag}]);
     };
 
