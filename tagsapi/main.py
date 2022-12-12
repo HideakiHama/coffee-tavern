@@ -3,13 +3,14 @@ from routers import (
     TagRoutes,
 )
 from fastapi.middleware.cors import CORSMiddleware
+import os
 
 app = FastAPI()
 
 origins = [
-    "http://localhost:3000",
-    "http://localhost:8000",
-    "http://localhost:8100",
+    os.environ.get("CORS_HOST", "http://localhost:3000"),
+    os.environ.get("ACCOUNTS_CORS_HOST", "http://localhost:8000"),
+
 ]
 
 app.add_middleware(
