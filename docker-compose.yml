@@ -14,7 +14,7 @@ services:
       DATABASE_URL: postgres://mbhucnqa:5bIwBQB4xgAlOwpH7MfhE7S-4NKxvfso@lallah.db.elephantsql.com/mbhucnqa
       # WAIT_HOSTS: db:5432
       PORT: 8000
-      SIGNING_KEY: f6ebee956a80089c6a798f29506fa6ef
+      SIGNING_KEY: aki
     ports:
       - "8000:8000"
     volumes:
@@ -32,8 +32,7 @@ services:
         DATABASE_URL: postgres://tjekoxde:qNH_ZgvbJmON36vw0InZM-m2ptGxsy-F@lallah.db.elephantsql.com/tjekoxde
         # WAIT_HOSTS: db:5432
         PORT: 8100
-        SIGNING_KEY: f6ebee956a80089c6a798f29506fa6ef
-
+        SIGNING_KEY: aki
   react:
     image: node:lts-bullseye
     command: /bin/bash run.sh
