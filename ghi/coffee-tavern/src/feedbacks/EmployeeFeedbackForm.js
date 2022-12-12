@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from "axios"
 // import M from 'materialize-css';
 import 'materialize-css/dist/css/materialize.min.css'
@@ -13,10 +13,19 @@ function EmployeeFeedbackForm() {
                                           , date: ''
                                           , description:''
                                           });
+    const [accountId, setAccountId] = useState('')
     const { token } = useAuthContext();
-    const decoded = jwt_decode(token)
-    const account_id = decoded.account["id"]   //Decode jwt token to get User ID
     const navigate = useNavigate();
+
+    useEffect(() => {
+      const getAccountId = () => {
+          const decoded = jwt_decode(token)
+          setAccountId(decoded.account["id"])
+      }
+      if (token) {
+          getAccountId()
+      }
+  }, [token])
 
 
     //Creating the feedback into employee feedbacks end point
@@ -24,7 +33,7 @@ function EmployeeFeedbackForm() {
       event.preventDefault();
       const { employer_name, date, description } = inputs;
       const submit = { employer_name, date, description } ;
-      await axios.post(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employee-feedback-form/${account_id}/`, submit,
+      await axios.post(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employee-feedback-form/${accountId}/`, submit,
       {headers: { Authorization: `Bearer ${token}`}})    //checks if the user logged in
       setInputs({employer_name: '', date: '', description:''})
       navigate("/")
@@ -67,7 +76,7 @@ function EmployeeFeedbackForm() {
               <div className="col s12">
                 <div className="input-field inline">
 
-                    <button className="btn waves-effect waves-light" type="submit" name="action">Submit
+                    <button className="btn waves-effect teal" type="submit" name="action">Submit
                               <i className="material-icons right">Feedback</i>
                     </button>
                 </div>

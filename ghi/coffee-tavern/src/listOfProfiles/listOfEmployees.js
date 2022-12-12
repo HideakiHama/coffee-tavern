@@ -2,10 +2,12 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useNavigate } from 'react-router-dom';
+import FadeLoader from "react-spinners/FadeLoader";
 
 
 function EmployeeProfileList() {
     const [employeeProfiles, setEmployeeProfiles] = useState([]);
+    const [loading, setLoading] = useState(false)
     const { token } = useAuthContext();
 
 
@@ -14,7 +16,6 @@ function EmployeeProfileList() {
     const employeeFeedbackEdit = (account_id) => {
       navigate("/other-employee-profile", {state:{account_id:account_id}});
     };
-
 
 
     useEffect(() =>{
@@ -26,8 +27,24 @@ function EmployeeProfileList() {
       getEmployeeFeedbacksUrl();
     }, [token]);
 
+    useEffect(() => {
+      setLoading(true)
+      setTimeout(() =>{
+        setLoading(false)
+      }, 1000)}, [])
+
 
     return (
+      <div>
+            {loading?
+      <div className="d-flex justify-content-center p-5">
+        <FadeLoader
+        color={'#36d7b7'}
+        loading={loading}
+        size={200}
+      />
+      </div>
+       :
       <div>
         <h2>List of Employees</h2>
         <table>
@@ -44,12 +61,15 @@ function EmployeeProfileList() {
                 <td>{employeeProfile.full_name}</td>
                 <td>{employeeProfile.location}</td>
                 <td>{employeeProfile.career_title}</td>
-                <td><button onClick={() => employeeFeedbackEdit(employeeProfile.account_id)}>Check Profile</button></td>
+                <td><button className="btn waves-effect teal" onClick={() => employeeFeedbackEdit(employeeProfile.account_id)}>Check Profile</button></td>
               </tr>
               )}
           </tbody>
         </table>
       </div>
+  }
+</div>
     )
+
 }
 export default EmployeeProfileList

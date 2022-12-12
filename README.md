@@ -31,28 +31,28 @@
 ## Database Urls
 
 **tags api db:**
- postgres://mjlcehbq:68CQlz4J0QGLvquHOSHqQjs97X_vpuyS@arjuna.db.elephantsql.com/mjlcehbq
+ postgres://csbbehie:dmMYbL26VrUlKm6nT8E-qTo0XfR0qkWR@stampy.db.elephantsql.com/csbbehie
 
 **accounts api db:**
-postgres://uuafgwdr:WDx2393zSgqxcFkuOJct-_98SI0zi5pF@arjuna.db.elephantsql.com/uuafgwdr
+postgres://qqurjzyt:4J9_f7CSKfSxuYsiCRmJTzXZkrpxsQo3@stampy.db.elephantsql.com/qqurjzyt
 
 _**Run these commands in terminal to set up the application**_
 
 ```shell
-#This will create the database in your docker 
+#This will create the database in your docker
 $ docker volume create coffee_tavern-data
-$ docker volume create tagsapi-data    
+$ docker volume create tagsapi-data
 ```
 ```shell
-#This will build and compose up the images and containers for your docker at the same time 
+#This will build and compose up the images and containers for your docker at the same time
 
-$ docker compose up --build 
-```                
+$ docker compose up --build
+```
 
 ```shell
-# ***(Mac User Only)*** 
+# ***(Mac User Only)***
 # Will do everything Thanos the project***(Mac User Only)***
-$ bash thanos.sh 
+$ bash thanos.sh
 ```
 
 ## Application Design
@@ -62,7 +62,7 @@ $ bash thanos.sh
 
 | Method | URL |
 | ------ | ------ |
-| POST | /create_form/ | 
+| POST | /create_form/ |
 | GET | /get_all_form |
 | GET | /get_all_form/{form_id} |
 | PUT | /update_job_form/{id} |
@@ -112,7 +112,7 @@ output:
   }
 ]
 ```
-</details> 
+</details>
 <details><summary>GET BY ID in/out</summary>
 
 inuput:
@@ -137,7 +137,7 @@ output:
 </details>
 <details><summary>PUT in/out</summary>
 
-inuput:
+input:
 ```shell
 The id of the form you want to edit
 &
@@ -183,7 +183,7 @@ true or false
 
 | Method | URL |
 | ------ | ------ |
-| POST | /apply/{employer_id} | 
+| POST | /apply/{employer_id} |
 | GET | /get_applicants |
 | DELETE | /delete_application/{id} |
 
@@ -252,7 +252,7 @@ true or false
 
 | Method | URL |
 | ------ | ------ |
-| POST | /employer-feedback-form/{account_id} | 
+| POST | /employer-feedback-form/{account_id} |
 | GET | /employer-feedback-form/{EmployerFeedback_id} |
 | PUT | /employer-feedback-form/{EmployerFeedback_id} |
 | DELETE | /employer-feedback-form/{EmployerFeedback_id} |
@@ -389,7 +389,7 @@ output:
 
 | Method | URL |
 | ------ | ------ |
-| POST | /employee-feedback-form/{account_id} | 
+| POST | /employee-feedback-form/{account_id} |
 | GET | /employee-feedback-form/{EmployeeFeedback_id} |
 | PUT | /employee-feedback-form/{EmployeeFeedback_id} |
 | DELETE | /employee-feedback-form/{EmployeeFeedback_id} |
@@ -527,11 +527,11 @@ output:
 
 | Method | URL |
 | ------ | ------ |
-| POST | /users/{account_id}/create_employee_info | 
+| POST | /users/{account_id}/create_employee_info |
 | GET | /users/{account_id}/get_employee_info |
 | PUT | /users/{account_id}/update_employee_info |
 | GET | /get_all_employee_profile |
-| POST | /users/{account_id}/create_employer_info | 
+| POST | /users/{account_id}/create_employer_info |
 | GET | /users/{account_id}/get_employer_info |
 | PUT | /users/{account_id}/update_employer_info |
 | GET | /get_all_employer_profile |
@@ -736,6 +736,3 @@ output:
 </details>
 </details>
 
-
-
-</details>
