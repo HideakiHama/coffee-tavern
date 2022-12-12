@@ -89,8 +89,8 @@ export function useToken() {
     const form = new FormData();
     form.append("username", username);
     form.append("password", password);
-    console.log("FORMDATA user", form.get("username"))
-    console.log("FORMDATA pass", form.get("password"))
+    console.log("username", username)
+    console.log("pass", password)
     const response = await fetch(url, {
       method: "post",
       credentials: "include",
@@ -98,6 +98,7 @@ export function useToken() {
     });
     if (response.ok) {
       const token = await getTokenInternal();
+      console.log("setting token")
       setToken(token);
       return;
     }
@@ -122,7 +123,7 @@ export function useToken() {
     });
     if (response.ok) {
       console.log("RESPONSE", response)
-      await login(email, password);
+      await login(username, password);
     }
     return false;
   }

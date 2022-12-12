@@ -26,7 +26,7 @@ function EmployeeFeedbackEdit(){
     const getEmployeeFeedbacksUrl = async ( ) => {
       if (token) {
       const EmployeeFeedback_id = id
-      const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/employee-feedback-form/${EmployeeFeedback_id}`,
+      const response = await axios.get(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employee-feedback-form/${EmployeeFeedback_id}`,
       {headers: { Authorization: `Bearer ${token}`}});
       setEmployer(response.data)}};
     getEmployeeFeedbacksUrl();
@@ -53,7 +53,7 @@ function EmployeeFeedbackEdit(){
 
       const { employer_name, date, description } = inputs;
       const submit = { employer_name, date, description } ;
-      await axios.put(`${process.env.REACT_APP_TAGS_API_HOST}/employee-feedback-form/${EmployeeFeedback_id}`, submit,
+      await axios.put(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employee-feedback-form/${EmployeeFeedback_id}`, submit,
       {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employer_name:'', date: '', description:''})
       setEmployer({employer_name:'', date: '', description:''})
@@ -74,7 +74,7 @@ function EmployeeFeedbackEdit(){
     const handleDelete = async (EmployeeFeedback_id) => {
       EmployeeFeedback_id = id                            //Temporary Employee ID
       await axios.delete(
-        `${process.env.REACT_APP_TAGS_API_HOST}/employee-feedback-form/${EmployeeFeedback_id}`
+        `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employee-feedback-form/${EmployeeFeedback_id}`
         , {headers: { Authorization: `Bearer ${token}`}})
       setInputs({employer_name:'', date: '', description:''})
       setEmployer({employer_name:'', date: '', description:''})

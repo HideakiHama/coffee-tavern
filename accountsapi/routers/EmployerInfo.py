@@ -23,10 +23,10 @@ def create_employer_info(
 
 @router.get("/users/{account_id}/get_employer_info", tags=["User Info"])
 def get_employer_info_by_id(
-    account_id: str, repo: EmployerInfoRepo = Depends(), repo1: AccountRepo = Depends()
+    account_id: int, repo: EmployerInfoRepo = Depends(), repo1: AccountRepo = Depends()
 ) -> EmployerInfoOut:
     EmployerInfo = repo.get_one(account_id).dict()
-    EmployerInfo["account_id"] = repo1.get(account_id).dict()
+    EmployerInfo["account_id"] = repo1.getId(account_id).dict()
     return EmployerInfo
 
 

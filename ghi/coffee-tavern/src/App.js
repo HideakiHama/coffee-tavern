@@ -10,13 +10,15 @@ import AllEmployeeFeedback from './feedbacks/AllEmployeeFeedback';
 import AllEmployerFeedback from './feedbacks/AllEmployerFeedback';
 
 
-import EmployeeProfile from './LoggedInUserProfile/Employee';
-import EmployerProfile from './LoggedInUserProfile/Employer';
+// import EmployeeProfile from './LoggedInUserProfile/Employee';
+// import EmployerProfile from './LoggedInUserProfile/Employer';
 import EmployeeInfoForm from './LoggedInUserProfile/EmployeeInfoForm';
+import EmployeeInfoFormCreate from './LoggedInUserProfile/CreateEmployeeInfo';
+import EmployerInfoFormCreate from './LoggedInUserProfile/CreateEmployerInfo';
 import EmployerInfoForm from './LoggedInUserProfile/EmployerInfoForm';
 import OthersEmployeeProfile from './listOfProfiles/othersEmployeeProfile';
 import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile';
-
+import Profile from './LoggedInUserProfile/Profile';
 import EmployeeProfileList from './listOfProfiles/listOfEmployees';
 import EmployerProfileList from './listOfProfiles/listOfEmployers';
 import TagForm from './tags/TagForm';
@@ -93,10 +95,11 @@ render() {
 
                 {/* Lexey */}
 
-                <Route path = "/user/employee/" element={<EmployeeProfile id={this.state.id}/>} />
-                <Route path = "/user/employee/info-form" element={<EmployeeInfoForm id={this.state.id}/>} />
-                <Route path = "/user/employer" element={<EmployerProfile id={this.state.id}/>} />
-                <Route path = "/user/employer/info-form" element={<EmployerInfoForm id={this.state.id}/>} />
+                <Route path = "/user/current/profile" element={<Profile/>} />
+                <Route path = "/user/employee/info-form/create" element={<EmployeeInfoFormCreate/>} />
+                <Route path = "/user/employee/info-form" element={<EmployeeInfoForm/>} />
+                <Route path = "/user/employer/info-form/create" element={<EmployerInfoFormCreate/>} />
+                <Route path = "/user/employer/info-form" element={<EmployerInfoForm/>} />
 
               </Routes>
             </div>

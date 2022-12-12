@@ -27,7 +27,7 @@ function OthersEmployeeProfile(){
     const getOthersEmployeeInfo = async () => {
       if (token) {
         const id = account_id
-        const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/users/${id}/get_employee_info`,
+        const response = await axios.get(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/get_employee_info`,
         {headers: { Authorization: `Bearer ${token}`}});
         setOtherEmployee(response.data)
 }};
@@ -44,7 +44,7 @@ function OthersEmployeeProfile(){
           sm={4}
           md={7}
           sx={{
-            backgroundImage: 'url(https://source.unsplash.com/random)',
+            backgroundImage: `url(${otherEmployee.pic_url})`,
             backgroundRepeat: 'no-repeat',
             backgroundColor: (t) =>
               t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],

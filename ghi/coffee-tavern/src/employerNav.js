@@ -18,7 +18,7 @@ const EmployerNav = () => {
         <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedback">Send Feedback</NavLink></li>
         <li><NavLink className="dropdown-item" aria-current="page" to="/employer-feedbacks-list">My Past Feedbacks</NavLink></li>
         <li><NavLink className="dropdown-item" aria-current="page" to="/employee-profile-list">Employee Profiles</NavLink></li>
-        <li><NavLink className="dropdown-item" aria-current="page" to="/user/employer">My Profile</NavLink></li>
+        <li><NavLink className="dropdown-item" aria-current="page" to="/user/current/profile">My Profile</NavLink></li>
         <li><NavLink className="dropdown-item" aria-current="page" to="/applicants">My Applicants</NavLink></li>
         <li><NavLink className="dropdown-item" aria-current="page" to="/create_tag_form">Tags</NavLink></li>
         </>

@@ -2,78 +2,56 @@ import 'materialize-css/dist/css/materialize.min.css'
 import jwt_decode from 'jwt-decode';
 import {useEffect, useState} from 'react';
 import { useAuthContext } from '../useToken';
+import { useNavigate } from "react-router-dom";
 
-function EmployeeInfoForm() {
+function EmployerInfoFormCreate({id}) {
 
-    const [fullName, setFullName] = useState('')
-    const [careerTitle, setCareerTitle] = useState('')
+    const [companyName, setCompanyName] = useState('')
+    const [jobType, setJobType] = useState('')
     const [location, setLocation] = useState('')
-    const [education, setEducation] = useState('')
     const [about, setAbout] = useState('')
     const [pic, setPic] = useState('')
+    const navigate = useNavigate();
 
-    //
-    const [id, setId] = useState('');
+    const [decodedId, setDecodedId] = useState('')
 
     const { token } = useAuthContext();
 
-    
     useEffect(() => {
-        async function getEmployeeInfo () {
-
+        const getDecodedId = () => {
             const decoded = jwt_decode(token)
-            setId(decoded.account["id"])
-
-            const infoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/get_employee_info`
-
-            const infoResponse = await fetch(infoURL, {
-                method: "GET",
-                headers: { Authorization: `Bearer ${token}`}
-            })
-
-            if (infoResponse.ok) {
-                const info = await infoResponse.json()
-
-                if (info) {
-                    setFullName(info.full_name)
-                    setCareerTitle(info.career_title)
-                    setLocation(info.location)
-                    setEducation(info.education)
-                    setAbout(info.about)
-                    setPic(info.pic_url)
-                }
-            }
+            setDecodedId(decoded.account["id"])
         }
-
-        getEmployeeInfo()
-
-    }, [id, token])
+        if (token) {
+            getDecodedId()
+        }
+    }, [token])
 
     const handleSubmit = async (event) => {
         event.preventDefault();
         const data = {
-            "full_name": fullName,
-            "career_title": careerTitle,
+            "company_name": companyName,
+            "job_type": jobType,
             "location": location,
-            "education": education,
             "about": about,
             "pic_url": pic
         }
-        
-        const employeeInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${id}/update_employee_info`
+
+        const employerInfoURL = `${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/users/${decodedId}/create_employer_info`
 
         const fetchConfig = {
-            method: "PUT",
+            method: "POST",
             body: JSON.stringify(data),
             headers: {
                 "Content-Type": "application/json",
                 Authorization: `Bearer ${token}`
             },
         }
-        const response = await fetch(employeeInfoURL, fetchConfig)
+        const response = await fetch(employerInfoURL, fetchConfig)
 
         if (response.ok) {
             console.log("submit worked")
+            navigate("/user/current/profile");
         } else {
             console.log("submit didn't work", response)
         }
@@ -84,27 +62,21 @@ function EmployeeInfoForm() {
             <form className="col s12" onSubmit={handleSubmit}>
                 <div className="row">
                     <div className="form-floating col s6">
-                        <input placeholder="Full Name" type="text" name="full_name" value={fullName} id="full_name" onChange={e => setFullName(e.target.value)}>
+                        <input placeholder="Company Name" type="text" name="company_name" value={companyName} id="company_name" onChange={e => setCompanyName(e.target.value)}>
                         </input>
                     </div>
                     <div className="form-floating col s6">
-                        <input placeholder="Career Title"type="text" name="career_title" value={careerTitle} id="career_title" onChange={e => setCareerTitle(e.target.value)}>
-                        </input>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="form-floating col s6">
-                        <input placeholder="Location"type="text" name="location" value={location} id="location" onChange={e => setLocation(e.target.value)}>
-                        </input>
-                    </div>
-                    <div className="form-floating col s6">
-                        <input placeholder="Education"type="text" name="education" value={education} id="education" onChange={e => setEducation(e.target.value)}>
+                        <input placeholder="Type of Company" type="text" name="job_type" value={jobType} id="job_type" onChange={e => setJobType(e.target.value)}>
                         </input>
                     </div>
                 </div>
                 <div className="row">
                     <div className="form-floating col s6">
-                        <input placeholder="About"type="text" name="about" value={about} id="about" onChange={e => setAbout(e.target.value)}>
+                        <input placeholder="Location" type="text" name="location" value={location} id="location" onChange={e => setLocation(e.target.value)}>
+                        </input>
+                    </div>
+                    <div className="form-floating col s6">
+                        <input placeholder="About" type="text" name="about" value={about} id="about" onChange={e => setAbout(e.target.value)}>
                         </input>
                     </div>
                 </div>
@@ -123,10 +95,9 @@ function EmployeeInfoForm() {
                         </div>
                     </div>
                 </div>
-                <a href="/user/current/profile">Back to Profile</a>
             </form>
         </div>
     )
 }
 
-export default EmployeeInfoForm;
+export default EmployerInfoFormCreate;

@@ -13,18 +13,15 @@ lint-test-job:
     - flake8 --max-line-length 200 tagsapi
 
 
-# api-unit-test-job:
-#   image: python:3-bullseye
-#   stage: test
-#   needs:
-#     - lint-test-job
-#   script:
-#     - cd coffee-tavern
-#     -
-#     - pip install -r requirements.txt
-#     - cd accountsapi
-#     -
-#     - python -m pytest
+api-unit-test-job:
+  image: python:3-bullseye
+  stage: test
+  needs:
+    - lint-test-job
+  script:
+    - cd accountsapi
+    - pip install -r requirements.txt
+    - python -m pytest
 
 # Build the React/JavaScript front-end
 build-front-end-job:
@@ -40,7 +37,7 @@ build-front-end-job:
     - cd coffee-tavern
     - npm install
     - npm run build
-    - cp coffee-tavern/index.html build/404.html
+    - cp build/index.html build/404.html
   artifacts:
     paths:
       - ghi/coffee-tavern/
@@ -55,7 +52,7 @@ pages:
   needs:
     - build-front-end-job
   script:
-    - mv ghi/build/ public
+    - mv ghi/coffee-tavern public
   artifacts:
     paths:
       - public

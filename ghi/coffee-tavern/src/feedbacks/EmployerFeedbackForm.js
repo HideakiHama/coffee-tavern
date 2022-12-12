@@ -24,7 +24,7 @@ function EmployerFeedbackForm() {
       event.preventDefault();
       const { employee_name, date, description } = inputs;
       const submit = { employee_name, date, description } ;
-      await axios.post(`${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${account_id}`, submit,
+      await axios.post(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employer-feedback-form/${account_id}`, submit,
       {headers: { Authorization: `Bearer ${token}`,}})      //checks if the user logged in
       setInputs({employee_name: '', date: '', description:''})
       navigate("/")

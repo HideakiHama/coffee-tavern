@@ -26,7 +26,7 @@ function EmployerFeedbackEdit(){
     const getEmployerFeedbacksUrl = async () => {
       if (token) {
       const EmployerFeedback_id = id                        //Temporary Employer ID
-      const response = await axios.get(`${process.env.REACT_APP_TAGS_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`,
+      const response = await axios.get(`${process.env.REACT_APP_SAMPLE_SERVICE_API_HOST}/employer-feedback-form/${EmployerFeedback_id}`,
       {headers: { Authorization: `Bearer ${token}`}});
       setEmployee(response.data)}};
     getEmployerFeedbacksUrl();

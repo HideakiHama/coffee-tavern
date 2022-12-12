@@ -10,8 +10,8 @@ services:
       dockerfile: Dockerfile.dev
     environment:
       # DATABASE_URL: postgresql://coffee:tavern@db/coffee_tavern
-      # URL for updated Accounts api 2 on elephant sql
-      DATABASE_URL: postgres://snbufshr:KLJy0dWrnX5vhJfOIYAONvCgM1PbytS7@lallah.db.elephantsql.com/snbufshr
+      # URL for updated AccountsApi -Final on elephant sql
+      DATABASE_URL: postgres://mbhucnqa:5bIwBQB4xgAlOwpH7MfhE7S-4NKxvfso@lallah.db.elephantsql.com/mbhucnqa
       # WAIT_HOSTS: db:5432
       PORT: 8000
       SIGNING_KEY: aki
@@ -33,7 +33,6 @@ services:
         # WAIT_HOSTS: db:5432
         PORT: 8100
         SIGNING_KEY: aki
-
   react:
     image: node:lts-bullseye
     command: /bin/bash run.sh

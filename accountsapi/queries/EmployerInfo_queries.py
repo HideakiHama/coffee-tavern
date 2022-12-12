@@ -18,6 +18,7 @@ class EmployerInfoIn(BaseModel):
     job_type: Optional[str]
     location: Optional[str]
     about: Optional[str]
+    pic_url: Optional[str]
 
 
 class EmployerInfoOut(BaseModel):
@@ -25,6 +26,7 @@ class EmployerInfoOut(BaseModel):
     job_type: Optional[str]
     location: Optional[str]
     about: Optional[str]
+    pic_url: Optional[str]
     account_id: int
 
 
@@ -39,30 +41,28 @@ class EmployerInfoRepo:
             ) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our INSERT statement
                     result = db.execute(
                         """
                         INSERT INTO employer_info
-                            (company_name, job_type, location, about, account_id)
+                            (company_name, job_type, location, about, pic_url, account_id)
                         VALUES
-                            (%s, %s, %s, %s, %s)
+                            (%s, %s, %s, %s, %s, %s)
                         """,
                         [
                             info.company_name,
                             info.job_type,
                             info.location,
                             info.about,
+                            info.pic_url,
                             account_id,
                         ],
                     )
                     print(result)
-                    # get current user id
                     return EmployerInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
 
     def get_one(self, account_id: int) -> Optional[EmployerInfoOut]:
-        print(account_id)
         try:
             # connect the database
             with connect(
@@ -70,7 +70,6 @@ class EmployerInfoRepo:
             ) as conn:
                 # get a cursor (something to run SQL with)
                 with conn.cursor() as db:
-                    # Run our SELECT statement
                     result = db.execute(
                         """
                         SELECT
@@ -78,6 +77,7 @@ class EmployerInfoRepo:
                             job_type,
                             location,
                             about,
+                            pic_url,
                             account_id
                         FROM employer_info
                         WHERE account_id = %s
@@ -85,7 +85,6 @@ class EmployerInfoRepo:
                         [account_id],
                     )
                     record = result.fetchone()
-                    print("RECORddD", record)
                     if record is None:
                         return None
                     return self.record_employer_form_out(record)
@@ -107,7 +106,8 @@ class EmployerInfoRepo:
                             company_name = %s,
                             job_type = %s,
                             location = %s,
-                            about = %s
+                            about = %s,
+                            pic_url = %s
                         WHERE account_id = %s
                         """,
                         [
@@ -115,6 +115,7 @@ class EmployerInfoRepo:
                             info.job_type,
                             info.location,
                             info.about,
+                            info.pic_url,
                             account_id,
                         ],
                     )
@@ -129,7 +130,8 @@ class EmployerInfoRepo:
             job_type=record[1],
             location=record[2],
             about=record[3],
-            account_id=record[4],
+            pic_url=record[4],
+            account_id=record[5],
         )
 
     # GET #
@@ -138,7 +140,6 @@ class EmployerInfoRepo:
             with connect(
                 conninfo=os.environ["DATABASE_URL"], **keepalive_kwargs
             ) as conn:
-                print("HI")
                 with conn.cursor() as db:
                     result = db.execute(
                         """
@@ -147,6 +148,7 @@ class EmployerInfoRepo:
                             job_type,
                             location,
                             about,
+                            pic_url,
                             account_id
                         FROM employer_info
                         ORDER BY company_name
