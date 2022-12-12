@@ -4,11 +4,8 @@
 
 ## Team:
 >Person 1 - Hideaki Hama
-
 >Person 2 - Curtis Cheung
-
 >Person 3 - Lexey Olsen
-
 >Person 4 - Christopher Shih
 
 ### Stack:
@@ -25,7 +22,8 @@
 # Platform
     - Docker
 
-
+# Unit-Test
+> test_get_accounts.py -> Curtis Cheung
 
 Run these commands in terminal to set up the application
 

@@ -56,6 +56,7 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
+                    print(result)
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Create did not work"}
@@ -88,6 +89,7 @@ class EmployeeInfoRepo:
                     return self.record_employee_form_out(record)
 
         except Exception as e:
+            print(e)
             return {"message": "Could not get employee info"}
 
     def update(
@@ -120,10 +122,10 @@ class EmployeeInfoRepo:
                             account_id,
                         ],
                     )
+                    print(result)
                     return EmployeeInfoOut(account_id=account_id, **info.dict())
         except Exception:
             return {"message": "Update did not work"}
-        
 
     # GET #
     def get_all_profile(self) -> List[EmployeeInfoOut]:
@@ -150,7 +152,6 @@ class EmployeeInfoRepo:
                 return [self.record_employee_form_out(record) for record in resultList]
         except Exception:
             return {"message": "Could not get list of employee"}
-
 
     def record_employee_form_out(self, record):
         return EmployeeInfoOut(
