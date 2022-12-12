@@ -1,3 +1,13 @@
+## December 12, 2022
+
+Today, I worked on:
+
+* Readme
+
+Added gui map to readme.
+
+
+
 ## December 11, 2022
 
 Today, I worked on:
@@ -5,7 +15,7 @@ Today, I worked on:
 * Unit testing, readme
 
 I worked on unit testing for getting the employee and employer info by id, and 
-worked on the readme.
+worked on adding the aendpoints to the readme.
 
 
 
