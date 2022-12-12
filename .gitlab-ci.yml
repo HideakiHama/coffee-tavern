@@ -52,6 +52,7 @@ build-front-end-job2:
   needs:
     - lint-test-job
     - api-unit-test-job
+    - build-front-end-job
   variables:
     PUBLIC_URL: https://caffeine-anonymous.gitlab.io/coffee-tavern/
     REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavernn.onrender.com
@@ -73,8 +74,10 @@ pages:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
   dependencies:
     - build-front-end-job
+    - buildpfront-end-job2
   needs:
     - build-front-end-job
+    - build-fron-end-job2
   script:
     - mv ghi/coffee-tavern/build public
     - mv ghi/coffee-tavern/tags/build public
