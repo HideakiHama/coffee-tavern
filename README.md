@@ -25,6 +25,8 @@
 # Unit-Test
 > test_get_all_accounts.py -> Curtis Cheung
 > test_get_account_by_id.py -> Lexey Olsen
+> test_get_all_employee_feedbacks.py -> Christopher Shih
+> test_get_all_employer_feedbacks.py -> Hideaki Hama
 
 Run these commands in terminal to set up the application
 
