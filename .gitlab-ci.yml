@@ -52,7 +52,6 @@ build-front-end-job2:
   needs:
     - lint-test-job
     - api-unit-test-job
-    - build-front-end-job
   variables:
     PUBLIC_URL: https://caffeine-anonymous.gitlab.io/coffee-tavern/
     REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavernn.onrender.com
