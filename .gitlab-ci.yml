@@ -45,6 +45,7 @@ build-front-end-job:
   artifacts:
     paths:
       - ghi/coffee-tavern/build
+      - ghi/coffee-tavern/tags/build
 
 # Deploy the React/JavaScript front-end to GitLab pages
 pages:

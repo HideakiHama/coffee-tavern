@@ -23,6 +23,9 @@ import EmployeeProfileList from './listOfProfiles/listOfEmployees';
 import EmployerProfileList from './listOfProfiles/listOfEmployers';
 import TagForm from './tags/TagForm';
 
+import Tag from './tags/Tag';
+import TagListView from './tags/TagListView';
+
 import React, { Component } from 'react';
 import JobPostForm from './JobPost/JobPostForm';
 import JobPostList from './JobPost/JobPostList';
