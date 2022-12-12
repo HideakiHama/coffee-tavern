@@ -1,24 +1,24 @@
 from fastapi.testclient import TestClient
 from main import app
-from queries.accounts import AccountOut, AccountRepo
+from queries.accounts import Account, AccountRepo
 
 client = TestClient(app)
 
-test_account_out = AccountOut(
+test_account = Account (
     id=1,
-    user_name="curtis",
-    email="curtis@email.com",
-    role="Employer"
+    user_name="lexey",
+    email="lexey@email.com",
+    hashed_password="123abc",
+    role="Employee",
 )
 
-
 class TestAccountQueries:
-    def get_all(self):
-        return [test_account_out]
+    def getId(self, user_name="lexey"):
+        return [test_account]
 
 
 def test_get_all_accounts():
     app.dependency_overrides[AccountRepo] = TestAccountQueries
-    response = client.get("/api/get_all_account")
+    response = client.get("/api/get_account/1")
     assert response.status_code == 200
-    assert response.json() == [test_account_out.dict()]
+    assert response.json() == [test_account.dict()]
