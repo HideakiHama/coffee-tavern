@@ -19,7 +19,7 @@ api-unit-test-job:
   needs:
     - lint-test-job
   variables:
-    - SIGNING_KEY: aki
+    SIGNING_KEY: aki
   script:
     - cd accountsapi
     - pip install -r requirements.txt
