@@ -5,11 +5,12 @@ from queries.accounts import AccountOut, AccountRepo
 client = TestClient(app)
 
 test_account_out = AccountOut(
-    id= 1,
-    user_name= "curtis",
-    email= "curtis@email.com",
-    role= "Employer"
+    id=1,
+    user_name="curtis",
+    email="curtis@email.com",
+    role="Employer"
 )
+
 
 class TestAccountQueries:
     def get_all(self):
