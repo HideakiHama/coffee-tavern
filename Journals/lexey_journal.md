@@ -1,3 +1,39 @@
+## December 11, 2022
+
+Today, I worked on:
+
+* Unit testing, readme
+
+I worked on unit testing for getting the employee and employer info by id, and 
+worked on the readme.
+
+
+
+## December 9, 2022
+
+Today, I worked on:
+
+* create user info form
+
+There was an issue where the user profile page was breaking if the user hasn't 
+created their user information. So I after sign up, depedning on id they signed 
+up as an employee or employer, I had it then navigate to the corresponding create 
+info form. 
+
+
+
+## December 8, 2022
+
+Today, I worked on:
+
+* merged profile components
+
+I created a single component to render either the employee profile page or 
+the employer profile page depending on the rold of the current logged in user.
+This allows it to be rendered under one path instead of two.
+
+
+
 ## December 7, 2022
 
 Today, I worked on:

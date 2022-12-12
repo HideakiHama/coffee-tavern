@@ -19,11 +19,8 @@ lint-test-job:
 #   needs:
 #     - lint-test-job
 #   script:
-#     - cd coffee-tavern
-#     -
 #     - pip install -r requirements.txt
 #     - cd accountsapi
-#     -
 #     - python -m pytest
 
 # Build the React/JavaScript front-end
@@ -40,7 +37,7 @@ build-front-end-job:
     - cd coffee-tavern
     - npm install
     - npm run build
-    - cp coffee-tavern/index.html build/404.html
+    - cp build/index.html build/404.html
   artifacts:
     paths:
       - ghi/coffee-tavern/
@@ -55,7 +52,7 @@ pages:
   needs:
     - build-front-end-job
   script:
-    - mv ghi/build/ public
+    - mv ghi/coffee-tavern public
   artifacts:
     paths:
       - public
