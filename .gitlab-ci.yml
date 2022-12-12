@@ -35,7 +35,7 @@ build-front-end-job:
   variables:
     PUBLIC_URL: https://caffeine-anonymous.gitlab.io/coffee-tavern/
     REACT_APP_SAMPLE_SERVICE_API_HOST: https://coffee-tavernn.onrender.com
-    REACT_APP_SAMPLE_SERVICE_API_HOST2: https://coffee-tavern.onrender.com
+    REACT_APP_TAGS_API_HOST: https://coffee-tavern.onrender.com
   script:
     - cd ghi
     - cd coffee-tavern
