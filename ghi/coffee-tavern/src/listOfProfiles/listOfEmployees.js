@@ -2,10 +2,12 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useNavigate } from 'react-router-dom';
+import FadeLoader from "react-spinners/FadeLoader";
 
 
 function EmployeeProfileList() {
     const [employeeProfiles, setEmployeeProfiles] = useState([]);
+    const [loading, setLoading] = useState(false)
     const { token } = useAuthContext();
 
 
@@ -17,7 +19,6 @@ function EmployeeProfileList() {
     };
 
 
-
     useEffect(() =>{
       const getEmployeeFeedbacksUrl = async () => {
         if (token){
@@ -27,8 +28,24 @@ function EmployeeProfileList() {
       getEmployeeFeedbacksUrl();
     }, [token]);
 
+    useEffect(() => {
+      setLoading(true)
+      setTimeout(() =>{
+        setLoading(false)
+      }, 1000)}, [])
+
 
     return (
+      <div>
+            {loading?
+      <div className="d-flex justify-content-center p-5">
+        <FadeLoader
+        color={'#36d7b7'}
+        loading={loading}
+        size={200}
+      />
+      </div>
+       :
       <div>
         <h2>List of Employees</h2>
         <table>
@@ -51,6 +68,9 @@ function EmployeeProfileList() {
           </tbody>
         </table>
       </div>
+  }
+</div>
     )
+
 }
 export default EmployeeProfileList

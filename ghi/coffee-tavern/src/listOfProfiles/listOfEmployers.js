@@ -2,11 +2,12 @@ import React, { useState, useEffect }  from 'react';
 import axios from "axios";
 import { useAuthContext } from '../useToken';
 import { useNavigate } from 'react-router-dom';
-// import jwt_decode from "jwt-decode";
+import FadeLoader from "react-spinners/FadeLoader";
 
 
 function EmployerProfileList() {
     const [employerProfiles, setEmployerProfiles] = useState([]);
+    const [loading, setLoading] = useState(false)
     const { token } = useAuthContext();
 
 
@@ -18,7 +19,6 @@ function EmployerProfileList() {
     };
 
 
-
     useEffect(() =>{
       const getEmployerFeedbacksUrl = async () => {
         if (token){
@@ -28,10 +28,25 @@ function EmployerProfileList() {
       getEmployerFeedbacksUrl();
     }, [token]);
 
+    useEffect(() => {
+      setLoading(true)
+      setTimeout(() =>{
+        setLoading(false)
+      }, 1000)}, [])
 
 
 
     return (
+      <div>
+            {loading?
+      <div className="d-flex justify-content-center p-5">
+        <FadeLoader
+        color={'#36d7b7'}
+        loading={loading}
+        size={200}
+      />
+      </div>
+            :
       <div>
         <h2>List of Employers</h2>
         <table>
@@ -55,7 +70,8 @@ function EmployerProfileList() {
           </tbody>
         </table>
       </div>
-
+  }
+</div>
     )
 }
 export default EmployerProfileList

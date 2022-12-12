@@ -13,14 +13,14 @@ class Error(BaseModel):
 
 class EmployerFeedbackFormIn(BaseModel):
     employee_name: str
-    date: date
+    date: str
     description: str
 
 
 class EmployerFeedbackFormOut(BaseModel):
     id: int
     employee_name: str
-    date: date
+    date: str
     description: str
     account_id: Account | None = None
 
@@ -28,7 +28,7 @@ class EmployerFeedbackFormOut(BaseModel):
 class EmployerFeedbackFormOut2(BaseModel):
     id: int
     employee_name: str
-    date: date
+    date: str
     description: str
     account_id: int
 

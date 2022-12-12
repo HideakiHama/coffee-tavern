@@ -17,7 +17,7 @@ function AllEmployeeFeedback(){
     setLoading(true)
     setTimeout(() =>{
       setLoading(false)
-    }, 5000)}, [])
+    }, 1000)}, [])
 
   useEffect(() =>{
       // Getting Employee's Feedback from all the Employer
@@ -37,12 +37,11 @@ function AllEmployeeFeedback(){
   return (
     <div>
     {loading?
-    <div className="sweet-loading">
+    <div className="d-flex justify-content-center p-5">
         <FadeLoader
         color={'#36d7b7'}
         loading={loading}
         size={200}
-
       />
       </div>
        :
