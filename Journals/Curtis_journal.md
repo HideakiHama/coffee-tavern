@@ -68,3 +68,6 @@
 ## Dec 11 - Sunday
 > Finished creating my unit test , Group 13 met up on discord and we all worked together on 4 unit tests. 
 > All that is left is to have our gitlab run unit tests successfully. MONDAY PROBLEM HAHA
+
+## Dec 12 - Monday
+> Finished deploying project 
