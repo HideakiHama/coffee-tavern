@@ -18,6 +18,8 @@ api-unit-test-job:
   stage: test
   needs:
     - lint-test-job
+  variables:
+    - SIGNING_KEY: curtis
   script:
     - pip install -r requirements.txt
     - cd accountsapi
