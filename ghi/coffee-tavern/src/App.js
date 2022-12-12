@@ -21,7 +21,10 @@ import OthersEmployerProfile from './listOfProfiles/othersEmployerProfile';
 import Profile from './LoggedInUserProfile/Profile';
 import EmployeeProfileList from './listOfProfiles/listOfEmployees';
 import EmployerProfileList from './listOfProfiles/listOfEmployers';
+
 import TagForm from './tags/TagForm';
+import Tag from './tags/Tag';
+import TagListView from './tags/TagListView';
 
 import React, { Component } from 'react';
 import JobPostForm from './JobPost/JobPostForm';
@@ -84,7 +87,13 @@ render() {
                 </Route>
                 <Route path = "/employer-profile-list" element={<EmployerProfileList/>}>
                 </Route>
-                <Route path = "/create_tag_form" element={<TagForm />}>
+                {/* <Route path = "/create_tag_form" element={<TagForm />}>
+                </Route> */}
+                <Route path = "/create_tag_form" element={<TagForm/>}>
+                </Route>
+                <Route path = "/create_tag_form" element={<Tag/>}>
+                </Route>
+                <Route path = "/create_tag_form" element={<TagListView/>}>
                 </Route>
                 <Route path = "/applicants" element={<Apply />}>
                 </Route>
