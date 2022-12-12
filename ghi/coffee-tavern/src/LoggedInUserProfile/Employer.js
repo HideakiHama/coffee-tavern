@@ -80,7 +80,7 @@ const EmployerProfile = ({id}) => {
                 <li>{name}</li>
               </ul>
             </Typography>
-            <Typography componenet="h6" variant="h4">
+            <Typography component="h6" variant="h4">
               <ul>
                 <li>{job}</li>
                 <li>{location}</li>

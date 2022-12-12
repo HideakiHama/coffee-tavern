@@ -24,7 +24,7 @@ const EmployeeProfile = ({id}) => {
 
   useEffect(() => {
     async function getEmployeeInfo() {
-        
+
       const decoded = jwt_decode(token)
       const id = decoded.account["id"]
 
@@ -47,7 +47,7 @@ const EmployeeProfile = ({id}) => {
     }
     getEmployeeInfo()
   }, [id, token])
-  
+
   return (
     <ThemeProvider theme={theme}>
       <Grid container component="main" sx={{ height: '100vh' }}>
@@ -81,7 +81,7 @@ const EmployeeProfile = ({id}) => {
                 <li>{name}</li>
               </ul>
             </Typography>
-            <Typography componenet="h6" variant="h4">
+            <Typography component="h6" variant="h4">
               <ul>
                 <li>{career}</li>
                 <li>{location}</li>

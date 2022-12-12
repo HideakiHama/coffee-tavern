@@ -126,7 +126,7 @@ function EmployeeFeedbackEdit(){
           <div className="row">
             <div className="col s12">
               <div className="input-field inline">
-                  <button className="btn waves-effect waves-light" type="submit" name="action">Update
+                  <button className="btn waves-effect teal" type="submit" name="action">Update
                             <i className="material-icons right">Feedback</i>
                   </button>
 

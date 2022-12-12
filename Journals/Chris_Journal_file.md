@@ -1,3 +1,4 @@
+
 Wed Nov - 16 2022
 We cleaned up the files that were unused and testers making the code more legible and organized.
 We worked together on JobForm queries and router. They were able to get the endpoints to show up on the localhost:8000/docs
@@ -60,4 +61,7 @@ Working on an employee to send their info to the employer when they apply for th
 Tried to work on some more CI/CD, after some long hours. All passed except unit testing, but we have not started that.
 
 Sunday Dec 11 2022,
-Worked on unit testing. As a team we got 4 to pass. Tried to do some more deployment. Having issues. Plan to ask profressor
+Worked on unit testing. As a team we got 4 to pass. Tried to do some more deployment. Having issues. Plan to ask professor
+
+Monday Dec 12 2022,
+Worked on getting CI/CD to fully work with unit test. Going to demo.

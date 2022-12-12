@@ -17,7 +17,7 @@ const theme = createTheme();
 function OthersEmployeeProfile(){
   // set state name, email, etc
 
-  const [otherEmployee, setOtherEmployee] = useState([])
+  const [otherEmployee, setOtherEmployee] = useState('')
   const { token } = useAuthContext();
   const IdData = useLocation();
   const account_id = IdData.state.account_id
@@ -67,7 +67,7 @@ function OthersEmployeeProfile(){
                 <li>{otherEmployee.full_name}</li>
               </ul>
             </Typography>
-            <Typography componenet="h6" variant="h4">
+            <Typography component="h6" variant="h4">
               <ul>
                 <li>{otherEmployee.career_title}</li>
                 <li>{otherEmployee.location}</li>

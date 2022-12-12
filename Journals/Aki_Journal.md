@@ -95,3 +95,10 @@ I decided to go with the foreign key.
 Our group decided to go with Postgres SQL over the MongoDB because of the ease of use (And more comfortable using RDBMS over DOD)
 We also work as a group and finished authentication.py file
 Aside from that I worked on Employee and Employer Feedback Form
+
+#### Wed Nov - 16 2022 (Group Journal)
+We cleaned up the files that were unused and testers making the code more legible and organized.
+We worked together on JobForm queries and router. They were able to get the endpoints to show up on the localhost:8000/docs
+Our understanding of SQL and FastApi have gotten better. Things started to click in our brains.
+We also Watched God Reload. --> See slack for image of god reloading.
+ You may watch![Alt text](WatchGodReload.png)
