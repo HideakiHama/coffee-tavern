@@ -1,6 +1,10 @@
 # Coffee Tavern
 
-> This application is a linkedin but for the people in the service industry.
+> This application is a linkedin but for the people in the service industry. 
+> Linkedin is a site primarily for people in the tech industry. But where is Linkedin for service employees and employers? 
+> Our application's name is Coffee-Tavern, we are the answer to helping that barista or bartender find a quick job when the hours have been cut due to seasonal changes.
+> Or for that store manager at a flower shop who is in need of a sales clerk, because its Valentine's day and will have no time training a new clerk.
+> The communication is made via a employer making an account and creating a job post form. The employee will be able to look at that post through a board of jobs and send their information to the employer for an offer.
 
 ## Team:
 >Person 1 - Hideaki Hama
