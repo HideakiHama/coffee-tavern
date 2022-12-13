@@ -34,11 +34,11 @@
 
 ## Database Urls
 
-**tags api db:**
+<!-- **tags api db:**
  postgres://csbbehie:dmMYbL26VrUlKm6nT8E-qTo0XfR0qkWR@stampy.db.elephantsql.com/csbbehie
 
 **accounts api db:**
-postgres://qqurjzyt:4J9_f7CSKfSxuYsiCRmJTzXZkrpxsQo3@stampy.db.elephantsql.com/qqurjzyt
+postgres://qqurjzyt:4J9_f7CSKfSxuYsiCRmJTzXZkrpxsQo3@stampy.db.elephantsql.com/qqurjzyt -->
 
 _**Run these commands in terminal to set up the application**_
 
