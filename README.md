@@ -1,4 +1,4 @@
-imported repo from giitlab ([gitlab.com/caffeine-anonymous/coffee-tavern.git](https://gitlab.com/caffeine-anonymous/coffee-tavern))
+imported repo from gitlab ([gitlab.com/caffeine-anonymous/coffee-tavern.git](https://gitlab.com/caffeine-anonymous/coffee-tavern))
 
 
 # Coffee Tavern
